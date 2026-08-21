@@ -43,5 +43,22 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Deploy Hosting (admin) + Functions
-        run: npx firebase-tools deploy --only hosting:admin,functions --project miguel-angel-gutierrez-ibague --non-interactive
+      # Hosting first so a flaky Functions/Service Usage 500 does not block the SPA.
+      - name: Deploy Hosting (admin site)
+        run: npx firebase-tools deploy --only hosting:admin --project miguel-angel-gutierrez-ibague --non-interactive --force
+
+      # Service Usage sometimes returns 500 while "ensuring" APIs; retry a few times.
+      - name: Deploy Functions (sanityWrite)
+        run: |
+          set -e
+          for i in 1 2 3; do
+            echo "Functions deploy attempt $i..."
+            if npx firebase-tools deploy --only functions --project miguel-angel-gutierrez-ibague --non-interactive --force; then
+              echo "Functions deploy succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Attempt $i failed; waiting before retry..."
+            sleep $((i * 20))
+          done
+          echo "Functions deploy failed after 3 attempts"
+          exit 1
