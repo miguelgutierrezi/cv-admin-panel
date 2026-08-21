@@ -17,7 +17,10 @@ export class Login {
   private readonly fb = inject(FormBuilder);
 
   readonly portfolioUrl = environment.portfolioUrl;
+  readonly brandHandle = 'miguel.gutierrez';
+  readonly terminalHost = 'admin@miguel.gutierrez:~';
   readonly submitting = signal(false);
+  readonly showPassword = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly configError = this.auth.configError;
 
@@ -25,6 +28,10 @@ export class Login {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  togglePassword(): void {
+    this.showPassword.update((v) => !v);
+  }
 
   async onSubmit(): Promise<void> {
     this.errorMessage.set(null);
