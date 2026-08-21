@@ -7,7 +7,7 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 2 Auth **done**; Hosting admin en https://cv-admin-panel.web.app (site aparte del CV) + workflows CI/deploy. Siguiente: Phase 3 write proxy. Docs: `docs/deploy.md`, `docs/auth-setup.md`.
+Estado: Phase 3 write proxy **en código** (`sanityWrite`). Operador: `docs/proxy-setup.md`. Siguiente: Phase 4 pantallas MVP. Hosting: https://cv-admin-panel.web.app
 
 ## Leer primero
 
@@ -36,6 +36,6 @@ Estado: Phase 2 Auth **done**; Hosting admin en https://cv-admin-panel.web.app (
 
 ## Orden de trabajo
 
-Docs + stack ✓ → scaffold Angular `:4300` ✓ → Firebase Auth ✓ → Cloud Functions proxy → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
+Docs + stack ✓ → scaffold ✓ → Auth ✓ → Cloud Functions proxy ✓ → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
 
 Tras cualquier cambio, sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.

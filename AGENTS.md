@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 2 Auth done** + **admin Hosting/CI wired** (site https://cv-admin-panel.web.app; does not overwrite CV). Next: Phase 3 write proxy. See [docs/deploy.md](docs/deploy.md), [docs/auth-setup.md](docs/auth-setup.md).
+Current repo state: **Phase 3 write proxy implemented** (`sanityWrite` callable + `SanityProxyService`). Operator must set `SANITY_WRITE_TOKEN` and deploy Functions — [docs/proxy-setup.md](docs/proxy-setup.md). Next: Phase 4 MVP screens. No Figma required until editorial UI polish.
 
 ## Contract (read first)
 
@@ -46,7 +46,8 @@ See [docs/stack.md](docs/stack.md) for the full table. Default choices:
 - Do **not** run `npm test` as a routine gate unless the user asks.
 ## Working style
 
-- Execute roadmap phases in order: docs → scaffold → auth ✓ → **proxy** → MVP screens → slice 2 → polish/go-live.
+- Execute roadmap phases in order: docs → scaffold → auth ✓ → proxy ✓ → **MVP screens** → slice 2 → polish/go-live.
+- Never put `SANITY_WRITE_TOKEN` in Angular env or GitHub Actions secrets; use `firebase functions:secrets:set`.
 - Treat [docs/stack.md](docs/stack.md) as the default toolchain; do not silently switch stacks.
 - Prefer surgical changes that match documented architecture.
 - When changing content types, update portfolio schemas/studio first (or with the user); do not invent fields only in the admin.

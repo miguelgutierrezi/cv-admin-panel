@@ -5,8 +5,7 @@
 export const environment = {
   production: true,
   portfolioUrl: 'https://miguel-angel-gutierrez-ibague.web.app',
-  /** Set to deployed Cloud Functions / proxy URL when Phase 3 ships. */
-  proxyBaseUrl: '',
+  functionsRegion: 'us-central1',
   sanity: {
     projectId: 'xm49cfca',
     dataset: 'production',

@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 2 Auth **done** (login / guard / logout). Siguiente: Phase 3 write proxy. Activar Email/Password + usuario en Console — [auth-setup.md](./auth-setup.md).
+Estado del workspace: Phase 3 write proxy **implementado** (callable `sanityWrite`). Operador: secret + deploy Functions — [proxy-setup.md](./proxy-setup.md). Siguiente producto: Phase 4 pantallas MVP.
 
 ## Objetivo de producto
 
@@ -55,15 +55,18 @@ Según [stack.md](./stack.md):
 
 **Done when:** rutas protegidas redirigen a login; sesión válida permite navegar el shell — **sí** (tras activar provider + usuario en Console).
 
-### Phase 3: Write proxy — **siguiente**
+### Phase 3: Write proxy — **done (código)**
 
-- [ ] Firebase Cloud Functions 2nd gen (`@sanity/client` + `SANITY_WRITE_TOKEN`)
-- [ ] Verificar Firebase ID token antes de mutar
-- [ ] Payloads acotados (tipo de documento + patch); no proxy abierto
-- [ ] Errores claros al cliente (401/403/4xx Sanity) sin filtrar el write token
-- [ ] Secrets en el host del proxy / secret manager, no en el repo
+- [x] Firebase Cloud Functions 2nd gen (`sanityWrite` + `@sanity/client`)
+- [x] Verificar Firebase Auth en callable (`request.auth`)
+- [x] Payloads acotados: `ping` | `patch` | `createOrReplace` | `delete` + allowlist de `_type`
+- [x] Errores `HttpsError` al cliente (sin filtrar el write token)
+- [x] Secret `SANITY_WRITE_TOKEN` vía `defineSecret` (Secret Manager)
+- [x] Cliente `SanityProxyService` + botón **Probar proxy (ping)**
+- [x] Guía: [proxy-setup.md](./proxy-setup.md)
+- [ ] Operador: crear token Sanity + `firebase functions:secrets:set SANITY_WRITE_TOKEN` + deploy functions (Blaze)
 
-**Done when:** un mutate de prueba (p. ej. patch de título) funciona solo con sesión válida.
+**Done when:** ping/mutate con sesión válida — **código listo**; falta secret + deploy de Functions en el proyecto.
 
 ### Phase 4: MVP screens (slice 1)
 
@@ -104,9 +107,10 @@ Según [stack.md](./stack.md):
 1. Phase 0 ✓ — stack fijada en [stack.md](./stack.md).
 2. Phase 1 ✓ — scaffold Angular en **puerto 4300** (CV Login local → este admin).
 3. Phase 2 ✓ — Firebase Auth gate ([auth-setup.md](./auth-setup.md)).
-4. Phase 3 Cloud Functions proxy — **siguiente**.
-5. Phase 4 MVP → Phase 5 slice 2 → Phase 6 go-live.
-6. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
+4. Phase 3 ✓ — Cloud Functions `sanityWrite` ([proxy-setup.md](./proxy-setup.md)); secret + deploy Functions pendiente de operador.
+5. Phase 4 MVP screens — **siguiente**.
+6. Phase 5 slice 2 → Phase 6 go-live.
+7. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
 
 ## Lectura previa (portfolio)
 

@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { initializeApp, type FirebaseApp } from 'firebase/app';
 import {
   getAuth,
   onAuthStateChanged,
@@ -9,12 +8,12 @@ import {
   type User,
 } from 'firebase/auth';
 import { environment } from '../../environments/environment';
+import { getFirebaseApp, hasValidFirebaseConfig } from '../firebase/firebase-app';
 
 export type AuthStatus = 'loading' | 'authenticated' | 'anonymous' | 'misconfigured';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly app: FirebaseApp | null;
   private readonly auth: Auth | null;
   private readonly readyPromise: Promise<void>;
   private resolveReady!: () => void;
@@ -29,8 +28,7 @@ export class AuthService {
       this.resolveReady = resolve;
     });
 
-    if (!this.hasValidFirebaseConfig()) {
-      this.app = null;
+    if (!hasValidFirebaseConfig()) {
       this.auth = null;
       this.status.set('misconfigured');
       this.configError.set(
@@ -40,8 +38,7 @@ export class AuthService {
       return;
     }
 
-    this.app = initializeApp(environment.firebase);
-    this.auth = getAuth(this.app);
+    this.auth = getAuth(getFirebaseApp());
 
     onAuthStateChanged(this.auth, (firebaseUser) => {
       this.user.set(firebaseUser);
@@ -78,17 +75,12 @@ export class AuthService {
     await signOut(this.auth);
   }
 
-  /** ID token for Phase 3 write proxy. */
+  /** ID token for diagnostics; callable Functions use the Auth session automatically. */
   async getIdToken(): Promise<string | null> {
     const current = this.auth?.currentUser ?? null;
     if (!current) {
       return null;
     }
     return current.getIdToken();
-  }
-
-  private hasValidFirebaseConfig(): boolean {
-    const cfg = environment.firebase;
-    return Boolean(cfg.apiKey && cfg.authDomain && cfg.projectId && cfg.appId);
   }
 }

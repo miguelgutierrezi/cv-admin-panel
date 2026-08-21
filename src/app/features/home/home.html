@@ -13,13 +13,26 @@
   <main class="shell__main">
     <h1>Editorial admin</h1>
     <p>
-      Sesión iniciada. Las pantallas de edición (site, profile, projects) llegan en Phase 4;
-      el write proxy en Phase 3.
+      Sesión iniciada. Write proxy (Phase 3): callable <code>sanityWrite</code>. Pantallas de
+      edición en Phase 4.
     </p>
     <ul>
       <li>Sanity project: <code>{{ sanityProjectId }}</code></li>
       <li>Dataset: <code>{{ dataset }}</code></li>
-      <li>Auth: Firebase email/password (Phase 2 ✓)</li>
+      <li>Auth: Firebase email/password ✓</li>
+      <li>Proxy: Cloud Functions <code>sanityWrite</code> (token solo en servidor)</li>
     </ul>
+
+    <div class="shell__probe">
+      <button type="button" class="shell__probe-btn" [disabled]="probing()" (click)="probeProxy()">
+        {{ probing() ? 'Probando…' : 'Probar proxy (ping)' }}
+      </button>
+      @if (probeMessage(); as ok) {
+        <p class="shell__probe-ok" role="status">{{ ok }}</p>
+      }
+      @if (probeError(); as err) {
+        <p class="shell__probe-err" role="alert">{{ err }}</p>
+      }
+    </div>
   </main>
 </div>

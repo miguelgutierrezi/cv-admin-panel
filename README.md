@@ -19,12 +19,12 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 2 Auth — done.** Hosting + GitHub Actions for the **admin site** are wired (see [docs/deploy.md](docs/deploy.md)). Next product work: Phase 3 write proxy.
+**Phase 3 write proxy — code done** (callable `sanityWrite`). Next product: Phase 4 MVP screens.
 
-Live admin site (when deployed): https://cv-admin-panel.web.app  
-CV site (unchanged): https://miguel-angel-gutierrez-ibague.web.app  
+Operator steps before ping works in prod: [docs/proxy-setup.md](docs/proxy-setup.md) (Sanity token → `firebase functions:secrets:set` → deploy functions). Blaze plan required for Functions.
 
-Complete Console Auth steps in [docs/auth-setup.md](docs/auth-setup.md). Add GitHub secret `FIREBASE_SERVICE_ACCOUNT` for Actions deploy.
+Live admin: https://cv-admin-panel.web.app  
+CV: https://miguel-angel-gutierrez-ibague.web.app
 
 ## Local development
 
@@ -71,7 +71,7 @@ See **[docs/stack.md](docs/stack.md)**.
 | --- | --- |
 | UI | Angular 22 + TypeScript + Sass (Node >= 24.15) |
 | Auth | Firebase Auth email/password (**Phase 2 done**) |
-| Writes | Cloud Functions + `@sanity/client` — Phase 3 |
+| Writes | Cloud Functions `sanityWrite` (**Phase 3 code done**; set secret + deploy) |
 | Hosting | Firebase Hosting (static SPA; secrets on Functions) |
 | CMS | Sanity `xm49cfca` / `production` |
 
@@ -86,6 +86,7 @@ See **[docs/stack.md](docs/stack.md)**.
 
 | Doc | Purpose |
 | --- | --- |
+| [docs/proxy-setup.md](docs/proxy-setup.md) | Sanity write proxy + secrets (Phase 3) |
 | [docs/deploy.md](docs/deploy.md) | Hosting dual-site + GitHub Actions |
 | [docs/auth-setup.md](docs/auth-setup.md) | Firebase Auth Console steps (Phase 2) |
 | [docs/stack.md](docs/stack.md) | Recommended stack |
@@ -99,8 +100,8 @@ See **[docs/stack.md](docs/stack.md)**.
 0. Docs bootstrap + stack lock ← **done**  
 1. Angular scaffold + port 4300 + public-safe env ← **done**  
 2. Firebase Auth ← **done**  
-3. Cloud Functions write proxy ← **next**  
-4. MVP screens: site, profile, projects  
+3. Cloud Functions write proxy ← **code done** (secret + Functions deploy by operator)  
+4. MVP screens: site, profile, projects ← **next**  
 5. Slice 2: experience, courses, navigation  
 6. Polish, deploy, CORS, prod `adminLoginUrl`  
 7. Later: tests + lint → CI  

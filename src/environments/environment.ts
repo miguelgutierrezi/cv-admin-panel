@@ -7,8 +7,11 @@ export const environment = {
   production: false,
   /** Portfolio CV (sibling app on :4200) for local integration smoke. */
   portfolioUrl: 'http://localhost:4200',
-  /** Write proxy base URL (Cloud Functions). Empty until Phase 3. */
-  proxyBaseUrl: '',
+  /**
+   * Region for Firebase callable Functions (sanityWrite).
+   * Write token stays on the server — not here.
+   */
+  functionsRegion: 'us-central1',
   sanity: {
     projectId: 'xm49cfca',
     dataset: 'production',

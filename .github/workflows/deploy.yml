@@ -15,6 +15,7 @@ jobs:
     permissions:
       contents: read
       checks: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,17 +26,22 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Install dependencies
+      - name: Install app dependencies
         run: npm ci
 
-      - name: Production build
+      - name: Production build (admin SPA)
         run: npm run build
 
-      - name: Deploy to Firebase Hosting (admin site live)
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Install functions dependencies
+        run: npm ci --prefix functions
+
+      - name: Build functions
+        run: npm run build --prefix functions
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
-          projectId: miguel-angel-gutierrez-ibague
-          target: admin
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Deploy Hosting (admin) + Functions
+        run: npx firebase-tools deploy --only hosting:admin,functions --project miguel-angel-gutierrez-ibague --non-interactive

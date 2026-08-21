@@ -47,3 +47,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Cloud Functions build output
+functions/lib
+functions/node_modules

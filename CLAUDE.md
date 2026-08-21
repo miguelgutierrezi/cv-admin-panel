@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 2 Auth done**; admin Hosting site https://cv-admin-panel.web.app (separate from CV Hosting). Next: Phase 3 write proxy. See [docs/deploy.md](docs/deploy.md), [docs/auth-setup.md](docs/auth-setup.md).
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 3 write proxy done in code** (`sanityWrite`). Set secret + deploy Functions per [docs/proxy-setup.md](docs/proxy-setup.md). Next: Phase 4 screens.
 
 ## Read first
 

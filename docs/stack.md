@@ -59,10 +59,10 @@ We already chose a sibling repo (`cv-admin-panel`). Do not merge the admin into 
 1. **Keep Phase 0 docs** as the contract; treat this file as the stack lock for scaffold.
 2. **Phase 1 — scaffold** ✓ Angular 22 in this repo on port **4300**, with public-safe `environment` (`sanity.*`, `proxyBaseUrl`, Firebase placeholders). Portfolio local `adminLoginUrl` → `http://localhost:4300`.
 3. **Phase 2 — Auth** ✓ Firebase email/password + guards; see [auth-setup.md](./auth-setup.md).
-4. **Phase 3 — one (or few) Cloud Functions** e.g. `sanityMutate` / `sanityPatch` that:
-   - reject missing/invalid ID tokens;
+4. **Phase 3 — Cloud Function `sanityWrite`** ✓ (see [proxy-setup.md](./proxy-setup.md)):
+   - reject missing auth;
    - never echo the write token;
-   - accept tightly shaped payloads (document type + patch), not arbitrary proxy-to-anywhere.
+   - accept tightly shaped payloads (`ping` / `patch` / `createOrReplace` / `delete`), not arbitrary proxy-to-anywhere.
 5. **Phase 4+** build screens against existing schemas only (`siteSettings`, `profile`, `project` first).
 6. **Go-live:** Admin Hosting https://cv-admin-panel.web.app (already created) → Sanity CORS → set portfolio `adminLoginUrl` when ready. See [deploy.md](./deploy.md).
 
