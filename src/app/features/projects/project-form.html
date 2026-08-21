@@ -40,6 +40,13 @@
     <p>{{ statusLine() }}</p>
   </div>
 
+  @if (message(); as ok) {
+    <p class="edit__ok" role="status">{{ ok }}</p>
+  }
+  @if (error(); as err) {
+    <p class="edit__err" role="alert">{{ err }}</p>
+  }
+
   @if (loading()) {
     <p class="edit__loading">Cargando…</p>
   } @else {
@@ -474,12 +481,6 @@
         </section>
       </div>
 
-      @if (message(); as ok) {
-        <p class="edit__ok" role="status">{{ ok }}</p>
-      }
-      @if (error(); as err) {
-        <p class="edit__err" role="alert">{{ err }}</p>
-      }
     </form>
   }
 

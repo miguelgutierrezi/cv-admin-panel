@@ -28,6 +28,10 @@ export class AdminShell implements OnInit, OnDestroy {
   readonly searchXl = signal(false);
   /** Tablet landscape Experience form — Figma 72:455 @ 260px */
   readonly searchMd = signal(false);
+  /** Tablet portrait Experience form — Figma 77:4 @ 160px */
+  readonly searchXs = signal(false);
+  /** Tablet portrait Site/Profile/Projects form/list — Figma @ 180px */
+  readonly searchNarrow = signal(false);
   readonly searchAriaLabel = signal('Filtrar content types');
 
   private mediaQuery: MediaQueryList | null = null;
@@ -109,17 +113,31 @@ export class AdminShell implements OnInit, OnDestroy {
     this.searchWide.set(false);
     this.searchXl.set(false);
     this.searchMd.set(false);
+    this.searchXs.set(false);
+    this.searchNarrow.set(false);
 
     if (onSite || onProfile || onNavigation || onCoursesForm || onProjectForm) {
       this.searchWide.set((onCoursesForm || onNavigation) && tabletLandscape);
-      this.searchPlaceholder.set('grep config_key...');
+      this.searchNarrow.set(
+        (onSite || onProfile || onProjectForm || onCoursesForm || onNavigation) &&
+          tabletPortrait,
+      );
+      this.searchPlaceholder.set(
+        (onSite || onProfile || onProjectForm || onCoursesForm || onNavigation) &&
+          tabletPortrait
+          ? 'grep config...'
+          : 'grep config_key...',
+      );
       this.searchAriaLabel.set('Filtrar campos de configuración');
       return;
     }
 
     if (onCoursesList) {
       this.searchWide.set(tabletLandscape);
-      this.searchPlaceholder.set('grep courses...');
+      this.searchNarrow.set(tabletPortrait);
+      this.searchPlaceholder.set(
+        tabletPortrait ? 'grep...' : 'grep courses...',
+      );
       this.searchAriaLabel.set('Filtrar courses');
       return;
     }
@@ -127,14 +145,21 @@ export class AdminShell implements OnInit, OnDestroy {
     if (onExperienceList || onExperienceForm) {
       this.searchXl.set(onExperienceList && tabletLandscape);
       this.searchMd.set(onExperienceForm && tabletLandscape);
-      this.searchPlaceholder.set('grep experience...');
+      this.searchNarrow.set(onExperienceList && tabletPortrait);
+      this.searchXs.set(onExperienceForm && tabletPortrait);
+      this.searchPlaceholder.set(
+        onExperienceForm && tabletPortrait ? 'grep...' : 'grep experience...',
+      );
       this.searchAriaLabel.set('Filtrar experiences');
       return;
     }
 
     if (onProjectsList) {
       this.searchWide.set(tabletLandscape);
-      this.searchPlaceholder.set('grep project_name...');
+      this.searchNarrow.set(tabletPortrait);
+      this.searchPlaceholder.set(
+        tabletPortrait ? 'grep project...' : 'grep project_name...',
+      );
       this.searchAriaLabel.set('Filtrar projects');
       return;
     }

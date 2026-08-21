@@ -119,6 +119,7 @@ Según [stack.md](./stack.md):
 - [x] Courses list populated tablet landscape Figma (`72:580`)
 - [x] Course form tablet landscape Figma (`72:674`)
 - [x] Navigation tablet landscape Figma (`73:4`)
+- [x] Site Settings tablet portrait Figma (`62:349`)
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
 - [ ] (Siguiente UI) otras pantallas tablet+mobile Figma

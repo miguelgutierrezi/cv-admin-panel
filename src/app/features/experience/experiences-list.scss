@@ -41,3 +41,111 @@
     min-height: 40px;
   }
 }
+
+/* Tablet portrait — Figma empty 74:395 + populated 74:317 (~768) */
+@media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
+  .edit {
+    gap: 24px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__eyebrow {
+    font-size: 12px;
+  }
+
+  .edit__title {
+    font-size: 24px;
+  }
+
+  .list-page__new,
+  .list-page__new--neon {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .edit__status {
+    padding: 10px 16px;
+  }
+
+  .edit__status p {
+    font-size: 11px;
+  }
+
+  .list-empty {
+    padding: 80px 24px;
+  }
+
+  .list-empty__title {
+    font-size: 18px;
+  }
+
+  .data-table__head {
+    padding: 12px 20px;
+    font-size: 10px;
+  }
+
+  .data-table__col-order {
+    width: 40px;
+  }
+
+  .data-table__col-status,
+  .data-table__role {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+  }
+
+  .data-table__left,
+  .data-table__info {
+    gap: 16px;
+  }
+
+  .data-table__right,
+  .data-table__meta {
+    gap: 20px;
+  }
+
+  .data-table__row {
+    padding: 16px 20px;
+  }
+
+  .data-table__order {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .data-table__titles strong {
+    font-size: 14px;
+  }
+
+  .data-table__titles span {
+    font-size: 12px;
+  }
+
+  .data-table__role {
+    font-size: 13px;
+  }
+
+  .data-table__controls {
+    gap: 8px;
+  }
+
+  .data-table__row:hover,
+  .data-table__row:focus-within {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 0 24px;
+    min-height: 40px;
+  }
+}

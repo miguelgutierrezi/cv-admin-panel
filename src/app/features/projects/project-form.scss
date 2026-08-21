@@ -178,6 +178,110 @@
   }
 }
 
+/* Tablet portrait — Figma admin-project-detail-tablet-portrait (74:100, ~768) */
+@media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
+  .edit {
+    gap: 24px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title-bar {
+    gap: 16px;
+  }
+
+  .edit__title {
+    font-size: 26px;
+  }
+
+  .edit__eyebrow {
+    font-size: 12px;
+  }
+
+  .edit__btn--danger,
+  .edit__btn--ghost {
+    padding: 10px 16px;
+  }
+
+  .edit__btn--save {
+    padding: 10px 18px;
+  }
+
+  .edit__btn--add {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .edit__status p {
+    font-size: 13px;
+  }
+
+  .edit__stack {
+    gap: 24px;
+  }
+
+  .edit__mid-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .panel--general {
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .panel--general .panel__title {
+    font-size: 18px;
+  }
+
+  .panel--detail {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .panel--detail .panel__title,
+  .panel--features .panel__title {
+    font-size: 16px;
+  }
+
+  .panel--general .field-row,
+  .panel--detail .field-row {
+    gap: 20px;
+  }
+
+  .panel--general .field__control--mid {
+    min-height: 80px;
+  }
+
+  .panel--detail .field__control--mid {
+    min-height: 60px;
+  }
+
+  .field__label {
+    font-size: 12px;
+  }
+
+  .field__control {
+    min-height: 40px;
+  }
+
+  .item__body {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .item__chrome-label {
+    font-size: 10px;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 12px 24px;
+    min-height: 44px;
+  }
+}
+
 @media (max-width: 720px) {
   .field-row--order .field--order {
     width: 100%;

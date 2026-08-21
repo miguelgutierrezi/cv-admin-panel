@@ -36,6 +36,13 @@
     <p>{{ statusLine() }}</p>
   </div>
 
+  @if (message(); as ok) {
+    <p class="edit__ok" role="status">{{ ok }}</p>
+  }
+  @if (error(); as err) {
+    <p class="edit__err" role="alert">{{ err }}</p>
+  }
+
   @if (loading()) {
     <p class="edit__loading">Cargando…</p>
   } @else {
@@ -123,7 +130,10 @@
                     <span class="field__label">$ URL</span>
                     <span class="field__control">
                       <span class="field__prompt" aria-hidden="true">&gt;</span>
-                      <input formControlName="url" />
+                      <input
+                        formControlName="url"
+                        placeholder="https://…, tel:+… o mailto:…"
+                      />
                     </span>
                   </label>
                   <label class="field">
@@ -143,12 +153,6 @@
         </section>
       </div>
 
-      @if (message(); as ok) {
-        <p class="edit__ok" role="status">{{ ok }}</p>
-      }
-      @if (error(); as err) {
-        <p class="edit__err" role="alert">{{ err }}</p>
-      }
     </form>
   }
 

@@ -55,6 +55,13 @@
     <p>{{ statusLine() }}</p>
   </div>
 
+  @if (message(); as ok) {
+    <p class="edit__ok" role="status">{{ ok }}</p>
+  }
+  @if (error(); as err) {
+    <p class="edit__err" role="alert">{{ err }}</p>
+  }
+
   @if (loading()) {
     <p class="edit__loading">Cargando…</p>
   } @else {
@@ -188,17 +195,11 @@
           </span>
         </label>
 
-        @if (message(); as ok) {
-          <p class="edit__ok" role="status">{{ ok }}</p>
-        }
-        @if (error(); as err) {
-          <p class="edit__err" role="alert">{{ err }}</p>
-        }
       </section>
     </form>
   }
 
-  <footer class="edit__footer edit__footer--dark">
+  <footer class="edit__footer">
     <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
     <span>{{ footerUser() }}</span>
   </footer>

@@ -427,10 +427,11 @@
   background: var(--card);
 }
 
+/* Deprecated: always light — keep class for legacy templates */
 .edit__footer--dark {
-  background: var(--bg);
-  border-top: 1px solid var(--neon-border);
-  color: var(--slate);
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  color: var(--dim);
 }
 
 /* Stack panels on portrait tablet / narrow — landscape keeps 2 cols (Site Settings 62:205) */

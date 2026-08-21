@@ -9,9 +9,10 @@ import { SanityReadService } from '../../api/sanity-read.service';
 import { AuthService } from '../../auth/auth.service';
 import type { SiteSettingsDoc } from '../../models/cms.models';
 import {
-  httpUrlValidator,
   optionalAssetOrHttpUrlValidator,
   slugValidator,
+  socialUrlValidator,
+  validationHint,
 } from '../../shared/cms-validators';
 
 type SocialDraft = {
@@ -133,6 +134,7 @@ export class SiteSettingsPage implements OnInit {
     this.error.set(null);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.error.set(this.describeInvalidForm());
       return;
     }
 
@@ -189,9 +191,42 @@ export class SiteSettingsPage implements OnInit {
     return this.fb.nonNullable.group({
       id: ['', [Validators.required, slugValidator()]],
       label: ['', Validators.required],
-      url: ['', [Validators.required, httpUrlValidator()]],
+      url: ['', [Validators.required, socialUrlValidator()]],
       iconUrl: ['', optionalAssetOrHttpUrlValidator()],
     });
+  }
+
+  /** Prefer a concrete field hint over a generic “required” message. */
+  private describeInvalidForm(): string {
+    const top = this.form.controls;
+    for (const [key, label] of [
+      ['name', 'Nombre completo'],
+      ['brandHandle', 'Brand handle'],
+      ['emailsText', 'Emails'],
+    ] as const) {
+      const ctrl = top[key];
+      if (ctrl.invalid) {
+        return validationHint(ctrl.errors) ?? `Revisa el campo “${label}”.`;
+      }
+    }
+    for (let i = 0; i < this.socialLinks.length; i++) {
+      const group = this.socialLinks.at(i);
+      for (const [key, label] of [
+        ['id', 'ID'],
+        ['label', 'Label'],
+        ['url', 'URL'],
+        ['iconUrl', 'Icon Ident'],
+      ] as const) {
+        const ctrl = group.get(key);
+        if (ctrl?.invalid) {
+          const hint = validationHint(ctrl.errors);
+          return hint
+            ? `Social link #${i + 1} · ${label}: ${hint}`
+            : `Social link #${i + 1}: revisa “${label}”.`;
+        }
+      }
+    }
+    return 'Completa los campos requeridos.';
   }
 
   private patchForm(doc: SiteSettingsDoc): void {

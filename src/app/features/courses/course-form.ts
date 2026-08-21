@@ -151,6 +151,7 @@ export class CourseFormPage implements OnInit {
     this.error.set(null);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.error.set('Completa los campos requeridos.');
       return;
     }
     this.saving.set(true);

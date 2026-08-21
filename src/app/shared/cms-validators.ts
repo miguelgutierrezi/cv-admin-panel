@@ -90,6 +90,31 @@ export function httpUrlValidator(): ValidatorFn {
   };
 }
 
+/**
+ * Social / contact URL: http(s), tel:, or mailto:
+ * Mirrors portfolio `parseUrl(..., { allowContactSchemes: true })`.
+ */
+export function socialUrlValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = String(control.value ?? '').trim();
+    if (!value) {
+      return { required: true };
+    }
+    if (isHttpUrl(value) || isTelUrl(value) || isMailtoUrl(value)) {
+      return null;
+    }
+    return { socialUrl: true };
+  };
+}
+
+function isTelUrl(value: string): boolean {
+  return /^tel:\+?[\d().\-\s]+$/i.test(value);
+}
+
+function isMailtoUrl(value: string): boolean {
+  return /^mailto:[^\s]+$/i.test(value);
+}
+
 export function normalizeSlug(value: string): string {
   return value.trim().toLowerCase();
 }
@@ -106,6 +131,9 @@ export function validationHint(errors: ValidationErrors | null | undefined): str
   }
   if (errors['httpUrl']) {
     return 'URL inválida: debe ser http(s) con hostname.';
+  }
+  if (errors['socialUrl']) {
+    return 'URL inválida: usa http(s), tel: o mailto:.';
   }
   return null;
 }

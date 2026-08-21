@@ -72,6 +72,7 @@ export class NavigationPage implements OnInit {
     this.error.set(null);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.error.set('Completa los campos requeridos (section id y labels).');
       return;
     }
     this.saving.set(true);

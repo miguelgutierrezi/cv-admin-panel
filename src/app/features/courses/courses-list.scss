@@ -137,18 +137,136 @@
   }
 }
 
-/* Tablet portrait / narrow — shrink columns (not landscape table) */
-@media (max-width: 1100px) and (orientation: portrait) {
+/* Tablet portrait — Figma empty 77:85 + populated 77:128 (~768) */
+@media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
+  .edit {
+    gap: 24px;
+    padding: 28px 24px 0;
+  }
+
+  .edit:has(.list-empty) {
+    gap: 20px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title-bar {
+    gap: 16px;
+  }
+
+  .edit:has(.list-empty) .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__title {
+    font-size: 28px;
+  }
+
+  .list-page__new {
+    padding: 12px 16px;
+  }
+
+  .edit:has(.list-empty) .list-page__new {
+    padding: 12px 18px;
+  }
+
+  .edit__status p {
+    font-size: 12px;
+  }
+
+  .edit:has(.list-empty) .edit__status p {
+    font-size: 13px;
+  }
+
+  .list-empty {
+    padding: 80px 40px;
+  }
+
+  .list-empty__title {
+    font-size: 18px;
+  }
+
+  .data-table__head {
+    padding: 14px 16px;
+    font-size: 11px;
+  }
+
+  .data-table__col-order--wide {
+    width: 60px;
+  }
+
+  .data-table__left--courses,
+  .data-table__info--courses {
+    gap: 16px;
+  }
+
+  .data-table__right,
+  .data-table__meta {
+    gap: 16px;
+  }
+
   .data-table__col-details,
-  .data-table__titles--course,
+  .data-table__titles--course {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
   .data-table__col-institution,
   .data-table__institution {
-    width: auto;
-    max-width: 14rem;
+    width: 120px;
+    max-width: 120px;
+  }
+
+  .data-table__col-status--course,
+  .data-table__status--course {
+    width: 100px;
+  }
+
+  .data-table__col-controls--wide,
+  .data-table__controls--wide {
+    width: 80px;
+  }
+
+  .data-table__row {
+    padding: 16px;
+  }
+
+  .data-table__order {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .data-table__titles strong {
+    font-size: 15px;
+  }
+
+  .data-table__titles span {
+    font-size: 13px;
+  }
+
+  .data-table__institution {
+    font-size: 14px;
+  }
+
+  .status-badge {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .data-table__row:hover,
+  .data-table__row:focus-within {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 12px 24px;
+    min-height: 44px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .data-table__info--courses {
     flex-wrap: wrap;
   }

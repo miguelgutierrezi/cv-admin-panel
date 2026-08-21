@@ -126,6 +126,7 @@ export class ProfilePage implements OnInit {
     this.error.set(null);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.error.set('Completa los campos requeridos.');
       return;
     }
 
