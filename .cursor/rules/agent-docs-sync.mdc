@@ -1,0 +1,22 @@
+---
+description: Obligatorio — sincronizar AGENTS.md, CLAUDE.md, copilot-instructions y Cursor rules
+alwaysApply: true
+---
+
+# Sync obligatorio de instrucciones de agentes
+
+**Regla dura (cualquier agente, cualquier cambio):** al modificar este repositorio, actualizar **en el mismo cambio** estas superficies para que digan lo mismo:
+
+1. `AGENTS.md`
+2. `CLAUDE.md`
+3. `.github/copilot-instructions.md`
+4. `.cursor/rules/*.mdc` (editar o crear la regla que corresponda; eliminar guía obsoleta)
+
+Ningún PR/diff se considera completo si solo actualiza código o `docs/` y deja desfasadas estas guías.
+
+## Cómo cumplir
+
+- Si el cambio introduce o altera una decisión, comando, convención, stack, roadmap, seguridad o working style → reflejarlo en todas.
+- Si el cambio es pequeño → revisar igual; si no hay nada que cambiar, decirlo al terminar.
+- Nunca actualizar solo una superficie dejando las otras desactualizadas.
+- `AGENTS.md` es la entrada canónica; `CLAUDE.md` y Copilot deben permanecer alineados con ella.

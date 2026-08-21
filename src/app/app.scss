@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.shell__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.shell__brand {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.shell__link {
+  color: #0b5fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.shell__link:hover {
+  text-decoration: underline;
+}
+
+.shell__main h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.shell__main p {
+  margin: 0 0 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.shell__main ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+}

@@ -1,0 +1,22 @@
+<div class="shell">
+  <header class="shell__header">
+    <p class="shell__brand">{{ title }}</p>
+    <a class="shell__link" [href]="portfolioUrl" rel="noopener noreferrer">
+      Abrir portfolio
+    </a>
+  </header>
+
+  <main class="shell__main">
+    <h1>Editorial admin</h1>
+    <p>
+      Base Angular lista en <code>http://localhost:4300</code>. El CV apunta aquí
+      vía <code>adminLoginUrl</code> en desarrollo.
+    </p>
+    <ul>
+      <li>Sanity project: <code>{{ sanityProjectId }}</code></li>
+      <li>Dataset: <code>{{ dataset }}</code></li>
+      <li>Siguiente: auth (Phase 2) → write proxy (Phase 3)</li>
+    </ul>
+    <router-outlet />
+  </main>
+</div>

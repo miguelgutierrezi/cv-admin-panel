@@ -1,0 +1,40 @@
+---
+description: Contexto del admin panel, stack recomendada, fases y no-objetivos
+alwaysApply: true
+---
+
+# CV Admin Panel
+
+Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
+
+Estado: Phase 1 scaffold **done** (Angular 22, puerto **4300**). Siguiente: Phase 2 Auth. Plan: `docs/roadmap.md`. Stack: `docs/stack.md`.
+
+## Leer primero
+
+- `docs/stack.md` — stack v1 bloqueada
+- `docs/contract.md` y el brief del portfolio `docs/admin-app-brief.md`
+- `docs/architecture.md`, `docs/security.md`
+- Entrada de agentes: `AGENTS.md`
+
+## Stack recomendada (v1)
+
+- Angular 22 + TypeScript + Sass; Node >= 24.15
+- Firebase Auth (email/password, single-user)
+- Cloud Functions 2nd gen + `@sanity/client` (token solo en servidor)
+- Firebase Hosting = SPA estática del admin (como el CV); **no** guarda write tokens. La regla del portfolio era “sin token en el bundle del cliente”, no “evitar Hosting”
+- Sanity `xm49cfca` / `production`; schemas solo en portfolio `studio/`
+- Dev: `npm start` → `http://localhost:4300/` (CV en `:4200`, Login → admin)
+
+## No negociable
+
+- Sin write tokens en el cliente
+- App desplegable separada (no `/admin` dentro del SPA del CV). Repo hermano preferido; monorepo con dos apps también valdría — ver `docs/stack.md`
+- No rediseñar el portfolio público
+- MVP: login + `siteSettings` + `profile` + `project` (con `detail`)
+- Luego: `experience`, `course`, `navigation`
+
+## Orden de trabajo
+
+Docs + stack ✓ → scaffold Angular `:4300` ✓ → Firebase Auth → Cloud Functions proxy → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
+
+Tras cualquier cambio, sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.

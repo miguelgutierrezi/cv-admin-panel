@@ -1,0 +1,29 @@
+---
+description: Seguridad de escrituras Sanity — proxy autenticado, sin tokens en cliente
+globs: docs/security.md,docs/contract.md,docs/stack.md
+alwaysApply: false
+---
+
+# Seguridad de escrituras
+
+Fuente: `docs/security.md`, `docs/contract.md`, `docs/stack.md`.
+
+## Stack previsto
+
+- Angular 22 + Firebase Auth + Cloud Functions + Firebase Hosting (SPA estática)
+- Hosting **no** es el sitio del write token; el token vive solo en Functions. La regla del CV era “sin token en el bundle”, no “evitar Hosting”
+- `@sanity/client` solo en el proxy; verificar Firebase ID token antes de cualquier mutate
+- En el cliente solo: `projectId`, `dataset`, `apiVersion`, `proxyBaseUrl`, config pública de auth
+
+## Reglas
+
+- El token de escritura de Sanity vive **solo** en Cloud Functions (secrets), nunca en el bundle Angular ni en env públicos.
+- Toda mutación exige sesión Firebase verificada en el proxy.
+- No documentar secretos reales en README ni commits.
+- CORS en Sanity Manage para orígenes del admin (y del portfolio si lee CDN).
+- No exponer endpoints de mutate sin auth “para probar más rápido”.
+
+## Integración portfolio
+
+- El CV no debe recibir write tokens por culpa de este admin.
+- `adminLoginUrl` en el portfolio solo cuando exista URL HTTPS del admin.
