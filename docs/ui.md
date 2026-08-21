@@ -11,8 +11,9 @@ Visual direction for the admin SPA. Source of truth: Figma file **Hoja de vida**
 
 ## Home / content types hub (`/`)
 
-- **Implemented:** `admin-dashboard-content-types` (`41:4`).
-- Pattern: **dark top navbar** + **light main** (`#F8FAFC`) + subtle grid (~6% opacity).
+- **Desktop:** `admin-dashboard-content-types` (`41:4`) — 3-column card grid.
+- **Tablet portrait:** `admin-dashboard-tablet-portrait` (`61:4`, 768×1024) — 2×3 grid, denser type, search `grep…` @ 200px, nav padding `0 24px` / height 72.
+- Pattern: **dark top navbar** + **light main** (`#F8FAFC`) + subtle grid (desktop ~6%, tablet portrait ~4%).
 - Navbar (fiel a Figma): brand `[ handle ]` · search `$ grep…` · botón **Portfolio** (dark + arrow-up-right) · **Logout**.
 - Six cards → `/site`, `/profile`, `/projects`, `/experience`, `/courses`, `/navigation`.
 - Shell search filters the cards (client-side). No ES/EN global in current Figma navbar.

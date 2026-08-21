@@ -94,7 +94,7 @@ Según [stack.md](./stack.md):
 - [x] `adminLoginUrl` prod en portfolio → `https://cv-admin-panel.web.app`
 - [x] Guía [go-live.md](./go-live.md) (CORS Sanity, Auth domains, smoke)
 - [x] Login UI Figma (desktop + tablet landscape + tablet portrait + mobile) — ver [ui.md](./ui.md)
-- [x] Home dashboard Figma (`41:4`) — dark nav + light hub + 6 content-type cards
+- [x] Home dashboard Figma (`41:4` desktop + `61:4` tablet portrait) — dark nav + light hub + 6 content-type cards
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
 - [ ] (Siguiente UI) shell + pantallas editoriales light alineadas a Figma/tokens CV

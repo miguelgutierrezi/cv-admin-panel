@@ -255,9 +255,61 @@
   font-size: 0.95em;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (min-width: 721px) {
+  .dash {
+    gap: 24px;
+    padding: 28px 24px 0;
+  }
+
+  .dash__grid {
+    opacity: 0.04;
+  }
+
+  .dash__header {
+    padding-bottom: 16px;
+  }
+
+  .dash__eyebrow {
+    font-size: 11px;
+  }
+
+  .dash__title {
+    font-size: 24px;
+  }
+
+  .dash__welcome p {
+    font-size: 11px;
+  }
+
   .dash__grid-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    min-height: 175px;
+  }
+
+  .card__body {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .card__icon {
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .card__titles strong {
+    font-size: 15px;
+  }
+
+  .dash__footer {
+    font-size: 11px;
+    padding-inline: 0;
   }
 }
 

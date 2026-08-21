@@ -14,7 +14,7 @@
         <span class="shell__search-prefix" aria-hidden="true">$</span>
         <input
           type="search"
-          placeholder="grep type_name..."
+          [attr.placeholder]="searchPlaceholder()"
           [value]="filter.query()"
           (input)="onSearchInput($event)"
           aria-label="Filtrar content types"
