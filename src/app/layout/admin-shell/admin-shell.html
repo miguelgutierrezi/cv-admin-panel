@@ -41,7 +41,7 @@
       </a>
 
       <button type="button" class="shell__logout" [disabled]="loggingOut()" (click)="logout()">
-        {{ loggingOut() ? 'Saliendo…' : 'Logout' }}
+        {{ loggingOut() ? 'Saliendo…' : logoutLabel() }}
       </button>
     </div>
   </header>

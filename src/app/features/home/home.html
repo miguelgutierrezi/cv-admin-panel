@@ -1,24 +1,26 @@
 <section class="dash">
   <div class="dash__grid" aria-hidden="true"></div>
 
-  <header class="dash__header">
-    <div class="dash__title-group">
-      <p class="dash__eyebrow">&gt; SHELL // MAIN</p>
-      <h1 class="dash__title">// 01 CONTENT TYPES</h1>
-    </div>
-  </header>
+  <div class="dash__top">
+    <header class="dash__header">
+      <div class="dash__title-group">
+        <p class="dash__eyebrow">&gt; SHELL // MAIN</p>
+        <h1 class="dash__title">// 01 CONTENT TYPES</h1>
+      </div>
+    </header>
 
-  <div class="dash__welcome">
-    <p>{{ welcomeLine() }}</p>
-    <button type="button" class="dash__ping" [disabled]="probing()" (click)="probeProxy()">
-      @if (probing()) {
-        Probando…
-      } @else if (probeOk()) {
-        Proxy OK
-      } @else {
-        Probar proxy
-      }
-    </button>
+    <div class="dash__welcome">
+      <p>{{ welcomeLine() }}</p>
+      <button type="button" class="dash__ping" [disabled]="probing()" (click)="probeProxy()">
+        @if (probing()) {
+          Probando…
+        } @else if (probeOk()) {
+          Proxy OK
+        } @else {
+          Probar proxy
+        }
+      </button>
+    </div>
   </div>
 
   @if (probeError(); as err) {

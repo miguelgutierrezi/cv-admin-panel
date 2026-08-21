@@ -186,7 +186,60 @@
   color: var(--ink);
 }
 
-@media (max-width: 1100px) and (min-width: 721px) {
+/* Tablet landscape — Figma 61:161 */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .shell__nav {
+    padding: 0 24px;
+    min-height: 64px;
+  }
+
+  .shell__bracket {
+    font-size: 15px;
+  }
+
+  .shell__handle {
+    font-size: 16px;
+  }
+
+  .shell__actions {
+    gap: 12px;
+  }
+
+  .shell__search {
+    width: 220px;
+    padding: 8px 12px;
+  }
+
+  .shell__search-prefix,
+  .shell__search input {
+    font-size: 12px;
+  }
+
+  .shell__logout {
+    padding: 8px 12px;
+  }
+
+  .shell__glow--left {
+    top: 150px;
+    left: -150px;
+    width: 450px;
+    height: 450px;
+    opacity: 0.05;
+    filter: blur(60px);
+  }
+
+  .shell__glow--right {
+    top: 350px;
+    right: -50px;
+    width: 500px;
+    height: 500px;
+    opacity: 0.04;
+    filter: blur(70px);
+  }
+}
+
+/* Tablet portrait — Figma 61:4 */
+@media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
   .shell__nav {
     padding: 0 24px;
     min-height: 72px;
@@ -207,16 +260,62 @@
 
 @media (max-width: 720px) {
   .shell__nav {
+    flex-wrap: nowrap;
+    gap: 12px;
+    min-height: 0;
     padding: 16px;
   }
 
-  .shell__search {
-    order: 3;
-    width: 100%;
+  .shell__brand {
+    gap: 4px;
+    padding-left: 0;
+  }
+
+  .shell__bracket {
+    font-size: 14px;
+  }
+
+  .shell__handle {
+    font-size: 15px;
   }
 
   .shell__actions {
-    width: 100%;
-    justify-content: flex-end;
+    flex-wrap: nowrap;
+    width: auto;
+    gap: 12px;
+  }
+
+  .shell__search {
+    display: none;
+  }
+
+  .shell__portfolio {
+    gap: 4px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .shell__portfolio img {
+    width: 12px;
+    height: 12px;
+  }
+
+  .shell__logout {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .shell__glow--left {
+    top: 40px;
+    left: -80px;
+    width: 250px;
+    height: 250px;
+    opacity: 0.06;
+    filter: blur(40px);
+  }
+
+  .shell__glow--right {
+    display: none;
   }
 }

@@ -12,7 +12,10 @@ Visual direction for the admin SPA. Source of truth: Figma file **Hoja de vida**
 ## Home / content types hub (`/`)
 
 - **Desktop:** `admin-dashboard-content-types` (`41:4`) — 3-column card grid.
+- **Tablet landscape:** `admin-dashboard-tablet-landscape` (`61:161`, ~1024) — 3 cols denser (gap 16), nav height 64, search 220px `grep type_name…`, title 22px, grid ~3%.
 - **Tablet portrait:** `admin-dashboard-tablet-portrait` (`61:4`, 768×1024) — 2×3 grid, denser type, search `grep…` @ 200px, nav padding `0 24px` / height 72.
+- **Mobile:** `admin-dashboard-mobile` (`61:315`, ~390) — single-column cards; navbar **sin search**; brand + Portfolio + **Exit**; title/welcome stacked (gap 12); featured border neon 1.5px.
+- Breakpoints use `orientation` so landscape vs portrait don’t collide.
 - Pattern: **dark top navbar** + **light main** (`#F8FAFC`) + subtle grid (desktop ~6%, tablet portrait ~4%).
 - Navbar (fiel a Figma): brand `[ handle ]` · search `$ grep…` · botón **Portfolio** (dark + arrow-up-right) · **Logout**.
 - Six cards → `/site`, `/profile`, `/projects`, `/experience`, `/courses`, `/navigation`.
