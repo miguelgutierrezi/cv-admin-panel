@@ -1,6 +1,7 @@
 /**
  * Development environment — public-safe config only.
  * Never put Sanity write tokens or private keys here.
+ * Firebase web apiKey is public by design.
  */
 export const environment = {
   production: false,
@@ -14,12 +15,21 @@ export const environment = {
     apiVersion: '2025-01-01',
   },
   /**
-   * Firebase web config is public by design.
-   * Fill when Phase 2 Auth is wired; leave empty until then.
+   * Firebase web app "CV Admin Panel" on project miguel-angel-gutierrez-ibague.
+   * Enable Email/Password in Console → Authentication → Sign-in method.
+   * Create the single author user under Authentication → Users.
    */
   firebase: {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
+    apiKey: 'AIzaSyBDXihse3r17dDBwqzZZuQp7RmCxe7mekY',
+    authDomain: 'miguel-angel-gutierrez-ibague.firebaseapp.com',
+    projectId: 'miguel-angel-gutierrez-ibague',
+    storageBucket: 'miguel-angel-gutierrez-ibague.firebasestorage.app',
+    messagingSenderId: '104464044983',
+    appId: '1:104464044983:web:32ae63da2d5a5270a80e32',
   },
+  /**
+   * Optional hard allow-list (single author). Empty = any Firebase Auth user.
+   * Set to your admin email after creating the user in Console.
+   */
+  allowedAdminEmail: '',
 };

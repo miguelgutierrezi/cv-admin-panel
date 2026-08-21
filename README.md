@@ -19,9 +19,12 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 1 scaffold — done** (Angular 22 shell on port **4300**). Next: Phase 2 Auth.
+**Phase 2 Auth — done.** Hosting + GitHub Actions for the **admin site** are wired (see [docs/deploy.md](docs/deploy.md)). Next product work: Phase 3 write proxy.
 
-Portfolio local Login already points here: `adminLoginUrl: 'http://localhost:4300'` in the CV `environment.ts`.
+Live admin site (when deployed): https://cv-admin-panel.web.app  
+CV site (unchanged): https://miguel-angel-gutierrez-ibague.web.app  
+
+Complete Console Auth steps in [docs/auth-setup.md](docs/auth-setup.md). Add GitHub secret `FIREBASE_SERVICE_ACCOUNT` for Actions deploy.
 
 ## Local development
 
@@ -41,7 +44,24 @@ Open `http://localhost:4300/`. The portfolio runs on `http://localhost:4200/` �
 | `npm run build` | Production build (**primary validation**) |
 | `npm run watch` | Rebuild on change (development configuration) |
 
-Do not put Sanity write tokens in `src/environments/`.
+## Deployment
+
+Same Firebase **project** as the CV, **different Hosting site** (`cv-admin-panel` → https://cv-admin-panel.web.app). Does not overwrite the portfolio.
+
+| Workflow | Trigger | Purpose |
+| --- | --- | --- |
+| `.github/workflows/ci.yml` | Push / PR to `main` | `npm ci` + `npm run build` |
+| `.github/workflows/deploy.yml` | Push to `main` (and manual) | Build + deploy live to admin site |
+| `.github/workflows/firebase-hosting-pull-request.yml` | PR to `main` | Build + preview channel |
+
+Required secret: `FIREBASE_SERVICE_ACCOUNT` (same project as the CV; can reuse that JSON). Details: [docs/deploy.md](docs/deploy.md).
+
+### Manual
+
+```bash
+npm run build
+npx firebase-tools deploy --only hosting:admin
+```
 
 ## Recommended stack (v1)
 
@@ -50,7 +70,7 @@ See **[docs/stack.md](docs/stack.md)**.
 | Layer | Choice |
 | --- | --- |
 | UI | Angular 22 + TypeScript + Sass (Node >= 24.15) |
-| Auth | Firebase Auth (email/password) — Phase 2 |
+| Auth | Firebase Auth email/password (**Phase 2 done**) |
 | Writes | Cloud Functions + `@sanity/client` — Phase 3 |
 | Hosting | Firebase Hosting (static SPA; secrets on Functions) |
 | CMS | Sanity `xm49cfca` / `production` |
@@ -66,6 +86,8 @@ See **[docs/stack.md](docs/stack.md)**.
 
 | Doc | Purpose |
 | --- | --- |
+| [docs/deploy.md](docs/deploy.md) | Hosting dual-site + GitHub Actions |
+| [docs/auth-setup.md](docs/auth-setup.md) | Firebase Auth Console steps (Phase 2) |
 | [docs/stack.md](docs/stack.md) | Recommended stack |
 | [docs/contract.md](docs/contract.md) | Non-negotiables, Sanity IDs |
 | [docs/architecture.md](docs/architecture.md) | System shape |
@@ -76,8 +98,8 @@ See **[docs/stack.md](docs/stack.md)**.
 
 0. Docs bootstrap + stack lock ← **done**  
 1. Angular scaffold + port 4300 + public-safe env ← **done**  
-2. Firebase Auth ← **next**  
-3. Cloud Functions write proxy  
+2. Firebase Auth ← **done**  
+3. Cloud Functions write proxy ← **next**  
 4. MVP screens: site, profile, projects  
 5. Slice 2: experience, courses, navigation  
 6. Polish, deploy, CORS, prod `adminLoginUrl`  

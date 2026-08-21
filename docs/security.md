@@ -60,6 +60,7 @@ See [stack.md](./stack.md) (“Clarification: Firebase Hosting ≠ write tokens 
 
 ## Related
 
+- [Auth setup](./auth-setup.md)
 - [Stack](./stack.md) — Firebase Auth + Cloud Functions as the default security shape
 - [Contract](./contract.md)
 - Portfolio `docs/cms-strategy.md` and `.cursor/rules/cms-security.mdc`

@@ -1,0 +1,25 @@
+<div class="shell">
+  <header class="shell__header">
+    <p class="shell__brand">{{ title }}</p>
+    <div class="shell__actions">
+      <span class="shell__user">{{ email() }}</span>
+      <a class="shell__link" [href]="portfolioUrl" rel="noopener noreferrer">Portfolio</a>
+      <button type="button" class="shell__logout" [disabled]="loggingOut()" (click)="logout()">
+        {{ loggingOut() ? 'Saliendo…' : 'Salir' }}
+      </button>
+    </div>
+  </header>
+
+  <main class="shell__main">
+    <h1>Editorial admin</h1>
+    <p>
+      Sesión iniciada. Las pantallas de edición (site, profile, projects) llegan en Phase 4;
+      el write proxy en Phase 3.
+    </p>
+    <ul>
+      <li>Sanity project: <code>{{ sanityProjectId }}</code></li>
+      <li>Dataset: <code>{{ dataset }}</code></li>
+      <li>Auth: Firebase email/password (Phase 2 ✓)</li>
+    </ul>
+  </main>
+</div>

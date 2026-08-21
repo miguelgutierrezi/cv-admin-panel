@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 1 scaffold done** — `npm start` on port **4300**. Next: Phase 2 Auth ([docs/roadmap.md](docs/roadmap.md)).
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 2 Auth done**; admin Hosting site https://cv-admin-panel.web.app (separate from CV Hosting). Next: Phase 3 write proxy. See [docs/deploy.md](docs/deploy.md), [docs/auth-setup.md](docs/auth-setup.md).
 
 ## Read first
 
@@ -42,6 +42,8 @@ Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling pub
 
 - `npm start` → `http://localhost:4300/`
 - `npm run build` — primary validation
+- `npx firebase-tools deploy --only hosting:admin` → https://cv-admin-panel.web.app
+- GitHub Actions need secret `FIREBASE_SERVICE_ACCOUNT` (same Firebase project as the CV)
 
 ## Agent documentation sync (mandatory)
 

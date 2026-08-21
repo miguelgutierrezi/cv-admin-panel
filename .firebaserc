@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "miguel-angel-gutierrez-ibague"
+  },
+  "targets": {
+    "miguel-angel-gutierrez-ibague": {
+      "hosting": {
+        "admin": [
+          "cv-admin-panel"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -4,7 +4,7 @@
 
 This repo is the **custom admin panel** for Miguel Gutiérrez’s portfolio CMS (Sanity). It is the authenticated **write** path. The public site is the sibling `miguelgutierrezi.github.io` and must remain CDN read-only with a local content fallback.
 
-Repo status: Phase 1 Angular scaffold done (`npm start` → **port 4300**). Next is Phase 2 Auth. Implementation order: `docs/roadmap.md`. Canonical agent entry: `AGENTS.md`. Stack: `docs/stack.md`.
+Repo status: Phase 2 Auth done; admin Hosting + GitHub Actions wired (https://cv-admin-panel.web.app — does not overwrite CV). Next is Phase 3 write proxy. See `docs/deploy.md`, `docs/auth-setup.md`. Canonical agent entry: `AGENTS.md`. Stack: `docs/stack.md`.
 
 ## Recommended stack (v1)
 
@@ -42,8 +42,8 @@ Repo status: Phase 1 Angular scaffold done (`npm start` → **port 4300**). Next
 
 1. Docs bootstrap + stack lock ✓
 2. Angular scaffold + port 4300 + public-safe env ✓
-3. Firebase Auth ← next
-4. Cloud Functions write proxy
+3. Firebase Auth ✓
+4. Cloud Functions write proxy ← next
 5. MVP screens: site, profile, projects
 6. Slice 2: experience, courses, navigation
 7. Polish, deploy, CORS, portfolio Login URL (prod)
@@ -54,6 +54,7 @@ Repo status: Phase 1 Angular scaffold done (`npm start` → **port 4300**). Next
 - `npm start` — `http://localhost:4300/`
 - `npm run build` — primary validation
 - Portfolio `environment.ts` already uses `adminLoginUrl: 'http://localhost:4300'`
+- Deploy: Hosting target `admin` → https://cv-admin-panel.web.app; secret `FIREBASE_SERVICE_ACCOUNT`
 
 ## Agent documentation sync (mandatory)
 

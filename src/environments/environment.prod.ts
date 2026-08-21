@@ -4,7 +4,7 @@
  */
 export const environment = {
   production: true,
-  portfolioUrl: 'https://miguelgutierrezi.github.io',
+  portfolioUrl: 'https://miguel-angel-gutierrez-ibague.web.app',
   /** Set to deployed Cloud Functions / proxy URL when Phase 3 ships. */
   proxyBaseUrl: '',
   sanity: {
@@ -13,8 +13,12 @@ export const environment = {
     apiVersion: '2025-01-01',
   },
   firebase: {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
+    apiKey: 'AIzaSyBDXihse3r17dDBwqzZZuQp7RmCxe7mekY',
+    authDomain: 'miguel-angel-gutierrez-ibague.firebaseapp.com',
+    projectId: 'miguel-angel-gutierrez-ibague',
+    storageBucket: 'miguel-angel-gutierrez-ibague.firebasestorage.app',
+    messagingSenderId: '104464044983',
+    appId: '1:104464044983:web:32ae63da2d5a5270a80e32',
   },
+  allowedAdminEmail: '',
 };

@@ -7,7 +7,7 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 1 scaffold **done** (Angular 22, puerto **4300**). Siguiente: Phase 2 Auth. Plan: `docs/roadmap.md`. Stack: `docs/stack.md`.
+Estado: Phase 2 Auth **done**; Hosting admin en https://cv-admin-panel.web.app (site aparte del CV) + workflows CI/deploy. Siguiente: Phase 3 write proxy. Docs: `docs/deploy.md`, `docs/auth-setup.md`.
 
 ## Leer primero
 
@@ -24,6 +24,7 @@ Estado: Phase 1 scaffold **done** (Angular 22, puerto **4300**). Siguiente: Phas
 - Firebase Hosting = SPA estática del admin (como el CV); **no** guarda write tokens. La regla del portfolio era “sin token en el bundle del cliente”, no “evitar Hosting”
 - Sanity `xm49cfca` / `production`; schemas solo en portfolio `studio/`
 - Dev: `npm start` → `http://localhost:4300/` (CV en `:4200`, Login → admin)
+- Deploy: target Hosting `admin` → https://cv-admin-panel.web.app (no pisa el CV). Secret Actions: `FIREBASE_SERVICE_ACCOUNT`
 
 ## No negociable
 
@@ -35,6 +36,6 @@ Estado: Phase 1 scaffold **done** (Angular 22, puerto **4300**). Siguiente: Phas
 
 ## Orden de trabajo
 
-Docs + stack ✓ → scaffold Angular `:4300` ✓ → Firebase Auth → Cloud Functions proxy → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
+Docs + stack ✓ → scaffold Angular `:4300` ✓ → Firebase Auth ✓ → Cloud Functions proxy → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
 
 Tras cualquier cambio, sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.

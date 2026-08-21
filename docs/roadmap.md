@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 1 scaffold **done** (Angular en **puerto 4300**). Siguiente: Phase 2 Auth.
+Estado del workspace: Phase 2 Auth **done** (login / guard / logout). Siguiente: Phase 3 write proxy. Activar Email/Password + usuario en Console — [auth-setup.md](./auth-setup.md).
 
 ## Objetivo de producto
 
@@ -38,21 +38,24 @@ Según [stack.md](./stack.md):
 - [x] `package.json` scripts (`start` → **port 4300**, `build`)
 - [x] `environment`: `sanity` (`xm49cfca` / `production` / `apiVersion`), `proxyBaseUrl`, Firebase web placeholders, `portfolioUrl`
 - [x] Shell mínimo de la app (sin write token)
-- [ ] Esqueleto Firebase (`firebase.json`, Hosting target) — con Auth/Functions
-- [ ] CI mínimo: `npm ci` + `npm run build` (GitHub Actions)
+- [x] Esqueleto Firebase (`firebase.json`, Hosting target `admin` → site `cv-admin-panel`)
+- [x] CI: `npm ci` + `npm run build` (GitHub Actions)
+- [x] Deploy live + preview workflows (requiere secret `FIREBASE_SERVICE_ACCOUNT`)
 
 **Done when:** `npm run build` pasa — **sí**. Integración local: CV `:4200` Login → admin `:4300`.
 
-### Phase 2: Auth — **siguiente**
+### Phase 2: Auth — **done**
 
-- [ ] Firebase Auth email/password (single-user)
-- [ ] Login screen + session persistence
-- [ ] Route guard: sin sesión no hay pantallas de edición
-- [ ] Logout
+- [x] Firebase Auth email/password (single-user) + web app en proyecto `miguel-angel-gutierrez-ibague`
+- [x] Login screen (`/login`) + session persistence (`onAuthStateChanged`)
+- [x] Route guard: sin sesión → `/login`; guest en login si ya hay sesión
+- [x] Logout en shell home
+- [x] `AuthService.getIdToken()` listo para Phase 3
+- [x] Guía: [auth-setup.md](./auth-setup.md) (habilitar Email/Password + crear usuario en Console)
 
-**Done when:** rutas protegidas redirigen a login; sesión válida permite navegar el shell.
+**Done when:** rutas protegidas redirigen a login; sesión válida permite navegar el shell — **sí** (tras activar provider + usuario en Console).
 
-### Phase 3: Write proxy
+### Phase 3: Write proxy — **siguiente**
 
 - [ ] Firebase Cloud Functions 2nd gen (`@sanity/client` + `SANITY_WRITE_TOKEN`)
 - [ ] Verificar Firebase ID token antes de mutar
@@ -100,8 +103,8 @@ Según [stack.md](./stack.md):
 
 1. Phase 0 ✓ — stack fijada en [stack.md](./stack.md).
 2. Phase 1 ✓ — scaffold Angular en **puerto 4300** (CV Login local → este admin).
-3. Phase 2 Firebase Auth gate — **siguiente**.
-4. Phase 3 Cloud Functions proxy (bloqueante para cualquier mutate real).
+3. Phase 2 ✓ — Firebase Auth gate ([auth-setup.md](./auth-setup.md)).
+4. Phase 3 Cloud Functions proxy — **siguiente**.
 5. Phase 4 MVP → Phase 5 slice 2 → Phase 6 go-live.
 6. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
 
@@ -121,6 +124,8 @@ Según [stack.md](./stack.md):
 | Doc | Por qué |
 | --- | --- |
 | [stack.md](./stack.md) | Stack recomendada y camino bloqueado |
+| [deploy.md](./deploy.md) | Dos sites Hosting + GitHub Actions |
+| [auth-setup.md](./auth-setup.md) | Email/Password + usuario |
 | [contract.md](./contract.md) | Non-negotiables locales |
 | [architecture.md](./architecture.md) | Forma del sistema |
 | [security.md](./security.md) | Tokens y auth |

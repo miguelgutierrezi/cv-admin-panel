@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 1 scaffold done** (Angular 22, `npm start` → port **4300**). Follow [docs/roadmap.md](docs/roadmap.md); next is Phase 2 Auth.
+Current repo state: **Phase 2 Auth done** + **admin Hosting/CI wired** (site https://cv-admin-panel.web.app; does not overwrite CV). Next: Phase 3 write proxy. See [docs/deploy.md](docs/deploy.md), [docs/auth-setup.md](docs/auth-setup.md).
 
 ## Contract (read first)
 
@@ -39,12 +39,14 @@ See [docs/stack.md](docs/stack.md) for the full table. Default choices:
 
 - `nvm use` → `npm install` → `npm start` — dev server at **`http://localhost:4300/`**
 - `npm run build` — production build (**primary validation**)
+- Deploy admin Hosting: `npx firebase-tools deploy --only hosting:admin` → https://cv-admin-panel.web.app
+- CI/CD: `.github/workflows/` (ci, deploy, PR preview). Secret: `FIREBASE_SERVICE_ACCOUNT`. Details: `docs/deploy.md`
 - Portfolio local Login → this app via `adminLoginUrl: 'http://localhost:4300'`
 - Do not invent lint/test CI gates until a real suite exists (same policy as the portfolio).
 - Do **not** run `npm test` as a routine gate unless the user asks.
 ## Working style
 
-- Execute roadmap phases in order: docs → scaffold → auth → proxy → MVP screens → slice 2 → polish/go-live.
+- Execute roadmap phases in order: docs → scaffold → auth ✓ → **proxy** → MVP screens → slice 2 → polish/go-live.
 - Treat [docs/stack.md](docs/stack.md) as the default toolchain; do not silently switch stacks.
 - Prefer surgical changes that match documented architecture.
 - When changing content types, update portfolio schemas/studio first (or with the user); do not invent fields only in the admin.
