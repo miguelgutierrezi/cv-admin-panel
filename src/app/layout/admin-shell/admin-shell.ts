@@ -24,6 +24,10 @@ export class AdminShell implements OnInit, OnDestroy {
   readonly searchPlaceholder = signal('grep type_name...');
   readonly logoutLabel = signal('Logout');
   readonly searchWide = signal(false);
+  /** Tablet landscape Experiences list — Figma 72:341 @ 280px */
+  readonly searchXl = signal(false);
+  /** Tablet landscape Experience form — Figma 72:455 @ 260px */
+  readonly searchMd = signal(false);
   readonly searchAriaLabel = signal('Filtrar content types');
 
   private mediaQuery: MediaQueryList | null = null;
@@ -87,37 +91,49 @@ export class AdminShell implements OnInit, OnDestroy {
     const tabletPortrait = window.matchMedia(
       '(max-width: 1100px) and (min-width: 721px) and (orientation: portrait)',
     ).matches;
+    const tabletLandscape = window.matchMedia(
+      '(max-width: 1280px) and (min-width: 900px) and (orientation: landscape)',
+    ).matches;
+    const onProjectsList = path === '/projects';
+    const onProjectForm = path.startsWith('/projects/');
     const onCoursesList = path === '/courses';
     const onCoursesForm = path.startsWith('/courses/');
-    const onExperience = path === '/experience' || path.startsWith('/experience/');
-    const onProjects = path === '/projects' || path.startsWith('/projects/');
+    const onExperienceList = path === '/experience';
+    const onExperienceForm = path.startsWith('/experience/');
+    const onSite = path === '/site' || path.startsWith('/site/');
+    const onProfile = path === '/profile' || path.startsWith('/profile/');
     const onNavigation = path === '/navigation' || path.startsWith('/navigation/');
     const onHome = path === '/' || path === '';
 
     this.logoutLabel.set(mobile ? 'Exit' : 'Logout');
     this.searchWide.set(false);
+    this.searchXl.set(false);
+    this.searchMd.set(false);
 
-    if (onNavigation || onCoursesForm) {
+    if (onSite || onProfile || onNavigation || onCoursesForm || onProjectForm) {
+      this.searchWide.set((onCoursesForm || onNavigation) && tabletLandscape);
       this.searchPlaceholder.set('grep config_key...');
-      this.searchAriaLabel.set(
-        onNavigation ? 'Filtrar navigation' : 'Filtrar campos del course',
-      );
+      this.searchAriaLabel.set('Filtrar campos de configuración');
       return;
     }
 
     if (onCoursesList) {
+      this.searchWide.set(tabletLandscape);
       this.searchPlaceholder.set('grep courses...');
       this.searchAriaLabel.set('Filtrar courses');
       return;
     }
 
-    if (onExperience) {
+    if (onExperienceList || onExperienceForm) {
+      this.searchXl.set(onExperienceList && tabletLandscape);
+      this.searchMd.set(onExperienceForm && tabletLandscape);
       this.searchPlaceholder.set('grep experience...');
       this.searchAriaLabel.set('Filtrar experiences');
       return;
     }
 
-    if (onProjects) {
+    if (onProjectsList) {
+      this.searchWide.set(tabletLandscape);
       this.searchPlaceholder.set('grep project_name...');
       this.searchAriaLabel.set('Filtrar projects');
       return;

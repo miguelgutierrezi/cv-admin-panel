@@ -1,14 +1,23 @@
 <section class="edit list-page">
   <div class="edit__title-bar">
     <nav class="edit__crumb" aria-label="Breadcrumb">
-      <a routerLink="/">&lt;- Content Types</a>
-      <span class="edit__crumb-sep" aria-hidden="true">/</span>
-      <span class="edit__crumb-current">Projects</span>
+      @if (totalCount() === 0) {
+        <a class="edit__crumb-link" routerLink="/">&lt;- Content Types</a>
+        <span class="edit__crumb-sep" aria-hidden="true">/</span>
+        <span class="edit__crumb-muted">Projects</span>
+      } @else {
+        <a routerLink="/">&lt;- Content Types</a>
+        <span class="edit__crumb-sep" aria-hidden="true">/</span>
+        <span class="edit__crumb-current">Projects</span>
+      }
     </nav>
 
     <div class="edit__head">
       <div class="edit__titles">
-        <p class="edit__eyebrow">
+        <p
+          class="edit__eyebrow"
+          [class.edit__eyebrow--muted]="totalCount() === 0"
+        >
           &gt; LIST_VIEW · {{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}
         </p>
         <h1 class="edit__title">// Projects</h1>
@@ -51,7 +60,12 @@
       <div class="proj-table__head" role="row">
         <div class="proj-table__left" role="columnheader">
           <span class="proj-table__col-order"># ORDER</span>
-          <span>PROJECT SCHEMATICS &amp; IDENTIFIER</span>
+          <span class="proj-table__col-details proj-table__col-details--desktop">
+            PROJECT SCHEMATICS &amp; IDENTIFIER
+          </span>
+          <span class="proj-table__col-details proj-table__col-details--tablet">
+            PROJECT SCREENSHOTS &amp; DESCRIPTION
+          </span>
         </div>
         <div class="proj-table__right" role="columnheader">
           <span class="proj-table__col-status">STATUS</span>

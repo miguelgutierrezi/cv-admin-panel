@@ -113,6 +113,14 @@
   width: 320px;
 }
 
+.shell__search--xl {
+  width: 280px;
+}
+
+.shell__search--md {
+  width: 260px;
+}
+
 .shell__search-prefix {
   color: var(--ink);
   font-family: 'Geist Mono', ui-monospace, monospace;
@@ -228,6 +236,18 @@
     padding: 8px 12px;
   }
 
+  .shell__search--wide {
+    width: 240px;
+  }
+
+  .shell__search--xl {
+    width: 280px;
+  }
+
+  .shell__search--md {
+    width: 260px;
+  }
+
   .shell__search-prefix,
   .shell__search input {
     font-size: 12px;
@@ -235,6 +255,11 @@
 
   .shell__logout {
     padding: 8px 12px;
+  }
+
+  .shell__portfolio {
+    padding: 8px 10px;
+    font-size: 13px;
   }
 
   .shell__glow--left {

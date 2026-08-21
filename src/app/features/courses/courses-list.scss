@@ -77,7 +77,68 @@
   color: var(--dim);
 }
 
-@media (max-width: 1100px) {
+/* Tablet landscape — Figma 72:537 (empty) + 72:580 (populated), ~1024 */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    gap: 24px;
+    padding: 32px 24px 0;
+  }
+
+  .edit:has(.list-empty) {
+    gap: 20px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title-bar {
+    gap: 16px;
+  }
+
+  .edit:has(.list-empty) .edit__title-bar {
+    gap: 12px;
+  }
+
+  .list-empty {
+    padding: 80px 40px;
+  }
+
+  .list-empty__title {
+    font-size: 18px;
+  }
+
+  .data-table__col-details,
+  .data-table__titles--course {
+    width: 280px;
+    max-width: 280px;
+  }
+
+  .data-table__col-institution,
+  .data-table__institution {
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .data-table__titles span {
+    font-size: 13px;
+  }
+
+  .status-badge {
+    font-size: 13px;
+  }
+
+  .data-table__row:hover,
+  .data-table__row:focus-within {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 12px 24px;
+    min-height: 44px;
+  }
+}
+
+/* Tablet portrait / narrow — shrink columns (not landscape table) */
+@media (max-width: 1100px) and (orientation: portrait) {
   .data-table__col-details,
   .data-table__titles--course,
   .data-table__col-institution,

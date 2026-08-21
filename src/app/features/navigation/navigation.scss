@@ -132,6 +132,32 @@
   background: rgba(239, 68, 68, 0.06);
 }
 
+/* Tablet landscape — Figma admin-navigation-tablet-landscape (73:4, ~1024) */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    gap: 24px;
+    padding: 32px 32px 0;
+  }
+
+  .nav-items {
+    gap: 24px;
+  }
+
+  .field-row {
+    gap: 16px;
+  }
+
+  .field__label {
+    font-size: 13px;
+  }
+
+  .edit__footer {
+    margin-inline: -32px;
+    padding: 12px 40px;
+    min-height: 44px;
+  }
+}
+
 @media (max-width: 900px) {
   .field-row {
     grid-template-columns: 1fr;

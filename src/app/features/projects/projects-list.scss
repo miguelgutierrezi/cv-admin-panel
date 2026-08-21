@@ -8,6 +8,17 @@
   text-decoration: none;
 }
 
+.edit__crumb-link {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.edit__eyebrow--muted {
+  color: var(--dim);
+  font-weight: 500;
+}
+
 .list-empty {
   display: flex;
   flex-direction: column;
@@ -116,6 +127,10 @@
 .proj-table__col-order {
   width: 50px;
   flex-shrink: 0;
+}
+
+.proj-table__col-details--tablet {
+  display: none;
 }
 
 .proj-table__col-status {
@@ -229,6 +244,57 @@
 .proj-table__icon-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    padding: 32px 24px 0;
+  }
+
+  .list-page__new {
+    padding: 12px 18px;
+  }
+
+  .list-empty {
+    padding: 100px 40px;
+  }
+
+  .list-empty__title {
+    font-size: 18px;
+  }
+
+  .proj-table__col-details--desktop {
+    display: none;
+  }
+
+  .proj-table__col-details--tablet {
+    display: inline;
+  }
+
+  .proj-table__left,
+  .proj-table__info {
+    gap: 16px;
+  }
+
+  .proj-table__titles span {
+    font-size: 13px;
+  }
+
+  .proj-table__row:hover,
+  .proj-table__row:focus-within {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .proj-table__icon-btn:hover:not(:disabled),
+  .proj-table__icon-btn:focus-visible {
+    background: #fff;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 12px 24px;
+    min-height: 40px;
+  }
 }
 
 @media (max-width: 900px) {

@@ -433,7 +433,8 @@
   color: var(--slate);
 }
 
-@media (max-width: 1100px) {
+/* Stack panels on portrait tablet / narrow — landscape keeps 2 cols (Site Settings 62:205) */
+@media (max-width: 899px), ((max-width: 1100px) and (orientation: portrait)) {
   .edit__panels {
     grid-template-columns: 1fr;
   }

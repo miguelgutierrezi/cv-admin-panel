@@ -1,14 +1,20 @@
 <section class="edit list-page">
   <div class="edit__title-bar">
     <nav class="edit__crumb" aria-label="Breadcrumb">
-      <a routerLink="/">&lt;- Content Types</a>
-      <span class="edit__crumb-sep" aria-hidden="true">/</span>
-      <span class="edit__crumb-current">Courses</span>
+      @if (totalCount() === 0) {
+        <a class="edit__crumb-link" routerLink="/">&lt;- Content Types</a>
+        <span class="edit__crumb-sep" aria-hidden="true">/</span>
+        <span class="edit__crumb-muted">Courses</span>
+      } @else {
+        <a routerLink="/">&lt;- Content Types</a>
+        <span class="edit__crumb-sep" aria-hidden="true">/</span>
+        <span class="edit__crumb-current">Courses</span>
+      }
     </nav>
 
     <div class="edit__head">
       <div class="edit__titles">
-        <p class="edit__eyebrow">
+        <p class="edit__eyebrow" [class.edit__eyebrow--muted]="totalCount() === 0">
           &gt; LIST_VIEW · {{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}
         </p>
         <h1 class="edit__title">// Courses</h1>

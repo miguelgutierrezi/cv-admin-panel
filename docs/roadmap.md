@@ -107,9 +107,21 @@ Según [stack.md](./stack.md):
 - [x] Courses list populated desktop Figma (`66:48`)
 - [x] Course form desktop Figma (`66:152`)
 - [x] Navigation desktop Figma (`66:362`)
+- [x] Site Settings tablet landscape Figma (`62:205`)
+- [x] Profile tablet landscape Figma (`68:4`)
+- [x] Projects list empty tablet landscape Figma (`72:4`)
+- [x] Projects list populated tablet landscape Figma (`72:47`)
+- [x] Project form tablet landscape Figma (`72:135`)
+- [x] Experiences list empty tablet landscape Figma (`72:341`)
+- [x] Experiences list populated tablet landscape Figma (`72:382`)
+- [x] Experience form tablet landscape Figma (`72:455`)
+- [x] Courses list empty tablet landscape Figma (`72:537`)
+- [x] Courses list populated tablet landscape Figma (`72:580`)
+- [x] Course form tablet landscape Figma (`72:674`)
+- [x] Navigation tablet landscape Figma (`73:4`)
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
-- [ ] (Siguiente UI) shell search contextual ampliado / polish residual
+- [ ] (Siguiente UI) otras pantallas tablet+mobile Figma
 - [ ] (Later) tests + lint → CI
 
 **Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN — **código/docs listos**; falta confirmación operador CORS + deploy CV.

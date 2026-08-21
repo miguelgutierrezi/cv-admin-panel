@@ -1,1 +1,43 @@
 @use '../../../styles/list';
+
+/* Tablet landscape — Figma 72:341 (empty) + 72:382 (populated), ~1024 */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    padding: 32px 32px 0;
+  }
+
+  .list-empty {
+    padding: 100px 40px;
+  }
+
+  .list-empty__title {
+    font-size: 18px;
+  }
+
+  .data-table__left,
+  .data-table__info {
+    gap: 16px;
+  }
+
+  .data-table__col-status,
+  .data-table__role {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+  }
+
+  .data-table__titles span {
+    font-size: 13px;
+  }
+
+  .data-table__row:hover,
+  .data-table__row:focus-within {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .edit__footer {
+    margin-inline: -32px;
+    padding: 12px 32px;
+    min-height: 40px;
+  }
+}

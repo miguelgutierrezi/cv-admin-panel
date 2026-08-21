@@ -6,6 +6,12 @@
   gap: 32px;
 }
 
+.edit__mid-split {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
 .edit__panels--single {
   grid-template-columns: 1fr;
 }
@@ -107,6 +113,69 @@
 .field-row--order .field--order {
   width: 180px;
   flex: 0 0 180px;
+}
+
+/* Tablet landscape — Figma admin-project-detail-tablet-landscape (72:135, ~1024) */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    gap: 24px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title {
+    font-size: 26px;
+  }
+
+  .edit__eyebrow {
+    font-size: 12px;
+  }
+
+  .edit__stack {
+    gap: 24px;
+  }
+
+  .edit__mid-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .panel--general {
+    gap: 20px;
+  }
+
+  .panel--detail {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .panel--detail .panel__title,
+  .panel--features .panel__title {
+    font-size: 16px;
+  }
+
+  .panel--detail .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .panel--general .field-row {
+    gap: 20px;
+  }
+
+  .panel--general .field__control--mid {
+    min-height: 80px;
+  }
+
+  .field__label {
+    font-size: 12px;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 0 24px;
+    min-height: 40px;
+  }
 }
 
 @media (max-width: 720px) {

@@ -188,6 +188,8 @@ export const sanityWrite = onCall(
       'http://localhost:4300',
       'https://cv-admin-panel.web.app',
       'https://cv-admin-panel.firebaseapp.com',
+      // LAN / phone local: add e.g. 'http://192.168.1.10:4300' then redeploy functions.
+      // See docs/go-live.md § Mobile / LAN.
     ],
   },
   async (request) => {

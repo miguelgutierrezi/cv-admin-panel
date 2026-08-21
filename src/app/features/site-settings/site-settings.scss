@@ -1,1 +1,95 @@
 @use '../../../styles/edit';
+
+/* Tablet landscape — Figma admin-site-settings-tablet-landscape (62:205, ~1024) */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit {
+    gap: 20px;
+    padding: 24px 24px 0;
+  }
+
+  .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__eyebrow {
+    margin-bottom: 2px;
+    font-size: 11px;
+  }
+
+  .edit__title {
+    font-size: 24px;
+  }
+
+  .edit__actions {
+    gap: 10px;
+  }
+
+  .edit__btn--ghost {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .edit__btn--save {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .edit__btn--add {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .edit__status {
+    padding: 10px 14px;
+  }
+
+  .edit__status p {
+    font-size: 12px;
+  }
+
+  .edit__panels {
+    gap: 20px;
+  }
+
+  .panel {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .panel--stack {
+    gap: 16px;
+  }
+
+  .panel__title {
+    font-size: 16px;
+  }
+
+  .item-stack {
+    gap: 16px;
+  }
+
+  .item__body {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .field-row {
+    gap: 12px;
+  }
+
+  .field__control input,
+  .field__control textarea {
+    font-size: 13px;
+  }
+
+  .edit__footer {
+    margin-inline: -24px;
+    padding: 0 24px;
+    min-height: 40px;
+    background: var(--surface);
+  }
+}

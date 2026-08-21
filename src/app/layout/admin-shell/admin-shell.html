@@ -10,7 +10,12 @@
     </a>
 
     <div class="shell__actions">
-      <label class="shell__search" [class.shell__search--wide]="searchWide()">
+      <label
+        class="shell__search"
+        [class.shell__search--wide]="searchWide()"
+        [class.shell__search--xl]="searchXl()"
+        [class.shell__search--md]="searchMd()"
+      >
         <span class="shell__search-prefix" aria-hidden="true">$</span>
         <input
           type="search"

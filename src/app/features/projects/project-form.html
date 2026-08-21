@@ -45,7 +45,7 @@
   } @else {
     <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
       <div class="edit__stack">
-        <section class="panel">
+        <section class="panel panel--general">
           <header class="panel__head">
             <p class="panel__kicker"># SECTION_01</p>
             <h2 class="panel__title">General Info</h2>
@@ -156,7 +156,8 @@
           </div>
         </section>
 
-        <section class="panel">
+        <div class="edit__mid-split">
+        <section class="panel panel--detail">
           <header class="panel__head">
             <p class="panel__kicker"># SECTION_02</p>
             <h2 class="panel__title">Detail (obligatorio)</h2>
@@ -257,57 +258,10 @@
           </div>
         </section>
 
-        <section class="panel panel--stack" formArrayName="body">
+        <section class="panel panel--stack panel--features" formArrayName="features">
           <header class="panel__head panel__head--row">
             <div>
               <p class="panel__kicker"># SECTION_03</p>
-              <h2 class="panel__title">Body paragraphs</h2>
-            </div>
-            <button type="button" class="edit__btn edit__btn--add" (click)="addBody()">
-              + Añadir
-            </button>
-          </header>
-          <hr class="panel__rule" />
-
-          <div class="item-stack">
-            @for (group of body.controls; track $index; let i = $index) {
-              <article class="item" [formGroupName]="i">
-                <header class="item__chrome">
-                  <span class="item__dots" aria-hidden="true">
-                    <i class="item__dot item__dot--red"></i>
-                    <i class="item__dot item__dot--yellow"></i>
-                    <i class="item__dot item__dot--green"></i>
-                  </span>
-                  <span class="item__chrome-label">{{ bodyChromeLabel(i) }}</span>
-                </header>
-                <div class="item__body">
-                  <label class="field">
-                    <span class="field__label">$ ES</span>
-                    <span class="field__control field__control--textarea field__control--mid">
-                      <span class="field__prompt" aria-hidden="true">&gt;</span>
-                      <textarea formControlName="es" rows="2"></textarea>
-                    </span>
-                  </label>
-                  <label class="field">
-                    <span class="field__label">$ EN</span>
-                    <span class="field__control field__control--textarea field__control--mid">
-                      <span class="field__prompt" aria-hidden="true">&gt;</span>
-                      <textarea formControlName="en" rows="2"></textarea>
-                    </span>
-                  </label>
-                  <button type="button" class="item__remove" (click)="removeBody(i)">
-                    [x] Quitar
-                  </button>
-                </div>
-              </article>
-            }
-          </div>
-        </section>
-
-        <section class="panel panel--stack" formArrayName="features">
-          <header class="panel__head panel__head--row">
-            <div>
-              <p class="panel__kicker"># SECTION_04</p>
               <h2 class="panel__title">Features</h2>
             </div>
             <button type="button" class="edit__btn edit__btn--add" (click)="addFeature()">
@@ -390,7 +344,57 @@
           </div>
         </section>
 
-        <section class="panel panel--stack" formArrayName="gallery">
+        </div>
+
+        <section class="panel panel--stack panel--body" formArrayName="body">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_04</p>
+              <h2 class="panel__title">Body paragraphs</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addBody()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of body.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ bodyChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <label class="field">
+                    <span class="field__label">$ ES</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="es" rows="2"></textarea>
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">$ EN</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="en" rows="2"></textarea>
+                    </span>
+                  </label>
+                  <button type="button" class="item__remove" (click)="removeBody(i)">
+                    [x] Quitar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+
+        <section class="panel panel--stack panel--gallery" formArrayName="gallery">
           <header class="panel__head panel__head--row">
             <div>
               <p class="panel__kicker"># SECTION_05</p>
