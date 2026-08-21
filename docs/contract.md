@@ -84,5 +84,6 @@ Seed reference: `miguelgutierrezi.github.io/studio/seed/slice1-documents.md`, `s
 
 - [Recommended stack](./stack.md)
 - [Architecture](./architecture.md)
+- [UI](./ui.md)
 - [Security](./security.md)
 - [Roadmap](./roadmap.md)

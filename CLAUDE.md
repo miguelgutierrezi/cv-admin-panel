@@ -6,14 +6,14 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** (validators + go-live docs; prod Login URL set in CV `environment.prod.ts`). Next: Phase 7 when asked.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** + **login UI Figma** (desktop / tablet L/P / mobile — `docs/ui.md`). Next: Phase 7 when asked; editorial Figma when ready.
 
 ## Read first
 
 - [docs/contract.md](docs/contract.md)
 - Portfolio [admin-app-brief.md](../miguelgutierrezi.github.io/docs/admin-app-brief.md)
 - [docs/stack.md](docs/stack.md) — **recommended stack (locked for v1)**
-- [docs/architecture.md](docs/architecture.md), [docs/security.md](docs/security.md)
+- [docs/architecture.md](docs/architecture.md), [docs/security.md](docs/security.md), [docs/ui.md](docs/ui.md)
 
 ## Recommended stack
 

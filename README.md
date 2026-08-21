@@ -19,7 +19,7 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 6 polish + go-live — done** (validators, prod `adminLoginUrl`, [docs/go-live.md](docs/go-live.md)). Next: Phase 7 (tests/lint) when needed. Operator: Sanity CORS + redeploy CV for Login in prod.
+**Phase 6 polish + go-live — done** (validators, prod `adminLoginUrl`, [docs/go-live.md](docs/go-live.md)). **Login UI** follows Figma (desktop + tablet L/P + mobile) — [docs/ui.md](docs/ui.md). Next: Phase 7 (tests/lint) when needed; editorial screens Figma when ready. Operator: Sanity CORS + redeploy CV for Login in prod.
 
 If CDN reads fail in the admin, add CORS origins in Sanity Manage: `http://localhost:4300` and `https://cv-admin-panel.web.app`.
 
@@ -86,6 +86,7 @@ See **[docs/stack.md](docs/stack.md)**.
 
 | Doc | Purpose |
 | --- | --- |
+| [docs/ui.md](docs/ui.md) | Login Figma / visual direction |
 | [docs/go-live.md](docs/go-live.md) | Phase 6: CORS, Auth domains, smoke |
 | [docs/proxy-setup.md](docs/proxy-setup.md) | Sanity write proxy + secrets (Phase 3) |
 | [docs/deploy.md](docs/deploy.md) | Hosting dual-site + GitHub Actions |

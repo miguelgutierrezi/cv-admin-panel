@@ -7,13 +7,13 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 6 polish + go-live **done**. Siguiente: Phase 7 cuando se pida. Hosting: https://cv-admin-panel.web.app. CORS Sanity: ver `docs/go-live.md` (`localhost:4300` + `cv-admin-panel.web.app`).
+Estado: Phase 6 polish + go-live **done**; login Figma (desktop + tablet L/P + mobile) **done** — `docs/ui.md`. Siguiente: Phase 7 cuando se pida; pantallas editoriales Figma cuando existan. Hosting: https://cv-admin-panel.web.app. CORS Sanity: ver `docs/go-live.md`.
 
 ## Leer primero
 
 - `docs/stack.md` — stack v1 bloqueada
 - `docs/contract.md` y el brief del portfolio `docs/admin-app-brief.md`
-- `docs/architecture.md`, `docs/security.md`
+- `docs/architecture.md`, `docs/security.md`, `docs/ui.md`, `docs/go-live.md`
 - Entrada de agentes: `AGENTS.md`
 
 ## Stack recomendada (v1)
@@ -36,6 +36,6 @@ Estado: Phase 6 polish + go-live **done**. Siguiente: Phase 7 cuando se pida. Ho
 
 ## Orden de trabajo
 
-Docs + stack ✓ → scaffold ✓ → Auth ✓ → Cloud Functions proxy ✓ → pantallas MVP → slice 2 → polish/CORS/`adminLoginUrl`
+Docs + stack ✓ → scaffold ✓ → Auth ✓ → Cloud Functions proxy ✓ → pantallas MVP ✓ → slice 2 ✓ → polish/CORS/`adminLoginUrl` ✓ → login Figma ✓ → Phase 7 / Figma editorial cuando se pida
 
-Tras cualquier cambio, sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.
+Tras cualquier cambio (código o UI), sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.

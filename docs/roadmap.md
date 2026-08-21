@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 6 polish + go-live **done** (validadores, `adminLoginUrl` prod, guía CORS). Siguiente: Phase 7 (tests/lint) cuando se pida. Operador: confirmar CORS en Sanity Manage + redeploy CV.
+Estado del workspace: Phase 6 polish + go-live **done**; login UI Figma (desktop + tablet L/P + mobile) **done**. Siguiente: Phase 7 (tests/lint) cuando se pida; Figma del shell/content light cuando exista. Operador: CORS Sanity + redeploy CV.
 
 ## Objetivo de producto
 
@@ -93,8 +93,10 @@ Según [stack.md](./stack.md):
 - [x] Helpers en `src/app/shared/cms-validators.ts` + hints en forms
 - [x] `adminLoginUrl` prod en portfolio → `https://cv-admin-panel.web.app`
 - [x] Guía [go-live.md](./go-live.md) (CORS Sanity, Auth domains, smoke)
+- [x] Login UI Figma (desktop + tablet landscape + tablet portrait + mobile) — ver [ui.md](./ui.md)
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
+- [ ] (Siguiente UI) shell + pantallas editoriales light alineadas a Figma/tokens CV
 
 **Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN — **código/docs listos**; falta confirmación operador CORS + deploy CV.
 
@@ -132,6 +134,7 @@ Según [stack.md](./stack.md):
 | Doc | Por qué |
 | --- | --- |
 | [stack.md](./stack.md) | Stack recomendada y camino bloqueado |
+| [ui.md](./ui.md) | Login Figma / dirección visual |
 | [deploy.md](./deploy.md) | Dos sites Hosting + GitHub Actions |
 | [auth-setup.md](./auth-setup.md) | Email/Password + usuario |
 | [contract.md](./contract.md) | Non-negotiables locales |

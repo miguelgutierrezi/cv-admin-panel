@@ -372,7 +372,8 @@
   text-decoration: underline;
 }
 
-@media (max-width: 1100px) {
+/* Tablet landscape — Figma admin-login-tablet-landscape (1024×768), denser card */
+@media (max-width: 1100px) and (orientation: landscape) {
   .login {
     padding: 1.5rem 1.25rem 2.5rem;
   }
@@ -425,13 +426,205 @@
   }
 }
 
-@media (max-width: 480px) {
+/* Tablet portrait — Figma admin-login-tablet-portrait (768×1024): desktop card spacing, softer glow */
+@media (max-width: 900px) and (min-width: 481px) and (orientation: portrait) {
+  .login {
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .login__glow {
+    width: min(500px, 90vw);
+    height: min(500px, 90vw);
+    opacity: 0.08;
+  }
+
+  .login__grid {
+    opacity: 0.15;
+  }
+
+  /* Card internals match desktop (40 / 28 / 20 / 14) — do not compact */
   .login__body {
-    padding: 28px 20px;
-    gap: 22px;
+    gap: 28px;
+    padding: 40px;
+  }
+
+  .login__title-block {
+    gap: 10px;
+  }
+
+  .login__prompt {
+    font-size: 13px;
+  }
+
+  .login__form {
+    gap: 20px;
+  }
+
+  .login__actions {
+    gap: 16px;
+  }
+
+  .login__label-row {
+    font-size: 11px;
+  }
+
+  .login__input-wrap {
+    padding: 14px;
+  }
+
+  .login__submit {
+    padding: 14px;
+  }
+}
+
+/* Mobile — Figma admin-login-mobile (390×844): full-bleed card, compact type */
+@media (max-width: 480px) {
+  .login {
+    gap: 0;
+    padding: 0 16px 24px;
+    justify-content: center;
+  }
+
+  .login__glow {
+    width: min(320px, 82vw);
+    height: min(320px, 82vw);
+    opacity: 0.08;
+    filter: blur(45px);
+  }
+
+  .login__grid {
+    opacity: 0.12;
+  }
+
+  .login__card {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.69);
+  }
+
+  .login__terminal {
+    padding: 12px 14px;
+  }
+
+  .login__dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .login__dots {
+    gap: 6px;
+  }
+
+  .login__terminal-title {
+    font-size: 10px;
+    gap: 5px;
+  }
+
+  .login__terminal-title img {
+    width: 11px;
+    height: 11px;
   }
 
   .login__terminal-title span {
-    max-width: 9rem;
+    max-width: 8.5rem;
+  }
+
+  .login__badge {
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
+  .login__body {
+    gap: 24px;
+    padding: 28px 24px;
+  }
+
+  .login__title-block {
+    gap: 8px;
+  }
+
+  .login__brand-bracket {
+    font-size: 15px;
+  }
+
+  .login__brand-name {
+    font-size: 18px;
+  }
+
+  .login__prompt {
+    font-size: 11px;
+  }
+
+  .login__form {
+    gap: 16px;
+  }
+
+  .login__field {
+    gap: 6px;
+  }
+
+  .login__label-row {
+    font-size: 10px;
+  }
+
+  .login__label {
+    font-weight: 700;
+  }
+
+  .login__input-wrap {
+    gap: 10px;
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .login__prefix,
+  .login__input-wrap input {
+    font-size: 13px;
+  }
+
+  .login__icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .login__eye-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .login__actions {
+    gap: 14px;
+  }
+
+  .login__submit {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.25);
+  }
+
+  .login__diagnostics {
+    gap: 4px;
+    padding: 10px;
+  }
+
+  .login__diag-row {
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .login__diag-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .login__diag-meta {
+    font-size: 8px;
+  }
+
+  .login__footer {
+    gap: 6px;
+    padding-top: 20px;
+    font-size: 11px;
   }
 }

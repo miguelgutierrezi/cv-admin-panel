@@ -6,7 +6,8 @@ Single-author Firebase Authentication for `cv-admin-panel`.
 
 - Firebase project: `miguel-angel-gutierrez-ibague` (same as portfolio Hosting)
 - Web app **CV Admin Panel** created; public config lives in `src/environments/environment*.ts`
-- Angular: login at `/login`, `authGuard` on `/`, logout on the home shell
+- Angular: login at `/login` (Figma dark terminal UI — [ui.md](./ui.md)), `authGuard` on `/`, logout on the home shell
+- Link **← Ver Portfolio** on the login card → `environment.portfolioUrl`
 - `AuthService.getIdToken()` ready for Phase 3 write proxy
 
 Firebase **web apiKey is public by design**. Still never put Sanity write tokens in the client.
@@ -41,5 +42,6 @@ Sign in with the Console user → home shell → **Salir** returns to `/login`.
 ## Related
 
 - [stack.md](./stack.md)
+- [ui.md](./ui.md)
 - [security.md](./security.md)
 - [roadmap.md](./roadmap.md)

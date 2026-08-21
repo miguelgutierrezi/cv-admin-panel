@@ -31,9 +31,11 @@ Suggested folder boundaries once the app is scaffolded:
 | Area | Responsibility |
 | --- | --- |
 | `src/app/models/` | Typed document shapes aligned with portfolio models / schemas |
-| `src/app/auth/` | Login, session guard, auth service |
+| `src/app/auth/` | Login (Figma dark terminal), session guard, auth service |
 | `src/app/features/` | Screens: site, profile, projects, experience, courses, navigation |
 | `src/app/api/` or `services/` | CDN reads + proxy write client (no tokens) |
+| `src/app/shared/` | Shared validators / helpers |
+| `public/assets/login/` | Login chrome assets (grid, icons) |
 | `src/environments/` | `sanityProjectId`, `dataset`, `apiVersion`, `proxyBaseUrl`, auth config |
 | `functions/` or sibling backend | Authenticated proxy only (token lives here) |
 
@@ -73,6 +75,7 @@ Primary validation after scaffold: `npm run build` (same policy as the portfolio
 ## Related docs
 
 - [Stack](./stack.md)
+- [UI](./ui.md)
 - [Contract](./contract.md)
 - [Security](./security.md)
 - [Roadmap](./roadmap.md)

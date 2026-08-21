@@ -76,7 +76,7 @@ Do **not** start with React/Next, a second CMS, Studio-as-primary-UI, or write t
 | Auth | Firebase Auth email/password | Auth0 / Clerk single-user (extra vendor) | Multi-tenant IdP setup |
 | Proxy | Cloud Functions 2nd gen | Cloud Run or Cloudflare Worker | Mutate from the browser |
 | Hosting | Firebase Hosting (static admin SPA only) | Cloudflare Pages / Netlify | Putting write tokens in any SPA host’s bundle; embedding inside the CV repo deploy |
-| CSS | Sass + simple tokens | Reuse CV tokens later if desired | Bootstrap-by-default / large UI kit before MVP |
+| CSS | Sass + Geist (Sans/Mono) + CV-aligned tokens | Reuse portfolio `:root` vars over time | Bootstrap-by-default / large UI kit before MVP |
 
 ## Public-safe vs secret config
 
@@ -97,11 +97,13 @@ Do **not** start with React/Next, a second CMS, Studio-as-primary-UI, or write t
 - `firebase` (client SDK) for Auth
 - `firebase-tools` for Hosting + Functions deploy (local or CI)
 - Functions: `firebase-functions`, `firebase-admin`, `@sanity/client`
+- `@fontsource/geist-sans`, `@fontsource/geist-mono` (login + future chrome)
 - Primary validation: `npm run build` (admin app); deploy Functions separately
 
 ## Related
 
 - [Architecture](./architecture.md)
+- [UI](./ui.md)
 - [Security](./security.md)
 - [Roadmap](./roadmap.md)
 - [Contract](./contract.md)

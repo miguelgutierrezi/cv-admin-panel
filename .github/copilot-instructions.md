@@ -4,7 +4,7 @@
 
 This repo is the **custom admin panel** for Miguel Gutiérrez’s portfolio CMS (Sanity). It is the authenticated **write** path. The public site is the sibling `miguelgutierrezi.github.io` and must remain CDN read-only with a local content fallback.
 
-Repo status: Phase 6 polish/go-live done. Next: Phase 7 when asked. Canonical agent entry: `AGENTS.md`.
+Repo status: Phase 6 polish/go-live done; login UI Figma done (desktop + tablet L/P + mobile — `docs/ui.md`). Next: Phase 7 when asked. Canonical agent entry: `AGENTS.md`.
 
 ## Recommended stack (v1)
 
@@ -21,6 +21,7 @@ Repo status: Phase 6 polish/go-live done. Next: Phase 7 when asked. Canonical ag
 - Document CRUD only — schemas stay in the portfolio `studio/` package.
 - Never expose Sanity write tokens in the Angular client.
 - Follow `docs/stack.md` for tooling choices.
+- UI: see `docs/ui.md` (login Figma dark; editorial light preferred).
 - Align fields with portfolio models; `project.detail` is required.
 
 ## Architecture rules
@@ -47,7 +48,9 @@ Repo status: Phase 6 polish/go-live done. Next: Phase 7 when asked. Canonical ag
 5. MVP screens: site, profile, projects ✓
 6. Slice 2: experience, courses, navigation ← done
 7. Polish / go-live ← done
-8. Tests / lint → CI ← later
+8. Login Figma UI ← done (`docs/ui.md`)
+9. Tests / lint → CI ← later
+10. Editorial screens Figma ← when frames exist
 7. Polish, deploy, CORS, portfolio Login URL (prod)
 8. Later: real tests + lint → CI
 
