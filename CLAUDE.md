@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** + **login UI Figma** (desktop / tablet L/P / mobile — `docs/ui.md`). Next: Phase 7 when asked; editorial Figma when ready.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** + **login + home dashboard Figma** (`docs/ui.md`). Next: Phase 7 / editorial Figma when asked.
 
 ## Read first
 

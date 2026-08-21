@@ -1,25 +1,52 @@
-<div class="layout">
-  <aside class="layout__nav">
-    <p class="layout__brand">CV Admin</p>
-    <nav>
-      @for (item of nav; track item.path) {
-        <a
-          [routerLink]="item.path"
-          routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: item.exact }"
-          >{{ item.label }}</a
-        >
-      }
-    </nav>
-    <div class="layout__foot">
-      <span class="layout__user">{{ email() }}</span>
-      <a [href]="portfolioUrl" rel="noopener noreferrer">Portfolio</a>
-      <button type="button" [disabled]="loggingOut()" (click)="logout()">
-        {{ loggingOut() ? 'Saliendo…' : 'Salir' }}
+<div class="shell">
+  <div class="shell__glow shell__glow--left" aria-hidden="true"></div>
+  <div class="shell__glow shell__glow--right" aria-hidden="true"></div>
+
+  <header class="shell__nav">
+    <a class="shell__brand" routerLink="/">
+      <span class="shell__bracket">[</span>
+      <span class="shell__handle">{{ brandHandle }}</span>
+      <span class="shell__bracket">]</span>
+    </a>
+
+    <div class="shell__actions">
+      <label class="shell__search">
+        <span class="shell__search-prefix" aria-hidden="true">$</span>
+        <input
+          type="search"
+          placeholder="grep type_name..."
+          [value]="filter.query()"
+          (input)="onSearchInput($event)"
+          aria-label="Filtrar content types"
+        />
+        <span class="shell__search-icon" aria-hidden="true">
+          <img src="/assets/dashboard/icon-search.svg" width="14" height="14" alt="" />
+        </span>
+      </label>
+
+      <a
+        class="shell__portfolio"
+        [href]="portfolioUrl"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <img
+          src="/assets/dashboard/icon-arrow-up-right.svg"
+          width="14"
+          height="14"
+          alt=""
+          aria-hidden="true"
+        />
+        <span>Portfolio</span>
+      </a>
+
+      <button type="button" class="shell__logout" [disabled]="loggingOut()" (click)="logout()">
+        {{ loggingOut() ? 'Saliendo…' : 'Logout' }}
       </button>
     </div>
-  </aside>
-  <main class="layout__main">
+  </header>
+
+  <div class="shell__main">
     <router-outlet />
-  </main>
+  </div>
 </div>

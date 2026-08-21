@@ -1,27 +1,28 @@
 # UI / design notes
 
-Visual direction for the admin SPA. Source of truth for auth chrome: Figma file **Hoja de vida** (`46kvlyIdv8hDZlIJbJektz`).
+Visual direction for the admin SPA. Source of truth: Figma file **Hoja de vida** (`46kvlyIdv8hDZlIJbJektz`).
 
 ## Login (`/login`)
 
 - **Implemented:** desktop, tablet landscape, tablet portrait, mobile.
-- Frames:
-  - `admin-login-desktop` (`32:5`) — 1440×900, card density default (440px)
-  - `admin-login-tablet-landscape` (`32:159`) — 1024×768, **denser** card (`max-width: 1100px` + `orientation: landscape`)
-  - `admin-login-tablet-portrait` (`32:84`) — 768×1024, **same card spacing as desktop**, glow 500px @ ~8% (`481px–900px` + `orientation: portrait`)
-  - `admin-login-mobile` (`32:230`) — 390×844, **full-width** card radius 12, compact type (`max-width: 480px`); do not paint the iOS status-bar chrome from Figma
-- **Dark terminal shell** — intentional gate; content screens may stay light.
-- Tokens aligned with the CV dark chrome (`#0B0F19`, `#111827`, `#1E293B`, accent `#06B6D4`, link `#00F2FE`, Geist Sans / Geist Mono).
-- Brand handle: `miguel.gutierrez` (not the Figma placeholder).
-- CTA: **Iniciar Sesión**; secondary: **← Ver Portfolio** → `environment.portfolioUrl`.
-- No “forgot password” in v1 (single-user Firebase Auth).
-- Assets: `public/assets/login/` (grid, lock, terminal icons).
+- Frames: `32:5`, `32:159`, `32:84`, `32:230`.
+- Dark terminal shell; brand `miguel.gutierrez`; CTA + **← Ver Portfolio**.
+- Assets: `public/assets/login/`.
+
+## Home / content types hub (`/`)
+
+- **Implemented:** `admin-dashboard-content-types` (`41:4`).
+- Pattern: **dark top navbar** + **light main** (`#F8FAFC`) + subtle grid (~6% opacity).
+- Navbar (fiel a Figma): brand `[ handle ]` · search `$ grep…` · botón **Portfolio** (dark + arrow-up-right) · **Logout**.
+- Six cards → `/site`, `/profile`, `/projects`, `/experience`, `/courses`, `/navigation`.
+- Shell search filters the cards (client-side). No ES/EN global in current Figma navbar.
+- Assets: `public/assets/dashboard/`.
+- Editorial forms keep functional light layout under the same shell.
 
 ## Post-login (editorial)
 
-- Phase 4–5 screens are still functional light forms.
-- Preferred direction: **login dark → content light**, same token family as the CV (`miguelgutierrezi.github.io/src/styles.sass` `:root`).
-- Future Figma frames for shell/lists/forms should reuse those tokens; do not invent a second palette.
+- Preferred: login dark → hub/forms light, same token family as the CV.
+- Future Figma frames for list/form screens should reuse these tokens.
 
 ## Agent notes
 

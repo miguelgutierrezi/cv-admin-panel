@@ -1,32 +1,73 @@
-<section class="page">
-  <h1>Editorial admin</h1>
-  <p>
-    Sesión: <strong>{{ email() }}</strong>. Edita contenido MVP con el menú; los cambios van a
-    Sanity vía <code>sanityWrite</code>.
-  </p>
+<section class="dash">
+  <div class="dash__grid" aria-hidden="true"></div>
 
-  <ul class="page__links">
-    <li><a routerLink="/site">Site settings</a></li>
-    <li><a routerLink="/profile">Profile</a></li>
-    <li><a routerLink="/projects">Projects</a></li>
-    <li><a routerLink="/experience">Experience</a></li>
-    <li><a routerLink="/courses">Courses</a></li>
-    <li><a routerLink="/navigation">Navigation</a></li>
-  </ul>
+  <header class="dash__header">
+    <div class="dash__title-group">
+      <p class="dash__eyebrow">&gt; SHELL // MAIN</p>
+      <h1 class="dash__title">// 01 CONTENT TYPES</h1>
+    </div>
+  </header>
 
-  <p class="page__meta">
-    Sanity <code>{{ sanityProjectId }}</code> / <code>{{ dataset }}</code>
-  </p>
-
-  <div class="page__probe">
-    <button type="button" class="btn" [disabled]="probing()" (click)="probeProxy()">
-      {{ probing() ? 'Probando…' : 'Probar proxy (ping)' }}
+  <div class="dash__welcome">
+    <p>{{ welcomeLine() }}</p>
+    <button type="button" class="dash__ping" [disabled]="probing()" (click)="probeProxy()">
+      @if (probing()) {
+        Probando…
+      } @else if (probeOk()) {
+        Proxy OK
+      } @else {
+        Probar proxy
+      }
     </button>
-    @if (probeMessage(); as ok) {
-      <p class="ok" role="status">{{ ok }}</p>
-    }
-    @if (probeError(); as err) {
-      <p class="err" role="alert">{{ err }}</p>
-    }
   </div>
+
+  @if (probeError(); as err) {
+    <p class="dash__err" role="alert">{{ err }}</p>
+  }
+
+  @if (cards().length === 0) {
+    <p class="dash__empty">Ningún content type coincide con la búsqueda.</p>
+  } @else {
+    <div class="dash__grid-cards">
+      @for (card of cards(); track card.path) {
+        <a
+          class="card"
+          [class.card--featured]="card.featured"
+          [routerLink]="card.path"
+        >
+          <div class="card__chrome">
+            <span class="card__dots" aria-hidden="true">
+              <i class="card__dot card__dot--red"></i>
+              <i class="card__dot card__dot--yellow"></i>
+              <i class="card__dot card__dot--green"></i>
+            </span>
+            <span class="card__eyebrow">{{ card.eyebrow }}</span>
+          </div>
+          <div class="card__body">
+            <div class="card__title-row">
+              <span class="card__icon">
+                <img [src]="card.icon" width="16" height="16" alt="" />
+              </span>
+              <div class="card__titles">
+                <strong>{{ card.title }}</strong>
+                <span>{{ card.fields }}</span>
+              </div>
+            </div>
+            <p>{{ card.description }}</p>
+          </div>
+        </a>
+      }
+    </div>
+  }
+
+  <footer class="dash__footer">
+    <span
+      >CMS v1 · Sanity <code>{{ sanityProjectId }}</code> /
+      <code>{{ dataset }}</code>
+      @if (probeOk()) {
+        · Conectado
+      }
+    </span>
+    <span>{{ brandHandle }}</span>
+  </footer>
 </section>

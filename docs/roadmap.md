@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 6 polish + go-live **done**; login UI Figma (desktop + tablet L/P + mobile) **done**. Siguiente: Phase 7 (tests/lint) cuando se pida; Figma del shell/content light cuando exista. Operador: CORS Sanity + redeploy CV.
+Estado del workspace: Phase 6 **done**; login + home dashboard Figma **done**. Siguiente: Phase 7 / Figma editorial cuando exista. Operador: CORS Sanity + redeploy CV.
 
 ## Objetivo de producto
 
@@ -94,6 +94,7 @@ Según [stack.md](./stack.md):
 - [x] `adminLoginUrl` prod en portfolio → `https://cv-admin-panel.web.app`
 - [x] Guía [go-live.md](./go-live.md) (CORS Sanity, Auth domains, smoke)
 - [x] Login UI Figma (desktop + tablet landscape + tablet portrait + mobile) — ver [ui.md](./ui.md)
+- [x] Home dashboard Figma (`41:4`) — dark nav + light hub + 6 content-type cards
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
 - [ ] (Siguiente UI) shell + pantallas editoriales light alineadas a Figma/tokens CV

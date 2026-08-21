@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 6 polish + go-live done**; **login UI Figma done** (desktop + tablet L/P + mobile — [docs/ui.md](docs/ui.md)). Next: Phase 7 when asked; editorial Figma when frames exist. Operator must confirm Sanity CORS + redeploy CV.
+Current repo state: **Phase 6 done**; **login + home dashboard Figma done** ([docs/ui.md](docs/ui.md)). Next: Phase 7 / editorial Figma when asked. Operator: Sanity CORS + redeploy CV.
 
 ## Contract (read first)
 
