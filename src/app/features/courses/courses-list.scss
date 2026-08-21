@@ -1,30 +1,107 @@
-@use '../../../styles/form' as *;
+@use '../../../styles/list';
 
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.5rem;
+.list-page__new {
+  padding: 12px 18px;
 }
 
-.list a {
-  display: grid;
-  gap: 0.15rem;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid #e0e0dc;
-  border-radius: 8px;
-  background: #fff;
-  text-decoration: none;
-  color: inherit;
+.data-table__left--courses,
+.data-table__info--courses {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
 }
 
-.list span {
-  font-size: 0.85rem;
-  color: #666;
+.data-table__col-order--wide {
+  width: 70px;
 }
 
-.btn {
-  display: inline-block;
-  text-decoration: none;
+.data-table__col-details {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.data-table__titles--course {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.data-table__col-institution,
+.data-table__institution {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.data-table__institution {
+  color: var(--dim);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.data-table__col-status--course {
+  width: 110px;
+}
+
+.data-table__status--course {
+  display: flex;
+  justify-content: flex-end;
+  width: 110px;
+}
+
+.data-table__col-controls--wide,
+.data-table__controls--wide {
+  width: 90px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge--published {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge--draft {
+  background: var(--chrome);
+  color: var(--dim);
+}
+
+@media (max-width: 1100px) {
+  .data-table__col-details,
+  .data-table__titles--course,
+  .data-table__col-institution,
+  .data-table__institution {
+    width: auto;
+    max-width: 14rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .data-table__info--courses {
+    flex-wrap: wrap;
+  }
+
+  .data-table__col-details,
+  .data-table__titles--course,
+  .data-table__col-institution,
+  .data-table__institution {
+    width: 100%;
+    max-width: none;
+  }
+
+  .data-table__status--course,
+  .data-table__controls--wide {
+    width: auto;
+  }
 }

@@ -1,60 +1,163 @@
-<section class="page">
-  <header class="page__head">
-    <div>
-      <a class="back" routerLink="/experience">← Experience</a>
-      <h1>{{ isNew() ? 'Nueva experience' : 'Editar experience' }}</h1>
-    </div>
-    <div class="page__actions">
-      @if (!isNew()) {
-        <button type="button" class="btn btn--ghost" [disabled]="deleting()" (click)="remove()">
-          {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/experience">&lt;- Experiences</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">{{ crumbLabel() }}</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">{{ eyebrow() }}</p>
+        <h1 class="edit__title">{{ pageTitle() }}</h1>
+      </div>
+      <div class="edit__actions">
+        @if (!isNew()) {
+          <button
+            type="button"
+            class="edit__btn edit__btn--danger"
+            [disabled]="deleting() || saving() || loading()"
+            (click)="remove()"
+          >
+            {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+          </button>
+        }
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
         </button>
-      }
-      <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-        {{ saving() ? 'Guardando…' : 'Guardar' }}
-      </button>
+      </div>
     </div>
-  </header>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field"
-        ><span>slug (kebab-case)</span><input formControlName="slug"
-      /></label>
-      <label class="field"><span>company</span><input formControlName="company" /></label>
-      <div class="field-row">
-        <label class="field"><span>role ES</span><input formControlName="roleEs" /></label>
-        <label class="field"><span>role EN</span><input formControlName="roleEn" /></label>
-      </div>
-      <div class="field-row">
-        <label class="field"><span>duration ES</span><input formControlName="durationEs" /></label>
-        <label class="field"><span>duration EN</span><input formControlName="durationEn" /></label>
-      </div>
-      <div class="field-row">
-        <label class="field"
-          ><span>responsibilities ES (uno por línea)</span
-          ><textarea formControlName="responsibilitiesEs" rows="5"></textarea
-        ></label>
-        <label class="field"
-          ><span>responsibilities EN (uno por línea)</span
-          ><textarea formControlName="responsibilitiesEn" rows="5"></textarea
-        ></label>
-      </div>
-      <label class="field"
-        ><span>imageUrl (assets/… o https)</span><input formControlName="imageUrl"
-      /></label>
-      <label class="field"
-        ><span>sortOrder</span><input type="number" formControlName="sortOrder"
-      /></label>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <section class="panel panel--exp">
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">$ slug (kebab-case)</span>
+            <span class="field__control">
+              <input
+                formControlName="slug"
+                placeholder="ej. angular-developer-acme"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">$ company</span>
+            <span class="field__control">
+              <input formControlName="company" placeholder="ej. Acme Corp" autocomplete="off" />
+            </span>
+          </label>
+        </div>
 
-      @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
-      }
-      @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
-      }
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">$ role ES</span>
+            <span class="field__control">
+              <input
+                formControlName="roleEs"
+                placeholder="ej. Desarrollador Frontend Angular"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">$ role EN</span>
+            <span class="field__control">
+              <input
+                formControlName="roleEn"
+                placeholder="ej. Angular Frontend Developer"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">$ duration ES</span>
+            <span class="field__control">
+              <input
+                formControlName="durationEs"
+                placeholder="ej. Ene 2024 - Presente"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">$ duration EN</span>
+            <span class="field__control">
+              <input
+                formControlName="durationEn"
+                placeholder="ej. Jan 2024 - Present"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">$ responsibilities ES (uno por línea)</span>
+            <span class="field__control field__control--textarea field__control--exp-ta">
+              <textarea
+                formControlName="responsibilitiesEs"
+                rows="4"
+                placeholder="- Diseñé la interfaz del panel administrativo&#10;- Optimicé el rendimiento de carga un 40%&#10;- Colaboré con el equipo de backend"
+              ></textarea>
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">$ responsibilities EN (uno por línea)</span>
+            <span class="field__control field__control--textarea field__control--exp-ta">
+              <textarea
+                formControlName="responsibilitiesEn"
+                rows="4"
+                placeholder="- Designed the admin panel interface&#10;- Optimized load performance by 40%&#10;- Collaborated with the backend team"
+              ></textarea>
+            </span>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">$ imageUrl (assets/... o https)</span>
+            <span class="field__control">
+              <input
+                formControlName="imageUrl"
+                placeholder="ej. assets/images/companies/acme.png"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">$ sortOrder</span>
+            <span class="field__control">
+              <input type="number" formControlName="sortOrder" />
+            </span>
+          </label>
+        </div>
+
+        @if (message(); as ok) {
+          <p class="edit__ok" role="status">{{ ok }}</p>
+        }
+        @if (error(); as err) {
+          <p class="edit__err" role="alert">{{ err }}</p>
+        }
+      </section>
     </form>
   }
+
+  <footer class="edit__footer">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

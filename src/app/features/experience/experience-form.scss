@@ -1,15 +1,31 @@
-@use '../../../styles/form' as *;
+@use '../../../styles/edit';
 
-.back {
-  display: inline-block;
-  margin-bottom: 0.35rem;
-  color: #0b5fff;
-  text-decoration: none;
-  font-size: 0.9rem;
+.panel--exp {
+  gap: 20px;
+  padding: 32px;
+  flex: 1;
 }
 
-.page__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.field__label {
+  font-size: 12px;
+}
+
+.field__control--exp-ta {
+  min-height: 100px;
+  height: 100px;
+}
+
+.field__control--exp-ta textarea {
+  height: 100%;
+  resize: vertical;
+}
+
+.edit__btn--save {
+  padding: 12px 18px;
+}
+
+@media (max-width: 900px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
 }

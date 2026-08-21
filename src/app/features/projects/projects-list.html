@@ -1,25 +1,113 @@
-<section class="page">
-  <header class="page__head">
-    <h1>Projects</h1>
-    <a class="btn" routerLink="/projects/new">Nuevo project</a>
-  </header>
+<section class="edit list-page">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/">&lt;- Content Types</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">Projects</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">
+          &gt; LIST_VIEW · {{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}
+        </p>
+        <h1 class="edit__title">// Projects</h1>
+      </div>
+      <a class="edit__btn edit__btn--save list-page__new" routerLink="/projects/new">
+        [+] Nuevo project
+      </a>
+    </div>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else if (error(); as err) {
-    <p class="err" role="alert">{{ err }}</p>
-  } @else if (projects().length === 0) {
-    <p>No hay projects en Sanity. Crea el primero.</p>
+    <p class="edit__err" role="alert">{{ err }}</p>
+  } @else if (totalCount() === 0) {
+    <div class="list-empty">
+      <div class="list-empty__icon" aria-hidden="true">
+        <span>$_</span>
+      </div>
+      <div class="list-empty__text">
+        <p class="list-empty__title">No hay projects en Sanity.</p>
+        <p class="list-empty__hint">
+          Crea un nuevo documento para inicializar la colección "projects-main"
+        </p>
+      </div>
+    </div>
+  } @else if (visibleProjects().length === 0) {
+    <div class="list-empty list-empty--compact">
+      <div class="list-empty__text">
+        <p class="list-empty__title">Ningún project coincide con la búsqueda.</p>
+        <p class="list-empty__hint">Prueba otro término en el grep de la barra superior.</p>
+      </div>
+    </div>
   } @else {
-    <ul class="list">
-      @for (project of projects(); track project._id) {
-        <li>
-          <a [routerLink]="['/projects', project._id]">
-            <strong>{{ project.title || slugOf(project) }}</strong>
-            <span>#{{ project.sortOrder }} · {{ slugOf(project) }}</span>
-          </a>
-        </li>
+    <div class="proj-table" role="table" aria-label="Projects">
+      <div class="proj-table__head" role="row">
+        <div class="proj-table__left" role="columnheader">
+          <span class="proj-table__col-order"># ORDER</span>
+          <span>PROJECT SCHEMATICS &amp; IDENTIFIER</span>
+        </div>
+        <div class="proj-table__right" role="columnheader">
+          <span class="proj-table__col-status">STATUS</span>
+          <span class="proj-table__col-controls">CONTROLS</span>
+        </div>
+      </div>
+
+      @for (project of visibleProjects(); track project._id; let i = $index) {
+        <div
+          class="proj-table__row"
+          [class.proj-table__row--alt]="i % 2 === 1"
+          role="row"
+        >
+          <div class="proj-table__info">
+            <span class="proj-table__order">#{{ project.sortOrder }}</span>
+            <div class="proj-table__titles">
+              <strong>{{ project.title || slugOf(project) }}</strong>
+              <span>slug: {{ slugOf(project) }}</span>
+            </div>
+          </div>
+          <div class="proj-table__meta">
+            <div class="proj-table__status">
+              @if (project.featured) {
+                <span class="proj-table__featured">★ FEATURED</span>
+              }
+            </div>
+            <div class="proj-table__controls">
+              <a
+                class="proj-table__icon-btn"
+                [routerLink]="['/projects', project._id]"
+                [attr.aria-label]="'Editar ' + (project.title || slugOf(project))"
+              >
+                <img src="/assets/dashboard/icon-edit.svg" width="14" height="14" alt="" />
+              </a>
+              <button
+                type="button"
+                class="proj-table__icon-btn"
+                [disabled]="deletingId() === project._id"
+                [attr.aria-label]="'Eliminar ' + (project.title || slugOf(project))"
+                (click)="remove(project)"
+              >
+                <img src="/assets/dashboard/icon-trash.svg" width="14" height="14" alt="" />
+              </button>
+            </div>
+          </div>
+        </div>
       }
-    </ul>
+    </div>
   }
+
+  @if (actionError(); as actionErr) {
+    <p class="edit__err" role="alert">{{ actionErr }}</p>
+  }
+
+  <footer class="edit__footer">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

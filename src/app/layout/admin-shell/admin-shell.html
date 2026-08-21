@@ -10,14 +10,14 @@
     </a>
 
     <div class="shell__actions">
-      <label class="shell__search">
+      <label class="shell__search" [class.shell__search--wide]="searchWide()">
         <span class="shell__search-prefix" aria-hidden="true">$</span>
         <input
           type="search"
           [attr.placeholder]="searchPlaceholder()"
           [value]="filter.query()"
           (input)="onSearchInput($event)"
-          aria-label="Filtrar content types"
+          [attr.aria-label]="searchAriaLabel()"
         />
         <span class="shell__search-icon" aria-hidden="true">
           <img src="/assets/dashboard/icon-search.svg" width="14" height="14" alt="" />

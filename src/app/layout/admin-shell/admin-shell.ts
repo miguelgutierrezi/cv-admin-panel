@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { DashboardFilterService } from '../dashboard-filter.service';
@@ -19,30 +21,38 @@ export class AdminShell implements OnInit, OnDestroy {
   readonly brandHandle = 'miguel.gutierrez';
   readonly email = () => this.auth.user()?.email ?? '';
   readonly loggingOut = signal(false);
-  /** Desktop / landscape: `grep type_name...`; tablet portrait: `grep...`. */
   readonly searchPlaceholder = signal('grep type_name...');
-  /** Mobile Figma uses Exit; desktop/tablet use Logout. */
   readonly logoutLabel = signal('Logout');
+  readonly searchWide = signal(false);
+  readonly searchAriaLabel = signal('Filtrar content types');
 
   private mediaQuery: MediaQueryList | null = null;
+  private currentPath = '/';
+
   private readonly onViewportChange = (): void => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    const mobile = window.matchMedia('(max-width: 720px)').matches;
-    const tabletPortrait = window.matchMedia(
-      '(max-width: 1100px) and (min-width: 721px) and (orientation: portrait)',
-    ).matches;
-    this.searchPlaceholder.set(tabletPortrait ? 'grep...' : 'grep type_name...');
-    this.logoutLabel.set(mobile ? 'Exit' : 'Logout');
+    this.applyChromeForRoute(this.currentPath);
   };
+
+  constructor() {
+    this.router.events
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe((e) => {
+        this.currentPath = e.urlAfterRedirects.split('?')[0] ?? '/';
+        this.filter.setQuery('');
+        this.applyChromeForRoute(this.currentPath);
+      });
+  }
 
   ngOnInit(): void {
     if (typeof window === 'undefined') {
       return;
     }
+    this.currentPath = this.router.url.split('?')[0] ?? '/';
     this.mediaQuery = window.matchMedia('(max-width: 720px)');
-    this.onViewportChange();
+    this.applyChromeForRoute(this.currentPath);
     this.mediaQuery.addEventListener('change', this.onViewportChange);
     window.addEventListener('resize', this.onViewportChange);
   }
@@ -67,5 +77,59 @@ export class AdminShell implements OnInit, OnDestroy {
     } finally {
       this.loggingOut.set(false);
     }
+  }
+
+  private applyChromeForRoute(path: string): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const mobile = window.matchMedia('(max-width: 720px)').matches;
+    const tabletPortrait = window.matchMedia(
+      '(max-width: 1100px) and (min-width: 721px) and (orientation: portrait)',
+    ).matches;
+    const onCoursesList = path === '/courses';
+    const onCoursesForm = path.startsWith('/courses/');
+    const onExperience = path === '/experience' || path.startsWith('/experience/');
+    const onProjects = path === '/projects' || path.startsWith('/projects/');
+    const onNavigation = path === '/navigation' || path.startsWith('/navigation/');
+    const onHome = path === '/' || path === '';
+
+    this.logoutLabel.set(mobile ? 'Exit' : 'Logout');
+    this.searchWide.set(false);
+
+    if (onNavigation || onCoursesForm) {
+      this.searchPlaceholder.set('grep config_key...');
+      this.searchAriaLabel.set(
+        onNavigation ? 'Filtrar navigation' : 'Filtrar campos del course',
+      );
+      return;
+    }
+
+    if (onCoursesList) {
+      this.searchPlaceholder.set('grep courses...');
+      this.searchAriaLabel.set('Filtrar courses');
+      return;
+    }
+
+    if (onExperience) {
+      this.searchPlaceholder.set('grep experience...');
+      this.searchAriaLabel.set('Filtrar experiences');
+      return;
+    }
+
+    if (onProjects) {
+      this.searchPlaceholder.set('grep project_name...');
+      this.searchAriaLabel.set('Filtrar projects');
+      return;
+    }
+
+    if (onHome && tabletPortrait) {
+      this.searchPlaceholder.set('grep...');
+      this.searchAriaLabel.set('Filtrar content types');
+      return;
+    }
+
+    this.searchPlaceholder.set('grep type_name...');
+    this.searchAriaLabel.set('Filtrar content types');
   }
 }

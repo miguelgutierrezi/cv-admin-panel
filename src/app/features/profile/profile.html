@@ -1,65 +1,181 @@
-<section class="page">
-  <header class="page__head">
-    <h1>Profile</h1>
-    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-      {{ saving() ? 'Guardando…' : 'Guardar' }}
-    </button>
-  </header>
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/">&lt;- Content Types</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">Profile</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">&gt; EDITING_INSTANCE</p>
+        <h1 class="edit__title">// Profile</h1>
+      </div>
+      <div class="edit__actions">
+        <button
+          type="button"
+          class="edit__btn edit__btn--ghost"
+          [disabled]="saving() || loading() || !form.dirty"
+          (click)="discard()"
+        >
+          Descartar
+        </button>
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field">
-        <span>imageUrl (assets/… o https)</span>
-        <input formControlName="imageUrl" />
-      </label>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="edit__panels">
+        <section class="panel">
+          <header class="panel__head">
+            <p class="panel__kicker"># SECTION_01 Identity</p>
+            <h2 class="panel__title">Identity &amp; Roles</h2>
+          </header>
+          <hr class="panel__rule" />
 
-      <div class="field-row">
-        <label class="field"><span>role (ES)</span><input formControlName="roleEs" /></label>
-        <label class="field"><span>role (EN)</span><input formControlName="roleEn" /></label>
-      </div>
+          <label class="field">
+            <span class="field__label">
+              $ imageUrl (assets/... o https)
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="imageUrl" />
+            </span>
+          </label>
 
-      <div class="field-row">
-        <label class="field"
-          ><span>pitch (ES)</span><textarea formControlName="pitchEs" rows="3"></textarea
-        ></label>
-        <label class="field"
-          ><span>pitch (EN)</span><textarea formControlName="pitchEn" rows="3"></textarea
-        ></label>
-      </div>
-
-      <div class="field-row">
-        <label class="field"
-          ><span>focusAreas ES (uno por línea)</span
-          ><textarea formControlName="focusEs" rows="4"></textarea
-        ></label>
-        <label class="field"
-          ><span>focusAreas EN (uno por línea)</span
-          ><textarea formControlName="focusEn" rows="4"></textarea
-        ></label>
-      </div>
-
-      <div class="block" formArrayName="paragraphs">
-        <div class="block__head">
-          <h2>Paragraphs</h2>
-          <button type="button" class="btn btn--ghost" (click)="addParagraph()">Añadir</button>
-        </div>
-        @for (group of paragraphs.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
-            <label class="field"><span>ES</span><textarea formControlName="es" rows="3"></textarea></label>
-            <label class="field"><span>EN</span><textarea formControlName="en" rows="3"></textarea></label>
-            <button type="button" class="btn btn--ghost" (click)="removeParagraph(i)">Quitar</button>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">
+                $ role (ES)
+                <span class="field__req" aria-hidden="true">*</span>
+              </span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="roleEs" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">
+                $ role (EN)
+                <span class="field__req" aria-hidden="true">*</span>
+              </span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="roleEn" />
+              </span>
+            </label>
           </div>
-        }
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ pitch (ES)</span>
+              <span class="field__control field__control--textarea field__control--tall">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="pitchEs" rows="4"></textarea>
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ pitch (EN)</span>
+              <span class="field__control field__control--textarea field__control--tall">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="pitchEn" rows="4"></textarea>
+              </span>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ focusAreas ES (uno por línea)</span>
+              <span class="field__control field__control--textarea field__control--tall">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="focusEs" rows="5"></textarea>
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ focusAreas EN (uno por línea)</span>
+              <span class="field__control field__control--textarea field__control--tall">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="focusEn" rows="5"></textarea>
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel panel--stack" formArrayName="paragraphs">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_02 Paragraphs</p>
+              <h2 class="panel__title">Biography Details</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addParagraph()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of paragraphs.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome item__chrome--dark">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ paragraphChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <label class="field">
+                    <span class="field__label">$ ES</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="es" rows="3"></textarea>
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">$ EN</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="en" rows="3"></textarea>
+                    </span>
+                  </label>
+                  <button type="button" class="item__remove" (click)="removeParagraph(i)">
+                    [x] Quitar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
       </div>
 
       @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
+        <p class="edit__ok" role="status">{{ ok }}</p>
       }
       @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
+        <p class="edit__err" role="alert">{{ err }}</p>
       }
     </form>
   }
+
+  <footer class="edit__footer edit__footer--dark">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

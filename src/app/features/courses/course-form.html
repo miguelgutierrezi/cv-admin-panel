@@ -1,53 +1,205 @@
-<section class="page">
-  <header class="page__head">
-    <div>
-      <a class="back" routerLink="/courses">← Courses</a>
-      <h1>{{ isNew() ? 'Nuevo course' : 'Editar course' }}</h1>
-    </div>
-    <div class="page__actions">
-      @if (!isNew()) {
-        <button type="button" class="btn btn--ghost" [disabled]="deleting()" (click)="remove()">
-          {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a class="edit__crumb-link" routerLink="/courses">&lt;- Courses</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-muted">{{ crumbLabel() }}</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">{{ eyebrow() }}</p>
+        <h1 class="edit__title">{{ pageTitle() }}</h1>
+      </div>
+      <div class="edit__actions">
+        @if (isNew()) {
+          <button
+            type="button"
+            class="edit__btn edit__btn--ghost"
+            [disabled]="saving() || loading()"
+            (click)="discard()"
+          >
+            Descartar
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="edit__btn edit__btn--danger"
+            [disabled]="deleting() || saving() || loading()"
+            (click)="remove()"
+          >
+            {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+          </button>
+          <button
+            type="button"
+            class="edit__btn edit__btn--ghost"
+            [disabled]="saving() || loading() || !form.dirty"
+            (click)="discard()"
+          >
+            Descartar
+          </button>
+        }
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
         </button>
-      }
-      <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-        {{ saving() ? 'Guardando…' : 'Guardar' }}
-      </button>
+      </div>
     </div>
-  </header>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field"
-        ><span>slug (kebab-case)</span><input formControlName="slug"
-      /></label>
-      <div class="field-row">
-        <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
-        <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
-      </div>
-      <label class="field"><span>institution</span><input formControlName="institution" /></label>
-      <div class="field-row">
-        <label class="field"><span>date ES</span><input formControlName="dateEs" /></label>
-        <label class="field"><span>date EN</span><input formControlName="dateEn" /></label>
-      </div>
-      <label class="field"
-        ><span>imageUrl (assets/… o https)</span><input formControlName="imageUrl"
-      /></label>
-      <label class="field"
-        ><span>credentialUrl (https, opcional)</span><input formControlName="credentialUrl"
-      /></label>
-      <label class="field"
-        ><span>sortOrder</span><input type="number" formControlName="sortOrder"
-      /></label>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <section class="panel">
+        <header class="panel__head">
+          <p class="panel__kicker"># SECTION_01 Course Meta</p>
+          <h2 class="panel__title">Course Specifications &amp; Credentials</h2>
+        </header>
+        <hr class="panel__rule" />
 
-      @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
-      }
-      @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
-      }
+        <label class="field">
+          <span class="field__label">
+            $ slug (kebab-case)
+            <span class="field__req" aria-hidden="true">*</span>
+          </span>
+          <span class="field__control">
+            <span class="field__prompt" aria-hidden="true">&gt;</span>
+            <input
+              formControlName="slug"
+              placeholder="e.g. angular-full-stack-spec"
+              autocomplete="off"
+            />
+          </span>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">
+              $ title (ES)
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input
+                formControlName="titleEs"
+                placeholder="e.g. Especialización Frontend Angular"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">
+              $ title (EN)
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input
+                formControlName="titleEn"
+                placeholder="e.g. Angular Frontend Specialization"
+                autocomplete="off"
+              />
+            </span>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field__label">
+            $ institution
+            <span class="field__req" aria-hidden="true">*</span>
+          </span>
+          <span class="field__control">
+            <span class="field__prompt" aria-hidden="true">&gt;</span>
+            <input
+              formControlName="institution"
+              placeholder="e.g. Coursera / Google"
+              autocomplete="off"
+            />
+          </span>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">
+              $ date (ES)
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="dateEs" placeholder="e.g. Enero 2026" autocomplete="off" />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field__label">
+              $ date (EN)
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="dateEn" placeholder="e.g. January 2026" autocomplete="off" />
+            </span>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field__label">
+            $ imageUrl (assets/... o https)
+            <span class="field__req" aria-hidden="true">*</span>
+          </span>
+          <span class="field__control">
+            <span class="field__prompt" aria-hidden="true">&gt;</span>
+            <input
+              formControlName="imageUrl"
+              placeholder="e.g. assets/courses/angular-spec.jpg"
+              autocomplete="off"
+            />
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">$ credentialUrl (https, opcional)</span>
+          <span class="field__control">
+            <span class="field__prompt" aria-hidden="true">&gt;</span>
+            <input
+              formControlName="credentialUrl"
+              placeholder="e.g. https://coursera.org/verify/..."
+              autocomplete="off"
+            />
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">
+            $ sortOrder
+            <span class="field__req" aria-hidden="true">*</span>
+          </span>
+          <span class="field__control">
+            <span class="field__prompt" aria-hidden="true">&gt;</span>
+            <input type="number" formControlName="sortOrder" />
+          </span>
+        </label>
+
+        @if (message(); as ok) {
+          <p class="edit__ok" role="status">{{ ok }}</p>
+        }
+        @if (error(); as err) {
+          <p class="edit__err" role="alert">{{ err }}</p>
+        }
+      </section>
     </form>
   }
+
+  <footer class="edit__footer edit__footer--dark">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

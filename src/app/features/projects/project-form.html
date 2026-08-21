@@ -1,179 +1,486 @@
-<section class="page">
-  <header class="page__head">
-    <div>
-      <a class="back" routerLink="/projects">← Projects</a>
-      <h1>{{ isNew() ? 'Nuevo project' : 'Editar project' }}</h1>
-    </div>
-    <div class="page__actions">
-      @if (!isNew()) {
-        <button type="button" class="btn btn--ghost" [disabled]="deleting()" (click)="remove()">
-          {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/projects">&lt;- Projects</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">{{ crumbLabel() }}</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">&gt; EDITING_DOCUMENT</p>
+        <h1 class="edit__title">{{ pageTitle() }}</h1>
+      </div>
+      <div class="edit__actions">
+        @if (isNew()) {
+          <a class="edit__btn edit__btn--ghost" routerLink="/projects">Cancelar</a>
+        } @else {
+          <button
+            type="button"
+            class="edit__btn edit__btn--danger"
+            [disabled]="deleting() || saving() || loading()"
+            (click)="remove()"
+          >
+            {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+          </button>
+        }
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
         </button>
-      }
-      <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-        {{ saving() ? 'Guardando…' : 'Guardar' }}
-      </button>
+      </div>
     </div>
-  </header>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field"
-        ><span>slug (id estable, kebab-case)</span><input formControlName="slug"
-      /></label>
-      <label class="field"><span>title</span><input formControlName="title" /></label>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="edit__stack">
+        <section class="panel">
+          <header class="panel__head">
+            <p class="panel__kicker"># SECTION_01</p>
+            <h2 class="panel__title">General Info</h2>
+          </header>
+          <hr class="panel__rule" />
 
-      <div class="field-row">
-        <label class="field"
-          ><span>description ES</span><textarea formControlName="descriptionEs" rows="3"></textarea
-        ></label>
-        <label class="field"
-          ><span>description EN</span><textarea formControlName="descriptionEn" rows="3"></textarea
-        ></label>
-      </div>
-
-      <div class="field-row">
-        <label class="field"
-          ><span>technologies (uno por línea)</span
-          ><textarea formControlName="technologiesText" rows="3"></textarea
-        ></label>
-        <label class="field"
-          ><span>technologyIconUrls</span
-          ><textarea formControlName="technologyIconUrlsText" rows="3"></textarea
-        ></label>
-      </div>
-
-      <div class="field-row">
-        <label class="field"><span>repositoryUrl</span><input formControlName="repositoryUrl" /></label>
-        <label class="field"><span>demoUrl</span><input formControlName="demoUrl" /></label>
-      </div>
-
-      <label class="field"
-        ><span>imageUrl (assets/… o https)</span><input formControlName="imageUrl"
-      /></label>
-
-      <div class="field-row">
-        <label class="field"
-          ><span>sortOrder</span><input type="number" formControlName="sortOrder"
-        /></label>
-        <label class="field field--check"
-          ><input type="checkbox" formControlName="featured" /> featured</label
-        >
-      </div>
-
-      <h2 class="section-title">Detail (obligatorio)</h2>
-
-      <div class="field-row">
-        <label class="field"
-          ><span>summary ES</span><textarea formControlName="summaryEs" rows="3"></textarea
-        ></label>
-        <label class="field"
-          ><span>summary EN</span><textarea formControlName="summaryEn" rows="3"></textarea
-        ></label>
-      </div>
-      <div class="field-row">
-        <label class="field"><span>role ES</span><input formControlName="roleEs" /></label>
-        <label class="field"><span>role EN</span><input formControlName="roleEn" /></label>
-      </div>
-      <div class="field-row">
-        <label class="field"><span>duration ES</span><input formControlName="durationEs" /></label>
-        <label class="field"><span>duration EN</span><input formControlName="durationEn" /></label>
-      </div>
-      <div class="field-row">
-        <label class="field"><span>team ES</span><input formControlName="teamEs" /></label>
-        <label class="field"><span>team EN</span><input formControlName="teamEn" /></label>
-      </div>
-      <label class="field"><span>year</span><input formControlName="year" /></label>
-      <div class="field-row">
-        <label class="field"><span>client ES</span><input formControlName="clientEs" /></label>
-        <label class="field"><span>client EN</span><input formControlName="clientEn" /></label>
-      </div>
-
-      <div class="block" formArrayName="body">
-        <div class="block__head">
-          <h2>Body paragraphs</h2>
-          <button type="button" class="btn btn--ghost" (click)="addBody()">Añadir</button>
-        </div>
-        @for (group of body.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
-            <label class="field"><span>ES</span><textarea formControlName="es" rows="3"></textarea></label>
-            <label class="field"><span>EN</span><textarea formControlName="en" rows="3"></textarea></label>
-            <button type="button" class="btn btn--ghost" (click)="removeBody(i)">Quitar</button>
-          </div>
-        }
-      </div>
-
-      <div class="block" formArrayName="features">
-        <div class="block__head">
-          <h2>Features</h2>
-          <button type="button" class="btn btn--ghost" (click)="addFeature()">Añadir</button>
-        </div>
-        @for (group of features.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
-            <label class="field"><span>id</span><input formControlName="id" /></label>
-            <label class="field"
-              ><span>icon</span>
-              <select formControlName="icon">
-                @for (icon of icons; track icon) {
-                  <option [value]="icon">{{ icon }}</option>
-                }
-              </select>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">
+                $ slug (id estable, kebab-case)
+                <span class="field__req" aria-hidden="true">*</span>
+              </span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="slug" />
+              </span>
             </label>
-            <div class="field-row">
-              <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
-              <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
-            </div>
-            <div class="field-row">
-              <label class="field"
-                ><span>description ES</span
-                ><textarea formControlName="descriptionEs" rows="2"></textarea
-              ></label>
-              <label class="field"
-                ><span>description EN</span
-                ><textarea formControlName="descriptionEn" rows="2"></textarea
-              ></label>
-            </div>
-            <button type="button" class="btn btn--ghost" (click)="removeFeature(i)">Quitar</button>
+            <label class="field">
+              <span class="field__label">
+                $ title
+                <span class="field__req" aria-hidden="true">*</span>
+              </span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="title" />
+              </span>
+            </label>
           </div>
-        }
-      </div>
 
-      <div class="block" formArrayName="gallery">
-        <div class="block__head">
-          <h2>Gallery</h2>
-          <button type="button" class="btn btn--ghost" (click)="addGallery()">Añadir</button>
-        </div>
-        @for (group of gallery.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
-            <label class="field"><span>id</span><input formControlName="id" /></label>
-            <label class="field"
-              ><span>imageUrl (assets/… o https)</span><input formControlName="imageUrl"
-            /></label>
-            <div class="field-row">
-              <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
-              <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
-            </div>
-            <div class="field-row">
-              <label class="field"
-                ><span>caption ES</span><textarea formControlName="captionEs" rows="2"></textarea
-              ></label>
-              <label class="field"
-                ><span>caption EN</span><textarea formControlName="captionEn" rows="2"></textarea
-              ></label>
-            </div>
-            <button type="button" class="btn btn--ghost" (click)="removeGallery(i)">Quitar</button>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ description ES</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="descriptionEs" rows="3"></textarea>
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ description EN</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="descriptionEn" rows="3"></textarea>
+              </span>
+            </label>
           </div>
-        }
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ technologies (uno por línea)</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="technologiesText" rows="3"></textarea>
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ technologyIconUrls</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="technologyIconUrlsText" rows="3"></textarea>
+              </span>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ repositoryUrl</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="repositoryUrl" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ demoUrl</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="demoUrl" />
+              </span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">$ imageUrl (assets/... o https)</span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="imageUrl" />
+            </span>
+          </label>
+
+          <div class="field-row field-row--order">
+            <label class="field field--order">
+              <span class="field__label">$ sortOrder</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input type="number" formControlName="sortOrder" />
+              </span>
+            </label>
+            <div class="featured-field">
+              <span class="featured-field__label">$ featured</span>
+              <label
+                class="featured-toggle"
+                [class.featured-toggle--on]="form.controls.featured.value"
+              >
+                <input type="checkbox" formControlName="featured" />
+                <span class="featured-toggle__box" aria-hidden="true">✓</span>
+                <span>{{ form.controls.featured.value ? '☑ featured' : 'featured' }}</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <header class="panel__head">
+            <p class="panel__kicker"># SECTION_02</p>
+            <h2 class="panel__title">Detail (obligatorio)</h2>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ summary ES</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="summaryEs" rows="3"></textarea>
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ summary EN</span>
+              <span class="field__control field__control--textarea field__control--mid">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <textarea formControlName="summaryEn" rows="3"></textarea>
+              </span>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ role ES</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="roleEs" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ role EN</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="roleEn" />
+              </span>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ duration ES</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="durationEs" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ duration EN</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="durationEn" />
+              </span>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ team ES</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="teamEs" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ team EN</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="teamEn" />
+              </span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">$ year</span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="year" />
+            </span>
+          </label>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">$ client ES</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="clientEs" />
+              </span>
+            </label>
+            <label class="field">
+              <span class="field__label">$ client EN</span>
+              <span class="field__control">
+                <span class="field__prompt" aria-hidden="true">&gt;</span>
+                <input formControlName="clientEn" />
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel panel--stack" formArrayName="body">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_03</p>
+              <h2 class="panel__title">Body paragraphs</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addBody()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of body.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ bodyChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <label class="field">
+                    <span class="field__label">$ ES</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="es" rows="2"></textarea>
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">$ EN</span>
+                    <span class="field__control field__control--textarea field__control--mid">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <textarea formControlName="en" rows="2"></textarea>
+                    </span>
+                  </label>
+                  <button type="button" class="item__remove" (click)="removeBody(i)">
+                    [x] Quitar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section class="panel panel--stack" formArrayName="features">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_04</p>
+              <h2 class="panel__title">Features</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addFeature()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of features.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ featureChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ id</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="id" />
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ icon</span>
+                      <span class="field__control field__control--select">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <select formControlName="icon">
+                          @for (icon of icons; track icon) {
+                            <option [value]="icon">{{ icon }}</option>
+                          }
+                        </select>
+                        <span class="field__select-hint" aria-hidden="true">[v]</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ title ES</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="titleEs" />
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ title EN</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="titleEn" />
+                      </span>
+                    </label>
+                  </div>
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ description ES</span>
+                      <span class="field__control field__control--textarea field__control--mid">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <textarea formControlName="descriptionEs" rows="2"></textarea>
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ description EN</span>
+                      <span class="field__control field__control--textarea field__control--mid">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <textarea formControlName="descriptionEn" rows="2"></textarea>
+                      </span>
+                    </label>
+                  </div>
+                  <button type="button" class="item__remove" (click)="removeFeature(i)">
+                    [x] Quitar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section class="panel panel--stack" formArrayName="gallery">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_05</p>
+              <h2 class="panel__title">Gallery</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addGallery()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of gallery.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ galleryChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <label class="field">
+                    <span class="field__label">$ id</span>
+                    <span class="field__control">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <input formControlName="id" />
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">$ imageUrl</span>
+                    <span class="field__control">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <input formControlName="imageUrl" />
+                    </span>
+                  </label>
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ title ES</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="titleEs" />
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ title EN</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="titleEn" />
+                      </span>
+                    </label>
+                  </div>
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ caption ES</span>
+                      <span class="field__control field__control--textarea field__control--mid">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <textarea formControlName="captionEs" rows="2"></textarea>
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ caption EN</span>
+                      <span class="field__control field__control--textarea field__control--mid">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <textarea formControlName="captionEn" rows="2"></textarea>
+                      </span>
+                    </label>
+                  </div>
+                  <button type="button" class="item__remove" (click)="removeGallery(i)">
+                    [x] Quitar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
       </div>
 
       @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
+        <p class="edit__ok" role="status">{{ ok }}</p>
       }
       @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
+        <p class="edit__err" role="alert">{{ err }}</p>
       }
     </form>
   }
+
+  <footer class="edit__footer">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

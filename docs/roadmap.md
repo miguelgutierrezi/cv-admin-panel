@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 6 **done**; login + home dashboard Figma **done**. Siguiente: Phase 7 / Figma editorial cuando exista. Operador: CORS Sanity + redeploy CV.
+Estado del workspace: Phase 6 **done**; Figma editorial slice (Site → Navigation) **done**. Operador: CORS Sanity + redeploy CV.
 
 ## Objetivo de producto
 
@@ -95,9 +95,22 @@ Según [stack.md](./stack.md):
 - [x] Guía [go-live.md](./go-live.md) (CORS Sanity, Auth domains, smoke)
 - [x] Login UI Figma (desktop + tablet landscape + tablet portrait + mobile) — ver [ui.md](./ui.md)
 - [x] Home dashboard Figma (`41:4` desktop + `61:161` landscape + `61:4` portrait + `61:315` mobile) — dark nav + light hub + 6 content-type cards
+- [x] Site Settings desktop Figma (`62:4`) — split panels General Info + Social Links
+- [x] Profile desktop Figma (`62:632`) — Identity & Roles + Biography paragraphs
+- [x] Projects list empty desktop Figma (`66:269`)
+- [x] Projects list populated desktop Figma (`65:4`) — table + featured + edit/delete
+- [x] Project form desktop Figma (`65:118`) — stacked sections General → Gallery
+- [x] Experiences list empty desktop Figma (`66:316`)
+- [x] Experiences list populated desktop Figma (`65:520`)
+- [x] Experience form desktop Figma (`65:573`)
+- [x] Courses list empty desktop Figma (`66:5`)
+- [x] Courses list populated desktop Figma (`66:48`)
+- [x] Course form desktop Figma (`66:152`)
+- [x] Navigation desktop Figma (`66:362`)
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
-- [ ] (Siguiente UI) shell + pantallas editoriales light alineadas a Figma/tokens CV
+- [ ] (Siguiente UI) shell search contextual ampliado / polish residual
+- [ ] (Later) tests + lint → CI
 
 **Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN — **código/docs listos**; falta confirmación operador CORS + deploy CV.
 

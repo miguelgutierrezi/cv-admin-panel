@@ -1,28 +1,117 @@
-@use '../../../styles/form' as *;
+@use '../../../styles/edit';
 
-.back {
-  display: inline-block;
-  margin-bottom: 0.35rem;
-  color: #0b5fff;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.page__actions {
+.edit__stack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.section-title {
-  margin: 0.5rem 0 0;
-  font-size: 1.15rem;
+.edit__panels--single {
+  grid-template-columns: 1fr;
 }
 
-.field--check {
-  align-content: end;
+.field__control--select {
+  position: relative;
+}
+
+.field__control select {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'Geist Sans', 'Geist', system-ui, sans-serif;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.field__select-hint {
+  flex-shrink: 0;
+  color: var(--slate);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.featured-field {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.featured-field__label {
+  color: var(--dim);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.featured-toggle {
+  display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding-bottom: 0.4rem;
+  gap: 8px;
+  width: fit-content;
+  min-width: 160px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--dim);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.featured-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.featured-toggle__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: transparent;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.featured-toggle--on {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+
+.featured-toggle--on .featured-toggle__box {
+  border-color: #10b981;
+  background: #10b981;
+  color: #fff;
+}
+
+.field-row--order {
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.field-row--order .field--order {
+  width: 180px;
+  flex: 0 0 180px;
+}
+
+@media (max-width: 720px) {
+  .field-row--order .field--order {
+    width: 100%;
+    flex: 1 1 auto;
+  }
 }

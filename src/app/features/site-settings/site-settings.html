@@ -1,50 +1,159 @@
-<section class="page">
-  <header class="page__head">
-    <h1>Site settings</h1>
-    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-      {{ saving() ? 'Guardando…' : 'Guardar' }}
-    </button>
-  </header>
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/">&lt;- Content Types</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">Site Settings</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">&gt; EDITING_INSTANCE</p>
+        <h1 class="edit__title">// Site Settings</h1>
+      </div>
+      <div class="edit__actions">
+        <button
+          type="button"
+          class="edit__btn edit__btn--ghost"
+          [disabled]="saving() || loading() || !form.dirty"
+          (click)="discard()"
+        >
+          Descartar
+        </button>
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field">
-        <span>Nombre completo</span>
-        <input formControlName="name" />
-      </label>
-      <label class="field">
-        <span>Brand handle</span>
-        <input formControlName="brandHandle" />
-      </label>
-      <label class="field">
-        <span>Emails (uno por línea)</span>
-        <textarea formControlName="emailsText" rows="3"></textarea>
-      </label>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="edit__panels">
+        <section class="panel">
+          <header class="panel__head">
+            <p class="panel__kicker"># SECTION_01</p>
+            <h2 class="panel__title">General Info</h2>
+          </header>
+          <hr class="panel__rule" />
 
-      <div class="block" formArrayName="socialLinks">
-        <div class="block__head">
-          <h2>Social links</h2>
-          <button type="button" class="btn btn--ghost" (click)="addSocial()">Añadir</button>
-        </div>
-        @for (group of socialLinks.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
-            <label class="field"><span>id</span><input formControlName="id" /></label>
-            <label class="field"><span>label</span><input formControlName="label" /></label>
-            <label class="field"><span>url</span><input formControlName="url" /></label>
-            <label class="field"><span>iconUrl</span><input formControlName="iconUrl" /></label>
-            <button type="button" class="btn btn--ghost" (click)="removeSocial(i)">Quitar</button>
+          <label class="field">
+            <span class="field__label">
+              $ Nombre completo
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="name" autocomplete="name" />
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">
+              $ Brand handle
+              <span class="field__req" aria-hidden="true">*</span>
+            </span>
+            <span class="field__control">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <input formControlName="brandHandle" autocomplete="username" />
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">$ Emails (uno por línea)</span>
+            <span class="field__control field__control--textarea">
+              <span class="field__prompt" aria-hidden="true">&gt;</span>
+              <textarea formControlName="emailsText" rows="3"></textarea>
+            </span>
+          </label>
+        </section>
+
+        <section class="panel panel--stack" formArrayName="socialLinks">
+          <header class="panel__head panel__head--row">
+            <div>
+              <p class="panel__kicker"># SECTION_02</p>
+              <h2 class="panel__title">Social Links</h2>
+            </div>
+            <button type="button" class="edit__btn edit__btn--add" (click)="addSocial()">
+              + Añadir
+            </button>
+          </header>
+          <hr class="panel__rule" />
+
+          <div class="item-stack">
+            @for (group of socialLinks.controls; track $index; let i = $index) {
+              <article class="item" [formGroupName]="i">
+                <header class="item__chrome">
+                  <span class="item__dots" aria-hidden="true">
+                    <i class="item__dot item__dot--red"></i>
+                    <i class="item__dot item__dot--yellow"></i>
+                    <i class="item__dot item__dot--green"></i>
+                  </span>
+                  <span class="item__chrome-label">{{ socialChromeLabel(i) }}</span>
+                </header>
+                <div class="item__body">
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">$ ID</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="id" />
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">$ Label</span>
+                      <span class="field__control">
+                        <span class="field__prompt" aria-hidden="true">&gt;</span>
+                        <input formControlName="label" />
+                      </span>
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span class="field__label">$ URL</span>
+                    <span class="field__control">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <input formControlName="url" />
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">$ Icon Ident</span>
+                    <span class="field__control">
+                      <span class="field__prompt" aria-hidden="true">&gt;</span>
+                      <input formControlName="iconUrl" placeholder="assets/… o https://…" />
+                    </span>
+                  </label>
+                  <button type="button" class="item__remove" (click)="removeSocial(i)">
+                    [x] Quitar {{ removeLabel(i) }}
+                  </button>
+                </div>
+              </article>
+            }
           </div>
-        }
+        </section>
       </div>
 
       @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
+        <p class="edit__ok" role="status">{{ ok }}</p>
       }
       @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
+        <p class="edit__err" role="alert">{{ err }}</p>
       }
     </form>
   }
+
+  <footer class="edit__footer">
+    <span>CMS v1 · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

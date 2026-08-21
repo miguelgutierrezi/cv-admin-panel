@@ -1,14 +1,16 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
+import { AuthService } from '../../auth/auth.service';
 import { SECTION_IDS, emptyLocalized, type NavigationDoc } from '../../models/cms.models';
 
 @Component({
   selector: 'app-navigation-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './navigation.html',
   styleUrl: './navigation.scss',
 })
@@ -16,6 +18,7 @@ export class NavigationPage implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly read = inject(SanityReadService);
   private readonly proxy = inject(SanityProxyService);
+  private readonly auth = inject(AuthService);
 
   readonly sectionIds = SECTION_IDS;
   readonly loading = signal(true);
@@ -28,6 +31,10 @@ export class NavigationPage implements OnInit {
   readonly form = this.fb.nonNullable.group({
     items: this.fb.array([this.createItemGroup()]),
   });
+
+  readonly footerUser = computed(
+    () => this.auth.user()?.email ?? 'miguel.gutierrez',
+  );
 
   get items(): FormArray {
     return this.form.controls.items;
@@ -52,7 +59,12 @@ export class NavigationPage implements OnInit {
   }
 
   removeItem(index: number): void {
+    if (this.items.length <= 1) {
+      this.error.set('Navigation debe tener al menos un item.');
+      return;
+    }
     this.items.removeAt(index);
+    this.error.set(null);
   }
 
   async save(): Promise<void> {
@@ -85,6 +97,7 @@ export class NavigationPage implements OnInit {
         action: 'createOrReplace',
         document: document as unknown as { _id: string; _type: string; [key: string]: unknown },
       });
+      this.form.markAsPristine();
       this.message.set('Navigation guardada en Sanity.');
     } catch (err) {
       this.error.set(this.mapError(err));
@@ -110,9 +123,10 @@ export class NavigationPage implements OnInit {
           id: [item.id || 'about', Validators.required],
           labelEs: [item.label?.es ?? '', Validators.required],
           labelEn: [item.label?.en ?? '', Validators.required],
-        })
+        }),
       );
     }
+    this.form.markAsPristine();
   }
 
   private mapError(err: unknown): string {

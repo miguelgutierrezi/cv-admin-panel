@@ -7,7 +7,7 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 6 **done**; login + home dashboard Figma (`41:4` / `61:161` / `61:4` / `61:315`) **done** — `docs/ui.md`. Siguiente: Phase 7 / pantallas editoriales Figma cuando existan. Hosting: https://cv-admin-panel.web.app. CORS: `docs/go-live.md`.
+Estado: Phase 6 **done**; Figma editorial hasta Navigation (`66:362`) **done** — `docs/ui.md`. Hosting: https://cv-admin-panel.web.app. CORS: `docs/go-live.md`.
 
 ## Leer primero
 

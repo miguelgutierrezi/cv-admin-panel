@@ -1,10 +1,12 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
+import { AuthService } from '../../auth/auth.service';
 import {
   FEATURE_ICONS,
   emptyLocalized,
@@ -30,6 +32,7 @@ export class ProjectFormPage implements OnInit {
   private readonly router = inject(Router);
   private readonly read = inject(SanityReadService);
   private readonly proxy = inject(SanityProxyService);
+  private readonly auth = inject(AuthService);
 
   readonly icons = FEATURE_ICONS;
   readonly loading = signal(true);
@@ -38,6 +41,7 @@ export class ProjectFormPage implements OnInit {
   readonly isNew = signal(true);
   readonly message = signal<string | null>(null);
   readonly error = signal<string | null>(null);
+  private readonly formEpoch = signal(0);
 
   private documentId = '';
 
@@ -69,6 +73,41 @@ export class ProjectFormPage implements OnInit {
     gallery: this.fb.array([]),
   });
 
+  readonly pageTitle = computed(() =>
+    this.isNew() ? '// Nuevo project' : '// Editar project',
+  );
+
+  readonly crumbLabel = computed(() => {
+    this.formEpoch();
+    if (this.isNew()) {
+      return 'nuevo';
+    }
+    const title = this.form.controls.title.value.trim();
+    const slug = this.form.controls.slug.value.trim();
+    return title || slug || this.documentId || 'project';
+  });
+
+  readonly statusLine = computed(() => {
+    this.formEpoch();
+    const status = this.form.dirty ? 'unsaved_changes' : 'saved';
+    const id =
+      this.documentId ||
+      (this.form.controls.slug.value.trim()
+        ? `project-${normalizeSlug(this.form.controls.slug.value)}`
+        : 'new');
+    return `Status: ${status} • Document id: ${id} • Localized: ES / EN`;
+  });
+
+  readonly footerUser = computed(
+    () => this.auth.user()?.email ?? 'miguel.gutierrez',
+  );
+
+  constructor() {
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.formEpoch.update((n) => n + 1);
+    });
+  }
+
   get body(): FormArray {
     return this.form.controls.body;
   }
@@ -98,6 +137,8 @@ export class ProjectFormPage implements OnInit {
         this.error.set('Project no encontrado.');
       } else {
         this.patchForm(doc);
+        this.form.markAsPristine();
+        this.formEpoch.update((n) => n + 1);
       }
     } catch (err) {
       this.error.set(this.mapError(err));
@@ -106,28 +147,54 @@ export class ProjectFormPage implements OnInit {
     }
   }
 
+  bodyChromeLabel(index: number): string {
+    return `Body Paragraph · ${String(index + 1).padStart(2, '0')}`;
+  }
+
+  featureChromeLabel(index: number): string {
+    const id = (this.features.at(index).getRawValue() as { id: string }).id?.trim();
+    return `Feature Config · ${id || 'nuevo'}`;
+  }
+
+  galleryChromeLabel(index: number): string {
+    const id = (this.gallery.at(index).getRawValue() as { id: string }).id?.trim();
+    return `Gallery Item · ${id || 'nuevo'}`;
+  }
+
   addBody(): void {
     this.body.push(this.createLocalizedGroup());
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   removeBody(i: number): void {
     this.body.removeAt(i);
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   addFeature(): void {
     this.features.push(this.createFeatureGroup());
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   removeFeature(i: number): void {
     this.features.removeAt(i);
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   addGallery(): void {
     this.gallery.push(this.createGalleryGroup());
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   removeGallery(i: number): void {
     this.gallery.removeAt(i);
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   async save(): Promise<void> {
@@ -228,8 +295,10 @@ export class ProjectFormPage implements OnInit {
       });
       this.documentId = id;
       this.isNew.set(false);
+      this.form.markAsPristine();
+      this.formEpoch.update((n) => n + 1);
       this.message.set('Project guardado en Sanity.');
-      await this.router.navigate(['/projects', id]);
+      await this.router.navigate(['/projects', id], { replaceUrl: true });
     } catch (err) {
       this.error.set(this.mapError(err));
     } finally {
@@ -298,7 +367,7 @@ export class ProjectFormPage implements OnInit {
         this.fb.nonNullable.group({
           es: [p.es ?? '', Validators.required],
           en: [p.en ?? '', Validators.required],
-        })
+        }),
       );
     }
 

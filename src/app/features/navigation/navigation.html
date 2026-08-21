@@ -1,45 +1,99 @@
-<section class="page">
-  <header class="page__head">
-    <h1>Navigation</h1>
-    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
-      {{ saving() ? 'Guardando…' : 'Guardar' }}
-    </button>
-  </header>
+<section class="edit">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a class="edit__crumb-link" routerLink="/">&lt;- Content Types</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-muted">Navigation</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">&gt; CONFIGURING_NAVIGATION</p>
+        <h1 class="edit__title">// Navigation</h1>
+      </div>
+      <div class="edit__actions">
+        <button
+          type="button"
+          class="edit__btn edit__btn--save nav-save"
+          [disabled]="saving() || loading()"
+          (click)="save()"
+        >
+          {{ saving() ? 'Guardando…' : '[+] Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else {
-    <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <div class="block" formArrayName="items">
-        <div class="block__head">
-          <h2>Items</h2>
-          <button type="button" class="btn btn--ghost" (click)="addItem()">Añadir</button>
-        </div>
+    <form class="edit__form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="nav-section-head">
+        <h2 class="nav-section-head__title">
+          <span class="nav-section-head__hash" aria-hidden="true">#</span>
+          Items
+        </h2>
+        <button type="button" class="nav-add" (click)="addItem()">+ Añadir</button>
+      </div>
+
+      <div class="nav-items" formArrayName="items">
         @for (group of items.controls; track $index; let i = $index) {
-          <div class="card" [formGroupName]="i">
+          <div class="nav-card" [formGroupName]="i">
             <label class="field">
-              <span>section id</span>
-              <select formControlName="id">
-                @for (section of sectionIds; track section) {
-                  <option [value]="section">{{ section }}</option>
-                }
-              </select>
+              <span class="field__label">$ section id</span>
+              <span class="field__control field__control--select nav-select">
+                <select formControlName="id">
+                  @for (section of sectionIds; track section) {
+                    <option [value]="section">{{ section }}</option>
+                  }
+                </select>
+                <span class="field__select-hint" aria-hidden="true">[v]</span>
+              </span>
             </label>
+
             <div class="field-row">
-              <label class="field"><span>label ES</span><input formControlName="labelEs" /></label>
-              <label class="field"><span>label EN</span><input formControlName="labelEn" /></label>
+              <label class="field">
+                <span class="field__label">$ label (ES)</span>
+                <span class="field__control">
+                  <span class="field__prompt" aria-hidden="true">&gt;</span>
+                  <input
+                    formControlName="labelEs"
+                    placeholder="e.g. Proyectos"
+                    autocomplete="off"
+                  />
+                </span>
+              </label>
+              <label class="field">
+                <span class="field__label">$ label (EN)</span>
+                <span class="field__control">
+                  <span class="field__prompt" aria-hidden="true">&gt;</span>
+                  <input
+                    formControlName="labelEn"
+                    placeholder="e.g. Projects"
+                    autocomplete="off"
+                  />
+                </span>
+              </label>
             </div>
-            <button type="button" class="btn btn--ghost" (click)="removeItem(i)">Quitar</button>
+
+            <button type="button" class="nav-remove" (click)="removeItem(i)">
+              [x] Quitar Item
+            </button>
           </div>
         }
       </div>
 
       @if (message(); as ok) {
-        <p class="ok" role="status">{{ ok }}</p>
+        <p class="edit__ok" role="status">{{ ok }}</p>
       }
       @if (error(); as err) {
-        <p class="err" role="alert">{{ err }}</p>
+        <p class="edit__err" role="alert">{{ err }}</p>
       }
     </form>
   }
+
+  <footer class="edit__footer edit__footer--dark">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

@@ -1,10 +1,12 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
+import { AuthService } from '../../auth/auth.service';
 import { emptyLocalized, emptyLocalizedList, type ExperienceDoc } from '../../models/cms.models';
 import {
   assetOrHttpUrlValidator,
@@ -24,6 +26,7 @@ export class ExperienceFormPage implements OnInit {
   private readonly router = inject(Router);
   private readonly read = inject(SanityReadService);
   private readonly proxy = inject(SanityProxyService);
+  private readonly auth = inject(AuthService);
 
   readonly loading = signal(true);
   readonly saving = signal(false);
@@ -31,6 +34,7 @@ export class ExperienceFormPage implements OnInit {
   readonly isNew = signal(true);
   readonly message = signal<string | null>(null);
   readonly error = signal<string | null>(null);
+  private readonly formEpoch = signal(0);
 
   private documentId = '';
 
@@ -46,6 +50,39 @@ export class ExperienceFormPage implements OnInit {
     imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
     sortOrder: [0, Validators.required],
   });
+
+  readonly eyebrow = computed(() =>
+    this.isNew() ? '> NEW_DOCUMENT' : '> EDITING_DOCUMENT',
+  );
+
+  readonly pageTitle = computed(() => {
+    this.formEpoch();
+    if (this.isNew()) {
+      return '// Nueva experience';
+    }
+    const company = this.form.controls.company.value.trim();
+    return company ? `// ${company}` : '// Editar experience';
+  });
+
+  readonly crumbLabel = computed(() => {
+    this.formEpoch();
+    if (this.isNew()) {
+      return 'New Experience';
+    }
+    const company = this.form.controls.company.value.trim();
+    const slug = this.form.controls.slug.value.trim();
+    return company || slug || this.documentId || 'experience';
+  });
+
+  readonly footerUser = computed(
+    () => this.auth.user()?.email ?? 'miguel.gutierrez',
+  );
+
+  constructor() {
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.formEpoch.update((n) => n + 1);
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
@@ -102,8 +139,9 @@ export class ExperienceFormPage implements OnInit {
       });
       this.documentId = id;
       this.isNew.set(false);
+      this.form.markAsPristine();
       this.message.set('Experience guardada en Sanity.');
-      await this.router.navigate(['/experience', id]);
+      await this.router.navigate(['/experience', id], { replaceUrl: true });
     } catch (err) {
       this.error.set(this.mapError(err));
     } finally {
@@ -145,6 +183,7 @@ export class ExperienceFormPage implements OnInit {
       imageUrl: doc.imageUrl ?? '',
       sortOrder: doc.sortOrder ?? 0,
     });
+    this.form.markAsPristine();
   }
 
   private splitList(text: string): string[] {

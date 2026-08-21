@@ -1,1 +1,139 @@
-@use '../../../styles/form' as *;
+@use '../../../styles/edit';
+
+.edit__crumb-link {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.edit__crumb-link:hover {
+  color: var(--neon);
+}
+
+.nav-save {
+  padding: 10px 24px;
+  border-radius: 70px;
+  font-size: 14px;
+}
+
+.nav-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.nav-section-head__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav-section-head__hash {
+  color: var(--cyan);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nav-add {
+  padding: 8px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-add:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.nav-select {
+  min-height: 44px;
+  background: var(--surface);
+}
+
+.nav-select:focus-within {
+  border-color: var(--cyan);
+}
+
+.field__control--select {
+  position: relative;
+}
+
+.field__control select {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.field__select-hint {
+  flex-shrink: 0;
+  color: var(--slate);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.field__control {
+  min-height: 44px;
+}
+
+.nav-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--danger);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-remove:hover {
+  background: rgba(239, 68, 68, 0.06);
+}
+
+@media (max-width: 900px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}

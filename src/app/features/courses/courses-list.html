@@ -1,25 +1,117 @@
-<section class="page">
-  <header class="page__head">
-    <h1>Courses</h1>
-    <a class="btn" routerLink="/courses/new">Nuevo course</a>
-  </header>
+<section class="edit list-page">
+  <div class="edit__title-bar">
+    <nav class="edit__crumb" aria-label="Breadcrumb">
+      <a routerLink="/">&lt;- Content Types</a>
+      <span class="edit__crumb-sep" aria-hidden="true">/</span>
+      <span class="edit__crumb-current">Courses</span>
+    </nav>
+
+    <div class="edit__head">
+      <div class="edit__titles">
+        <p class="edit__eyebrow">
+          &gt; LIST_VIEW · {{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}
+        </p>
+        <h1 class="edit__title">// Courses</h1>
+      </div>
+      <a class="edit__btn edit__btn--save list-page__new" routerLink="/courses/new">
+        [+] Nuevo course
+      </a>
+    </div>
+  </div>
+
+  <div class="edit__status" role="status">
+    <p>{{ statusLine() }}</p>
+  </div>
 
   @if (loading()) {
-    <p>Cargando…</p>
+    <p class="edit__loading">Cargando…</p>
   } @else if (error(); as err) {
-    <p class="err" role="alert">{{ err }}</p>
-  } @else if (items().length === 0) {
-    <p>No hay courses en Sanity.</p>
+    <p class="edit__err" role="alert">{{ err }}</p>
+  } @else if (totalCount() === 0) {
+    <div class="list-empty">
+      <div class="list-empty__icon" aria-hidden="true">
+        <span>$_</span>
+      </div>
+      <div class="list-empty__text">
+        <p class="list-empty__title">No hay courses en Sanity.</p>
+        <p class="list-empty__hint">
+          Crea un nuevo documento para inicializar la colección "courses-main"
+        </p>
+      </div>
+    </div>
+  } @else if (visibleItems().length === 0) {
+    <div class="list-empty list-empty--compact">
+      <div class="list-empty__text">
+        <p class="list-empty__title">Ningún course coincide con la búsqueda.</p>
+        <p class="list-empty__hint">Prueba otro término en el grep de la barra superior.</p>
+      </div>
+    </div>
   } @else {
-    <ul class="list">
-      @for (item of items(); track item._id) {
-        <li>
-          <a [routerLink]="['/courses', item._id]">
-            <strong>{{ titleOf(item) }}</strong>
-            <span>#{{ item.sortOrder }} · {{ item.institution }} · {{ slugOf(item) }}</span>
-          </a>
-        </li>
+    <div class="data-table data-table--courses" role="table" aria-label="Courses">
+      <div class="data-table__head" role="row">
+        <div class="data-table__left data-table__left--courses" role="columnheader">
+          <span class="data-table__col-order data-table__col-order--wide"># ORDER</span>
+          <span class="data-table__col-details">COURSE DETAILS</span>
+          <span class="data-table__col-institution">INSTITUTION</span>
+        </div>
+        <div class="data-table__right" role="columnheader">
+          <span class="data-table__col-status data-table__col-status--course">STATUS</span>
+          <span class="data-table__col-controls data-table__col-controls--wide">CONTROLS</span>
+        </div>
+      </div>
+
+      @for (item of visibleItems(); track item._id; let i = $index) {
+        <div
+          class="data-table__row"
+          [class.data-table__row--alt]="i % 2 === 1"
+          role="row"
+        >
+          <div class="data-table__info data-table__info--courses">
+            <span class="data-table__order">#{{ item.sortOrder }}</span>
+            <div class="data-table__titles data-table__titles--course">
+              <strong>{{ titleOf(item) }}</strong>
+              <span>slug: {{ slugOf(item) }}</span>
+            </div>
+            <span class="data-table__institution">{{ item.institution || '—' }}</span>
+          </div>
+          <div class="data-table__meta">
+            <div class="data-table__status data-table__status--course">
+              @if (isPublished(item)) {
+                <span class="status-badge status-badge--published">✓ published</span>
+              } @else {
+                <span class="status-badge status-badge--draft">• draft</span>
+              }
+            </div>
+            <div class="data-table__controls data-table__controls--wide">
+              <a
+                class="data-table__icon-btn"
+                [routerLink]="['/courses', item._id]"
+                [attr.aria-label]="'Editar ' + titleOf(item)"
+              >
+                <img src="/assets/dashboard/icon-edit.svg" width="14" height="14" alt="" />
+              </a>
+              <button
+                type="button"
+                class="data-table__icon-btn"
+                [disabled]="deletingId() === item._id"
+                [attr.aria-label]="'Eliminar ' + titleOf(item)"
+                (click)="remove(item)"
+              >
+                <img src="/assets/dashboard/icon-trash.svg" width="14" height="14" alt="" />
+              </button>
+            </div>
+          </div>
+        </div>
       }
-    </ul>
+    </div>
   }
+
+  @if (actionError(); as actionErr) {
+    <p class="edit__err" role="alert">{{ actionErr }}</p>
+  }
+
+  <footer class="edit__footer">
+    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span>{{ footerUser() }}</span>
+  </footer>
 </section>

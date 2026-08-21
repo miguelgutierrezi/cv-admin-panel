@@ -1,9 +1,12 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
+import { AuthService } from '../../auth/auth.service';
 import type { SiteSettingsDoc } from '../../models/cms.models';
 import {
   httpUrlValidator,
@@ -11,9 +14,23 @@ import {
   slugValidator,
 } from '../../shared/cms-validators';
 
+type SocialDraft = {
+  id: string;
+  label: string;
+  url: string;
+  iconUrl: string;
+};
+
+type FormSnapshot = {
+  name: string;
+  brandHandle: string;
+  emailsText: string;
+  socialLinks: SocialDraft[];
+};
+
 @Component({
   selector: 'app-site-settings',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './site-settings.html',
   styleUrl: './site-settings.scss',
 })
@@ -21,13 +38,17 @@ export class SiteSettingsPage implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly read = inject(SanityReadService);
   private readonly proxy = inject(SanityProxyService);
+  private readonly auth = inject(AuthService);
 
   readonly loading = signal(true);
   readonly saving = signal(false);
   readonly message = signal<string | null>(null);
   readonly error = signal<string | null>(null);
+  /** Bumps when dirty/pristine changes so statusLine recomputes. */
+  private readonly formEpoch = signal(0);
 
   private documentId = 'siteSettings';
+  private snapshot: FormSnapshot | null = null;
 
   readonly form = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -35,6 +56,22 @@ export class SiteSettingsPage implements OnInit {
     emailsText: ['', Validators.required],
     socialLinks: this.fb.array([this.createSocialGroup()]),
   });
+
+  readonly statusLine = computed(() => {
+    this.formEpoch();
+    const status = this.form.dirty ? 'unsaved_changes' : 'synced';
+    return `Status: ${status} • Document id: ${this.documentId} • Localized: ES / EN`;
+  });
+
+  readonly footerUser = computed(
+    () => this.auth.user()?.email ?? 'miguel.gutierrez',
+  );
+
+  constructor() {
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.formEpoch.update((n) => n + 1);
+    });
+  }
 
   get socialLinks(): FormArray {
     return this.form.controls.socialLinks;
@@ -47,6 +84,9 @@ export class SiteSettingsPage implements OnInit {
         this.documentId = doc._id;
         this.patchForm(doc);
       }
+      this.captureSnapshot();
+      this.form.markAsPristine();
+      this.formEpoch.update((n) => n + 1);
     } catch (err) {
       this.error.set(this.mapError(err));
     } finally {
@@ -54,12 +94,38 @@ export class SiteSettingsPage implements OnInit {
     }
   }
 
+  socialChromeLabel(index: number): string {
+    const value = this.socialLinks.at(index).getRawValue() as SocialDraft;
+    const name = value.label.trim() || value.id.trim() || 'nuevo';
+    return `Social Link Config • ${name}`;
+  }
+
+  removeLabel(index: number): string {
+    const value = this.socialLinks.at(index).getRawValue() as SocialDraft;
+    return value.label.trim() || value.id.trim() || 'enlace';
+  }
+
   addSocial(): void {
     this.socialLinks.push(this.createSocialGroup());
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
   }
 
   removeSocial(index: number): void {
     this.socialLinks.removeAt(index);
+    this.form.markAsDirty();
+    this.formEpoch.update((n) => n + 1);
+  }
+
+  discard(): void {
+    if (!this.snapshot) {
+      return;
+    }
+    this.message.set(null);
+    this.error.set(null);
+    this.applySnapshot(this.snapshot);
+    this.form.markAsPristine();
+    this.formEpoch.update((n) => n + 1);
   }
 
   async save(): Promise<void> {
@@ -108,6 +174,9 @@ export class SiteSettingsPage implements OnInit {
           [key: string]: unknown;
         },
       });
+      this.captureSnapshot();
+      this.form.markAsPristine();
+      this.formEpoch.update((n) => n + 1);
       this.message.set('Site settings guardado en Sanity.');
     } catch (err) {
       this.error.set(this.mapError(err));
@@ -127,7 +196,9 @@ export class SiteSettingsPage implements OnInit {
 
   private patchForm(doc: SiteSettingsDoc): void {
     this.socialLinks.clear();
-    const links = doc.socialLinks?.length ? doc.socialLinks : [{ id: '', label: '', url: '', iconUrl: '' }];
+    const links = doc.socialLinks?.length
+      ? doc.socialLinks
+      : [{ id: '', label: '', url: '', iconUrl: '' }];
     for (const link of links) {
       const group = this.createSocialGroup();
       group.patchValue({
@@ -142,6 +213,30 @@ export class SiteSettingsPage implements OnInit {
       name: doc.name ?? '',
       brandHandle: doc.brandHandle ?? '',
       emailsText: (doc.emails ?? []).join('\n'),
+    });
+  }
+
+  private captureSnapshot(): void {
+    const raw = this.form.getRawValue();
+    this.snapshot = {
+      name: raw.name,
+      brandHandle: raw.brandHandle,
+      emailsText: raw.emailsText,
+      socialLinks: raw.socialLinks.map((s) => ({ ...s })),
+    };
+  }
+
+  private applySnapshot(snap: FormSnapshot): void {
+    this.socialLinks.clear();
+    for (const link of snap.socialLinks) {
+      const group = this.createSocialGroup();
+      group.patchValue(link);
+      this.socialLinks.push(group);
+    }
+    this.form.patchValue({
+      name: snap.name,
+      brandHandle: snap.brandHandle,
+      emailsText: snap.emailsText,
     });
   }
 
