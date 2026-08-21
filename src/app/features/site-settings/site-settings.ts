@@ -64,6 +64,13 @@ export class SiteSettingsPage implements OnInit {
     return `Status: ${status} • Document id: ${this.documentId} • Localized: ES / EN`;
   });
 
+  /** Compact status for mobile Figma 62:496 */
+  readonly statusLineShort = computed(() => {
+    this.formEpoch();
+    const status = this.form.dirty ? 'unsaved_changes' : 'synced';
+    return `Status: ${status} • Doc: ${this.documentId}`;
+  });
+
   readonly footerUser = computed(
     () => this.auth.user()?.email ?? 'miguel.gutierrez',
   );

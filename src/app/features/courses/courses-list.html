@@ -15,7 +15,11 @@
     <div class="edit__head">
       <div class="edit__titles">
         <p class="edit__eyebrow" [class.edit__eyebrow--muted]="totalCount() === 0">
-          &gt; LIST_VIEW · {{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}
+          &gt; LIST_VIEW ·
+          <span class="edit__count-full"
+            >{{ totalCount() }} documento{{ totalCount() === 1 ? '' : 's' }}</span
+          >
+          <span class="edit__count-short">{{ totalCount() }} docs</span>
         </p>
         <h1 class="edit__title">// Courses</h1>
       </div>
@@ -26,7 +30,8 @@
   </div>
 
   <div class="edit__status" role="status">
-    <p>{{ statusLine() }}</p>
+    <p class="edit__status-full">{{ statusLine() }}</p>
+    <p class="edit__status-short">{{ statusLineMobile() }}</p>
   </div>
 
   @if (loading()) {
@@ -64,6 +69,10 @@
           <span class="data-table__col-status data-table__col-status--course">STATUS</span>
           <span class="data-table__col-controls data-table__col-controls--wide">CONTROLS</span>
         </div>
+        <span class="data-table__m-order" role="columnheader">#</span>
+        <span class="data-table__m-details" role="columnheader">COURSE DETAILS</span>
+        <span class="data-table__m-status" role="columnheader">STATUS</span>
+        <span class="data-table__m-ctrl" role="columnheader">CTRL</span>
       </div>
 
       @for (item of visibleItems(); track item._id; let i = $index) {
@@ -76,16 +85,23 @@
             <span class="data-table__order">#{{ item.sortOrder }}</span>
             <div class="data-table__titles data-table__titles--course">
               <strong>{{ titleOf(item) }}</strong>
-              <span>slug: {{ slugOf(item) }}</span>
+              <span class="data-table__slug-full">slug: {{ slugOf(item) }}</span>
+              <span class="data-table__inst-mobile">{{ item.institution || '—' }}</span>
             </div>
             <span class="data-table__institution">{{ item.institution || '—' }}</span>
           </div>
           <div class="data-table__meta">
             <div class="data-table__status data-table__status--course">
               @if (isPublished(item)) {
-                <span class="status-badge status-badge--published">✓ published</span>
+                <span class="status-badge status-badge--published">
+                  <span class="status-badge__full">✓ published</span>
+                  <span class="status-badge__short">published</span>
+                </span>
               } @else {
-                <span class="status-badge status-badge--draft">• draft</span>
+                <span class="status-badge status-badge--draft">
+                  <span class="status-badge__full">• draft</span>
+                  <span class="status-badge__short">draft</span>
+                </span>
               }
             </div>
             <div class="data-table__controls data-table__controls--wide">
@@ -117,7 +133,11 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full"
+      >CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span
+    >
+    <span class="edit__footer-short">CMS · Sanity Studio Client v3.2 · Conectado</span>
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
+    <span class="edit__footer-user-short">{{ footerUser() }}</span>
   </footer>
 </section>

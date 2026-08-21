@@ -7,7 +7,7 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 6 **done**; Figma editorial hasta Navigation (`66:362`) **done** — `docs/ui.md`. Hosting: https://cv-admin-panel.web.app. CORS: `docs/go-live.md`.
+Estado: Phase 6 **done**; Figma editorial Site → Navigation (**desktop + tablet + mobile**) **done** — `docs/ui.md`. Tab title: **Admin - Miguel Ángel Gutiérrez Ibagué**. Hosting: https://cv-admin-panel.web.app. CORS: `docs/go-live.md`.
 
 ## Leer primero
 
@@ -36,6 +36,6 @@ Estado: Phase 6 **done**; Figma editorial hasta Navigation (`66:362`) **done** �
 
 ## Orden de trabajo
 
-Docs + stack ✓ → scaffold ✓ → Auth ✓ → Cloud Functions proxy ✓ → pantallas MVP ✓ → slice 2 ✓ → polish/CORS/`adminLoginUrl` ✓ → login Figma ✓ → Phase 7 / Figma editorial cuando se pida
+Docs + stack ✓ → scaffold ✓ → Auth ✓ → Cloud Functions proxy ✓ → pantallas MVP ✓ → slice 2 ✓ → polish/CORS/`adminLoginUrl` ✓ → Figma login + editorial (desktop/tablet/mobile) ✓ → Phase 7 later
 
 Tras cualquier cambio (código o UI), sincronizar o revisar `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` y `.cursor/rules/`.

@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 6 **done**; Figma editorial slice (Site → Navigation) **done**. Operador: CORS Sanity + redeploy CV.
+Estado del workspace: Phase 6 **done**; Figma editorial (Site → Navigation) **desktop + tablet + mobile** **done**. Document title: `Admin - Miguel Ángel Gutiérrez Ibagué`. Operador: CORS Sanity + redeploy CV.
 
 ## Objetivo de producto
 
@@ -120,9 +120,14 @@ Según [stack.md](./stack.md):
 - [x] Course form tablet landscape Figma (`72:674`)
 - [x] Navigation tablet landscape Figma (`73:4`)
 - [x] Site Settings tablet portrait Figma (`62:349`)
+- [x] Profile tablet portrait Figma (`68:161`)
+- [x] Projects / Experiences / Courses lists + forms tablet portrait (see [ui.md](./ui.md))
+- [x] Navigation tablet portrait Figma (`77:319`)
+- [x] Site → Navigation **mobile** Figma (incl. `62:496`, `68:302`, `77:409`…`79:92`)
+- [x] Shell navbar unificado desktop (`0 40px` / 72) + botones / footers light (overrides en [ui.md](./ui.md))
+- [x] Document title: `Admin - Miguel Ángel Gutiérrez Ibagué`
 - [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
-- [ ] (Siguiente UI) otras pantallas tablet+mobile Figma
 - [ ] (Later) tests + lint → CI
 
 **Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN — **código/docs listos**; falta confirmación operador CORS + deploy CV.
@@ -161,7 +166,7 @@ Según [stack.md](./stack.md):
 | Doc | Por qué |
 | --- | --- |
 | [stack.md](./stack.md) | Stack recomendada y camino bloqueado |
-| [ui.md](./ui.md) | Login Figma / dirección visual |
+| [ui.md](./ui.md) | Figma / dirección visual (login + editorial + shell) |
 | [deploy.md](./deploy.md) | Dos sites Hosting + GitHub Actions |
 | [auth-setup.md](./auth-setup.md) | Email/Password + usuario |
 | [contract.md](./contract.md) | Non-negotiables locales |

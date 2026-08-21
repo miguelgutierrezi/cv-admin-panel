@@ -55,6 +55,14 @@ export class CoursesListPage implements OnInit {
     return `Collection: courses-main • Query matches: ${matches} records found • Language: ES / EN`;
   });
 
+  readonly statusLineMobile = computed(() => {
+    const matches = this.loading() ? 0 : this.visibleItems().length;
+    if (this.totalCount() === 0) {
+      return `Collection: courses-main\nQuery matches: ${matches} records found\nLanguage: ES / EN`;
+    }
+    return `Collection: courses-main\nMatches: ${matches} records found • Language: ES / EN`;
+  });
+
   readonly footerUser = computed(
     () => this.auth.user()?.email ?? 'miguel.gutierrez',
   );

@@ -4,7 +4,7 @@
 
 This repo is the **custom admin panel** for Miguel Gutiérrez’s portfolio CMS (Sanity). It is the authenticated **write** path. The public site is the sibling `miguelgutierrezi.github.io` and must remain CDN read-only with a local content fallback.
 
-Repo status: Phase 6 done; editorial Figma through Navigation (`66:362`) done (`docs/ui.md`). Canonical agent entry: `AGENTS.md`.
+Repo status: Phase 6 done; editorial Figma Site → Navigation (desktop + tablet + mobile) done (`docs/ui.md`). Tab title: **Admin - Miguel Ángel Gutiérrez Ibagué**. Canonical agent entry: `AGENTS.md`.
 
 ## Recommended stack (v1)
 
@@ -46,13 +46,10 @@ Repo status: Phase 6 done; editorial Figma through Navigation (`66:362`) done (`
 3. Firebase Auth ✓
 4. Cloud Functions write proxy ✓
 5. MVP screens: site, profile, projects ✓
-6. Slice 2: experience, courses, navigation ← done
-7. Polish / go-live ← done
-8. Login Figma UI ← done (`docs/ui.md`)
-9. Tests / lint → CI ← later
-10. Editorial screens Figma ← when frames exist
-7. Polish, deploy, CORS, portfolio Login URL (prod)
-8. Later: real tests + lint → CI
+6. Slice 2: experience, courses, navigation ✓
+7. Polish / go-live + Login Figma + editorial Figma (desktop/tablet/mobile) ✓ — `docs/ui.md`
+8. Tests / lint → CI ← later
+9. Operator: Sanity CORS + redeploy CV Hosting
 
 ## Commands
 

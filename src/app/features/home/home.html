@@ -32,11 +32,7 @@
   } @else {
     <div class="dash__grid-cards">
       @for (card of cards(); track card.path) {
-        <a
-          class="card"
-          [class.card--featured]="card.featured"
-          [routerLink]="card.path"
-        >
+        <a class="card" [routerLink]="card.path">
           <div class="card__chrome">
             <span class="card__dots" aria-hidden="true">
               <i class="card__dot card__dot--red"></i>

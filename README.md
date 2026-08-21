@@ -19,7 +19,7 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 6 polish + go-live — done**. Editorial Figma through **Navigation** (`66:362`) — [docs/ui.md](docs/ui.md). Operator: Sanity CORS + redeploy CV.
+**Phase 6 polish + go-live — done**. Editorial Figma through **Navigation** (desktop + tablet + mobile) — [docs/ui.md](docs/ui.md). Browser tab title: **Admin - Miguel Ángel Gutiérrez Ibagué**. Operator: Sanity CORS + redeploy CV.
 
 If CDN reads fail in the admin, add CORS origins in Sanity Manage: `http://localhost:4300` and `https://cv-admin-panel.web.app`.
 
@@ -86,7 +86,7 @@ See **[docs/stack.md](docs/stack.md)**.
 
 | Doc | Purpose |
 | --- | --- |
-| [docs/ui.md](docs/ui.md) | Login Figma / visual direction |
+| [docs/ui.md](docs/ui.md) | Figma / visual direction (login + editorial + shell) |
 | [docs/go-live.md](docs/go-live.md) | Phase 6: CORS, Auth domains, smoke |
 | [docs/proxy-setup.md](docs/proxy-setup.md) | Sanity write proxy + secrets (Phase 3) |
 | [docs/deploy.md](docs/deploy.md) | Hosting dual-site + GitHub Actions |

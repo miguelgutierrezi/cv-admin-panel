@@ -33,7 +33,8 @@
   </div>
 
   <div class="edit__status" role="status">
-    <p>{{ statusLine() }}</p>
+    <p class="edit__status-full">{{ statusLine() }}</p>
+    <p class="edit__status-short">{{ statusLineShort() }}</p>
   </div>
 
   @if (message(); as ok) {
@@ -157,7 +158,8 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS v1 · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span class="edit__footer-full">CMS v1 · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span class="edit__footer-short">CMS v3.2 • Conectado</span>
     <span>{{ footerUser() }}</span>
   </footer>
 </section>

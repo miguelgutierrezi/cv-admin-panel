@@ -32,6 +32,8 @@ export class NavigationPage implements OnInit {
     items: this.fb.array([this.createItemGroup()]),
   });
 
+  private snapshot: ReturnType<typeof this.form.getRawValue> | null = null;
+
   readonly footerUser = computed(
     () => this.auth.user()?.email ?? 'miguel.gutierrez',
   );
@@ -47,6 +49,7 @@ export class NavigationPage implements OnInit {
         this.documentId = doc._id;
         this.patchForm(doc);
       }
+      this.captureSnapshot();
     } catch (err) {
       this.error.set(this.mapError(err));
     } finally {
@@ -54,8 +57,18 @@ export class NavigationPage implements OnInit {
     }
   }
 
+  discard(): void {
+    if (!this.snapshot) {
+      return;
+    }
+    this.applySnapshot(this.snapshot);
+    this.message.set(null);
+    this.error.set(null);
+  }
+
   addItem(): void {
     this.items.push(this.createItemGroup());
+    this.form.markAsDirty();
   }
 
   removeItem(index: number): void {
@@ -64,6 +77,7 @@ export class NavigationPage implements OnInit {
       return;
     }
     this.items.removeAt(index);
+    this.form.markAsDirty();
     this.error.set(null);
   }
 
@@ -99,6 +113,7 @@ export class NavigationPage implements OnInit {
         document: document as unknown as { _id: string; _type: string; [key: string]: unknown },
       });
       this.form.markAsPristine();
+      this.captureSnapshot();
       this.message.set('Navigation guardada en Sanity.');
     } catch (err) {
       this.error.set(this.mapError(err));
@@ -126,6 +141,29 @@ export class NavigationPage implements OnInit {
           labelEn: [item.label?.en ?? '', Validators.required],
         }),
       );
+    }
+    this.form.markAsPristine();
+  }
+
+  private captureSnapshot(): void {
+    this.snapshot = JSON.parse(
+      JSON.stringify(this.form.getRawValue()),
+    ) as ReturnType<typeof this.form.getRawValue>;
+  }
+
+  private applySnapshot(snap: NonNullable<typeof this.snapshot>): void {
+    this.items.clear();
+    for (const item of snap.items) {
+      this.items.push(
+        this.fb.nonNullable.group({
+          id: [item.id, Validators.required],
+          labelEs: [item.labelEs, Validators.required],
+          labelEn: [item.labelEn, Validators.required],
+        }),
+      );
+    }
+    if (this.items.length === 0) {
+      this.items.push(this.createItemGroup());
     }
     this.form.markAsPristine();
   }

@@ -47,6 +47,14 @@ export class ProjectsListPage implements OnInit {
     return `Collection: projects-main • Query matches: ${matches} records found • Language: ES / EN`;
   });
 
+  readonly statusLineMobile = computed(() => {
+    const matches = this.loading() ? 0 : this.visibleProjects().length;
+    if (this.totalCount() === 0) {
+      return `Collection: projects-main\nQuery matches: ${matches} records found\nLanguage: ES / EN`;
+    }
+    return `Collection: projects-main • Match: ${matches} records\nLanguage: ES / EN`;
+  });
+
   readonly footerUser = computed(
     () => this.auth.user()?.email ?? 'miguel.gutierrez',
   );

@@ -1,7 +1,10 @@
 <section class="edit">
   <div class="edit__title-bar">
     <nav class="edit__crumb" aria-label="Breadcrumb">
-      <a routerLink="/">&lt;- Content Types</a>
+      <a routerLink="/">
+        <span class="edit__crumb-long">&lt;- Content Types</span>
+        <span class="edit__crumb-short">&lt;- Content</span>
+      </a>
       <span class="edit__crumb-sep" aria-hidden="true">/</span>
       <span class="edit__crumb-current">Profile</span>
     </nav>
@@ -176,7 +179,9 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full">CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span class="edit__footer-short">CMS · Sanity Studio Client v3.2 • ES / EN</span>
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
+    <span class="edit__footer-user-short">User: {{ footerUser() }}</span>
   </footer>
 </section>

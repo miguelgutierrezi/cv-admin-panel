@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .shell {
@@ -20,10 +21,12 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 100%;
   height: 100%;
-  background: var(--bg);
+  max-height: 100%;
+  /* Light fill so overscroll/bleed matches main (not navy #0B0F19) */
+  background: var(--surface);
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .shell__glow {
@@ -56,12 +59,14 @@
   position: relative;
   z-index: 2;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  box-sizing: border-box;
+  height: 72px;
   min-height: 72px;
-  padding: 24px;
+  padding: 0 40px;
   background: var(--bg);
   border-bottom: 1px solid var(--border-neon);
   box-shadow: 0 0 24px rgba(0, 242, 254, 0.1);
@@ -210,20 +215,24 @@
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
   background: var(--surface);
   color: var(--ink);
 }
 
 .shell__main > *:not(router-outlet) {
   flex: 1 0 auto;
-  min-height: 100%;
   width: 100%;
+  /* Fill short pages; avoid % min-height that can add phantom scroll below footer */
+  min-height: 100%;
+  background: var(--surface);
 }
 
 /* Tablet landscape — Figma 61:161 */
 @media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
   .shell__nav {
     padding: 0 24px;
+    height: 64px;
     min-height: 64px;
   }
 
@@ -293,6 +302,7 @@
 @media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
   .shell__nav {
     padding: 0 24px;
+    height: 72px;
     min-height: 72px;
   }
 
@@ -329,6 +339,7 @@
   .shell__nav {
     flex-wrap: nowrap;
     gap: 12px;
+    height: auto;
     min-height: 0;
     padding: 16px;
   }

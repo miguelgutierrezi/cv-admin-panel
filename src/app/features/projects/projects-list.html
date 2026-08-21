@@ -29,7 +29,8 @@
   </div>
 
   <div class="edit__status" role="status">
-    <p>{{ statusLine() }}</p>
+    <p class="edit__status-full">{{ statusLine() }}</p>
+    <p class="edit__status-short">{{ statusLineMobile() }}</p>
   </div>
 
   @if (loading()) {
@@ -71,6 +72,10 @@
           <span class="proj-table__col-status">STATUS</span>
           <span class="proj-table__col-controls">CONTROLS</span>
         </div>
+        <span class="proj-table__head-mobile-left" role="columnheader">
+          # SCHEMATICS &amp; IDENTIFIER
+        </span>
+        <span class="proj-table__head-mobile-right" role="columnheader">META / CTRL</span>
       </div>
 
       @for (project of visibleProjects(); track project._id; let i = $index) {
@@ -83,7 +88,8 @@
             <span class="proj-table__order">#{{ project.sortOrder }}</span>
             <div class="proj-table__titles">
               <strong>{{ project.title || slugOf(project) }}</strong>
-              <span>slug: {{ slugOf(project) }}</span>
+              <span class="proj-table__slug-full">slug: {{ slugOf(project) }}</span>
+              <span class="proj-table__slug-short">{{ slugOf(project) }}</span>
             </div>
           </div>
           <div class="proj-table__meta">
@@ -121,7 +127,17 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full">CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    @if (totalCount() === 0) {
+      <span class="edit__footer-short edit__footer-short--split">
+        <span>CMS · Sanity Studio Client v3.2</span>
+        <span class="edit__footer-connected">• Conectado</span>
+      </span>
+      <span class="edit__footer-user-short">User: {{ footerUser() }}</span>
+    } @else {
+      <span class="edit__footer-short">CMS · Sanity Studio Client v3.2 · Conectado</span>
+      <span class="edit__footer-user-short">{{ footerUser() }}</span>
+    }
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
   </footer>
 </section>

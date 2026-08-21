@@ -12,7 +12,7 @@ This file is the **adapted** contract for `cv-admin-panel`. If the brief and thi
 | `miguelgutierrezi.github.io/` | Public Angular CV — **read-only** Sanity CDN |
 | `cv-admin-panel/` (this repo) | Custom editorial UI + authenticated **write** path |
 
-Portfolio Login redirects to `environment.adminLoginUrl` (empty in prod until this admin is deployed).
+Portfolio Login redirects to `environment.adminLoginUrl` (`http://localhost:4300` local; `https://cv-admin-panel.web.app` in prod — redeploy CV Hosting if Login is missing).
 
 ## Non-negotiables
 

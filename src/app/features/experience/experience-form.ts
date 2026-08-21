@@ -51,6 +51,8 @@ export class ExperienceFormPage implements OnInit {
     sortOrder: [0, Validators.required],
   });
 
+  private snapshot: ReturnType<typeof this.form.getRawValue> | null = null;
+
   readonly eyebrow = computed(() =>
     this.isNew() ? '> NEW_DOCUMENT' : '> EDITING_DOCUMENT',
   );
@@ -88,6 +90,7 @@ export class ExperienceFormPage implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id || id === 'new') {
       this.isNew.set(true);
+      this.captureSnapshot();
       this.loading.set(false);
       return;
     }
@@ -99,12 +102,26 @@ export class ExperienceFormPage implements OnInit {
         this.error.set('Experience no encontrada.');
       } else {
         this.patchForm(doc);
+        this.captureSnapshot();
       }
     } catch (err) {
       this.error.set(this.mapError(err));
     } finally {
       this.loading.set(false);
     }
+  }
+
+  discard(): void {
+    if (this.isNew() && !this.form.dirty) {
+      void this.router.navigateByUrl('/experience');
+      return;
+    }
+    if (!this.snapshot) {
+      return;
+    }
+    this.applySnapshot(this.snapshot);
+    this.message.set(null);
+    this.error.set(null);
   }
 
   async save(): Promise<void> {
@@ -141,6 +158,7 @@ export class ExperienceFormPage implements OnInit {
       this.documentId = id;
       this.isNew.set(false);
       this.form.markAsPristine();
+      this.captureSnapshot();
       this.message.set('Experience guardada en Sanity.');
       await this.router.navigate(['/experience', id], { replaceUrl: true });
     } catch (err) {
@@ -184,6 +202,15 @@ export class ExperienceFormPage implements OnInit {
       imageUrl: doc.imageUrl ?? '',
       sortOrder: doc.sortOrder ?? 0,
     });
+    this.form.markAsPristine();
+  }
+
+  private captureSnapshot(): void {
+    this.snapshot = { ...this.form.getRawValue() };
+  }
+
+  private applySnapshot(snap: NonNullable<typeof this.snapshot>): void {
+    this.form.patchValue(snap);
     this.form.markAsPristine();
   }
 

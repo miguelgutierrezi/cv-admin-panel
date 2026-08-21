@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 6 done**; editorial Figma through **Navigation** (`66:362`) done ([docs/ui.md](docs/ui.md)). Operator: Sanity CORS + redeploy CV.
+Current repo state: **Phase 6 done**; editorial Figma Site → Navigation (**desktop + tablet + mobile**) done ([docs/ui.md](docs/ui.md)). Tab title: **Admin - Miguel Ángel Gutiérrez Ibagué**. Operator: Sanity CORS + redeploy CV.
 
 ## Contract (read first)
 
@@ -47,7 +47,7 @@ See [docs/stack.md](docs/stack.md) for the full table. Default choices:
 ## Working style
 
 - Execute roadmap phases in order: docs → scaffold → auth ✓ → proxy ✓ → MVP ✓ → slice 2 ✓ → polish/go-live ✓ → **Phase 7 later**.
-- UI direction: login dark (Figma) → editorial light preferred; see [docs/ui.md](docs/ui.md). Sync agent docs on UI changes too.
+- UI direction: login dark (Figma) → editorial light; shell navbar + buttons/footers overrides in [docs/ui.md](docs/ui.md). Sync agent docs on UI changes too.
 - Never put `SANITY_WRITE_TOKEN` in Angular env or GitHub Actions secrets; use `firebase functions:secrets:set`.
 - Treat [docs/stack.md](docs/stack.md) as the default toolchain; do not silently switch stacks.
 - Prefer surgical changes that match documented architecture.

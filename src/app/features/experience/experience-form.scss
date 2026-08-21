@@ -1,5 +1,10 @@
 @use '../../../styles/edit';
 
+.edit__footer-short,
+.edit__footer-user-short {
+  display: none;
+}
+
 .panel--exp {
   gap: 20px;
   padding: 32px;
@@ -18,10 +23,6 @@
 .field__control--exp-ta textarea {
   height: 100%;
   resize: vertical;
-}
-
-.edit__btn--save {
-  padding: 12px 18px;
 }
 
 /* Tablet landscape — Figma admin-experience-new-tablet-landscape (72:455, ~1024) */
@@ -74,10 +75,6 @@
     font-size: 13px;
   }
 
-  .edit__btn--save {
-    padding: 10px 16px;
-  }
-
   .panel--exp {
     gap: 16px;
     padding: 0;
@@ -112,9 +109,85 @@
   }
 }
 
-/* Mobile only — keep ES|EN rows on tablet portrait (Figma 77:4) */
+/* Mobile — Figma admin-experience-new-mobile (78:837, ~390) */
 @media (max-width: 720px) {
+  .edit {
+    gap: 20px;
+    padding: 20px 16px 0;
+  }
+
+  .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__crumb a {
+    color: var(--cyan);
+  }
+
+  .edit__crumb-current {
+    color: var(--dim);
+  }
+
+  .edit__eyebrow {
+    margin-bottom: 0;
+    color: var(--dim);
+    font-size: 11px;
+  }
+
+  .edit__title {
+    font-size: 22px;
+  }
+
+  .edit__footer-full,
+  .edit__footer-user-full {
+    display: none;
+  }
+
+  .edit__footer-short,
+  .edit__footer-user-short {
+    display: block;
+  }
+
+  .panel--exp {
+    gap: 16px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
   .field-row {
+    gap: 16px;
     grid-template-columns: 1fr;
+  }
+
+  .field__label {
+    font-size: 12px;
+  }
+
+  .field__control {
+    min-height: 40px;
+    padding: 10px 14px;
+  }
+
+  .field__control--exp-ta {
+    min-height: 110px;
+    height: 110px;
+    padding: 12px 14px;
+  }
+
+  .edit__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    margin-inline: -16px;
+    padding: 12px 16px 16px;
+    min-height: 0;
+    font-size: 11px;
   }
 }

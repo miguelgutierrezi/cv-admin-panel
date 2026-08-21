@@ -200,7 +200,11 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full"
+      >CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span
+    >
+    <span class="edit__footer-short">CMS · Sanity Studio Client v3.2 · Conectado</span>
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
+    <span class="edit__footer-user-short">{{ footerUser() }}</span>
   </footer>
 </section>

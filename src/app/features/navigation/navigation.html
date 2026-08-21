@@ -14,7 +14,15 @@
       <div class="edit__actions">
         <button
           type="button"
-          class="edit__btn edit__btn--save nav-save"
+          class="edit__btn edit__btn--ghost"
+          [disabled]="saving() || loading() || !form.dirty"
+          (click)="discard()"
+        >
+          Descartar
+        </button>
+        <button
+          type="button"
+          class="edit__btn edit__btn--save"
           [disabled]="saving() || loading()"
           (click)="save()"
         >
@@ -94,7 +102,11 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full"
+      >CMS · Sanity Studio · {{ loading() ? 'Cargando' : saving() ? 'Guardando' : 'Listo' }}</span
+    >
+    <span class="edit__footer-short">CMS · Sanity Studio Client v3.2 · Conectado</span>
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
+    <span class="edit__footer-user-short">{{ footerUser() }}</span>
   </footer>
 </section>

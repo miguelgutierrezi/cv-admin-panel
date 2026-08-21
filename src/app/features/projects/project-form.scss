@@ -1,5 +1,10 @@
 @use '../../../styles/edit';
 
+.edit__footer-short,
+.edit__footer-user-short {
+  display: none;
+}
+
 .edit__stack {
   display: flex;
   flex-direction: column;
@@ -283,8 +288,158 @@
 }
 
 @media (max-width: 720px) {
+  .edit {
+    gap: 20px;
+    padding: 20px 16px 0;
+  }
+
+  .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__crumb a {
+    color: var(--cyan);
+  }
+
+  .edit__crumb-current {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--dim);
+  }
+
+  .edit__eyebrow {
+    margin-bottom: 0;
+    color: var(--dim);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .edit__title {
+    font-size: 24px;
+  }
+
+  .edit__status {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .edit__status p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+
+  .edit__footer-full,
+  .edit__footer-user-full {
+    display: none;
+  }
+
+  .edit__footer-short,
+  .edit__footer-user-short {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .edit__footer-user-short {
+    color: var(--slate);
+  }
+
+  .edit__stack {
+    gap: 20px;
+  }
+
+  .edit__mid-split {
+    gap: 20px;
+  }
+
+  .panel {
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .panel__title {
+    font-size: 16px;
+  }
+
+  .panel__kicker {
+    font-size: 10px;
+  }
+
+  .panel--features .panel__rule {
+    display: none;
+  }
+
+  .edit__btn--add {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .field__label,
+  .featured-field__label {
+    font-size: 12px;
+  }
+
+  .field__control {
+    min-height: 40px;
+    padding: 10px 14px;
+  }
+
+  .field__control--mid {
+    min-height: 80px;
+  }
+
+  .field-row--order {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
   .field-row--order .field--order {
     width: 100%;
     flex: 1 1 auto;
+  }
+
+  .featured-toggle {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .item__chrome {
+    padding: 10px 16px;
+    background: var(--surface);
+  }
+
+  .item__chrome-label {
+    font-size: 10px;
+  }
+
+  .item__body {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .item__remove {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .edit__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-inline: -16px;
+    padding: 16px;
+    min-height: 0;
+    font-size: 11px;
   }
 }

@@ -55,6 +55,14 @@ export class ExperiencesListPage implements OnInit {
     return `Collection: experiences-main • Query matches: ${matches} records found • Language: ES / EN`;
   });
 
+  readonly statusLineMobile = computed(() => {
+    const matches = this.loading() ? 0 : this.visibleItems().length;
+    if (this.totalCount() === 0) {
+      return `Collection: experiences-main\nQuery matches: ${matches} records found\nLanguage: ES / EN`;
+    }
+    return `Collection: experiences-main\nQuery matches: ${matches} records • ES / EN`;
+  });
+
   readonly footerUser = computed(
     () => this.auth.user()?.email ?? 'miguel.gutierrez',
   );

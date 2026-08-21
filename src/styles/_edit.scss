@@ -28,6 +28,7 @@
   gap: 24px;
   min-height: 100%;
   padding: 32px 40px 0;
+  background: var(--surface);
   color: var(--ink);
 }
 
@@ -67,12 +68,18 @@
   color: var(--dim);
 }
 
+/* Desktop header pattern (Site Settings): title left · actions right */
 .edit__head {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
+}
+
+.edit__titles {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .edit__eyebrow {
@@ -92,14 +99,25 @@
 .edit__actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
   gap: 12px;
 }
 
 .edit__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 10px 18px;
+  border-radius: 8px;
   font-family: 'Geist Mono', ui-monospace, monospace;
   font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .edit__btn:disabled {
@@ -107,11 +125,17 @@
   cursor: not-allowed;
 }
 
+/* Site Settings desktop: Descartar 10×16 · Guardar 10×18 */
 .edit__btn--ghost {
   padding: 10px 16px;
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--dim);
+  font-weight: 600;
+}
+
+.edit__btn--ghost:hover:not(:disabled) {
+  color: var(--ink);
 }
 
 .edit__btn--danger {
@@ -131,7 +155,6 @@
   border: 1px solid var(--neon-border);
   background: var(--bg);
   color: var(--neon);
-  font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 242, 254, 0.1);
 }
 
@@ -139,14 +162,111 @@
   background: rgba(0, 242, 254, 0.06);
 }
 
+/* Site Settings action chrome: desktop + tablet (incl. portrait) */
+@media (min-width: 721px) {
+  .edit__head {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .edit__actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .edit__btn--ghost,
+  .edit__btn--danger,
+  .edit__btn--save {
+    flex: 0 0 auto;
+    width: auto;
+  }
+}
+
+/* Tablet portrait — same Descartar/Guardar chrome as Site Settings (62:349) */
+@media (max-width: 1100px) and (min-width: 721px) and (orientation: portrait) {
+  .edit__head {
+    gap: 16px;
+  }
+
+  .edit__actions {
+    gap: 12px;
+  }
+
+  .edit__btn--ghost,
+  .edit__btn--danger {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .edit__btn--save {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet landscape — denser chrome as Site Settings (62:205) */
+@media (max-width: 1280px) and (min-width: 900px) and (orientation: landscape) {
+  .edit__head {
+    gap: 12px;
+  }
+
+  .edit__actions {
+    gap: 10px;
+  }
+
+  .edit__btn--ghost,
+  .edit__btn--danger {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .edit__btn--save {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile — New Course pattern (79:4): title stack · full-width Descartar | Guardar */
+@media (max-width: 720px) {
+  .edit__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .edit__titles {
+    gap: 8px;
+  }
+
+  .edit__actions {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .edit__btn--ghost,
+  .edit__btn--danger,
+  .edit__btn--save {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .edit__btn--save {
+    padding: 10px 18px;
+  }
+}
+
 .edit__btn--add {
   padding: 6px 12px;
   border: 1px solid var(--neon-border);
-  border-radius: 6px;
   background: var(--bg);
   color: var(--neon);
   font-size: 12px;
-  font-weight: 700;
 }
 
 .edit__status {

@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** + Figma through Navigation (`docs/ui.md`). Operator: CORS + redeploy CV.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** + Figma Site → Navigation desktop/tablet/mobile (`docs/ui.md`). Tab title: **Admin - Miguel Ángel Gutiérrez Ibagué**. Operator: CORS + redeploy CV.
 
 ## Read first
 

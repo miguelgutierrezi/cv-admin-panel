@@ -15,23 +15,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 18px;
   text-decoration: none;
-}
-
-.list-page__new--neon {
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  border-radius: 8px;
-  background: var(--neon);
-  color: var(--bg);
-  font-family: 'Geist Mono', ui-monospace, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.1);
-}
-
-.list-page__new--neon:hover {
-  filter: brightness(1.05);
 }
 
 .list-empty {

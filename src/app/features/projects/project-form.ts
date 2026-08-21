@@ -73,6 +73,8 @@ export class ProjectFormPage implements OnInit {
     gallery: this.fb.array([]),
   });
 
+  private snapshot: ReturnType<typeof this.form.getRawValue> | null = null;
+
   readonly pageTitle = computed(() =>
     this.isNew() ? '// Nuevo project' : '// Editar project',
   );
@@ -125,6 +127,7 @@ export class ProjectFormPage implements OnInit {
     if (!id || id === 'new') {
       this.isNew.set(true);
       this.documentId = '';
+      this.captureSnapshot();
       this.loading.set(false);
       return;
     }
@@ -138,6 +141,7 @@ export class ProjectFormPage implements OnInit {
       } else {
         this.patchForm(doc);
         this.form.markAsPristine();
+        this.captureSnapshot();
         this.formEpoch.update((n) => n + 1);
       }
     } catch (err) {
@@ -145,6 +149,19 @@ export class ProjectFormPage implements OnInit {
     } finally {
       this.loading.set(false);
     }
+  }
+
+  discard(): void {
+    if (this.isNew() && !this.form.dirty) {
+      void this.router.navigateByUrl('/projects');
+      return;
+    }
+    if (!this.snapshot) {
+      return;
+    }
+    this.applySnapshot(this.snapshot);
+    this.message.set(null);
+    this.error.set(null);
   }
 
   bodyChromeLabel(index: number): string {
@@ -296,6 +313,7 @@ export class ProjectFormPage implements OnInit {
       this.documentId = id;
       this.isNew.set(false);
       this.form.markAsPristine();
+      this.captureSnapshot();
       this.formEpoch.update((n) => n + 1);
       this.message.set('Project guardado en Sanity.');
       await this.router.navigate(['/projects', id], { replaceUrl: true });
@@ -423,6 +441,78 @@ export class ProjectFormPage implements OnInit {
       clientEs: detail?.client?.es ?? '',
       clientEn: detail?.client?.en ?? '',
     });
+  }
+
+  private captureSnapshot(): void {
+    this.snapshot = JSON.parse(
+      JSON.stringify(this.form.getRawValue()),
+    ) as ReturnType<typeof this.form.getRawValue>;
+  }
+
+  private applySnapshot(snap: NonNullable<typeof this.snapshot>): void {
+    this.body.clear();
+    this.features.clear();
+    this.gallery.clear();
+
+    for (const paragraph of snap.body) {
+      this.body.push(
+        this.fb.nonNullable.group({
+          es: [paragraph.es, Validators.required],
+          en: [paragraph.en, Validators.required],
+        }),
+      );
+    }
+    if (this.body.length === 0) {
+      this.body.push(this.createLocalizedGroup());
+    }
+
+    type FeatureSnap = {
+      id: string;
+      icon: string;
+      titleEs: string;
+      titleEn: string;
+      descriptionEs: string;
+      descriptionEn: string;
+    };
+    type GallerySnap = {
+      id: string;
+      imageUrl: string;
+      titleEs: string;
+      titleEn: string;
+      captionEs: string;
+      captionEn: string;
+    };
+
+    for (const feature of snap.features as FeatureSnap[]) {
+      const group = this.createFeatureGroup();
+      group.patchValue({
+        id: feature.id,
+        icon: feature.icon,
+        titleEs: feature.titleEs,
+        titleEn: feature.titleEn,
+        descriptionEs: feature.descriptionEs,
+        descriptionEn: feature.descriptionEn,
+      });
+      this.features.push(group);
+    }
+
+    for (const item of snap.gallery as GallerySnap[]) {
+      const group = this.createGalleryGroup();
+      group.patchValue({
+        id: item.id,
+        imageUrl: item.imageUrl,
+        titleEs: item.titleEs,
+        titleEn: item.titleEn,
+        captionEs: item.captionEs,
+        captionEn: item.captionEn,
+      });
+      this.gallery.push(group);
+    }
+
+    const { body: _b, features: _f, gallery: _g, ...rest } = snap;
+    this.form.patchValue(rest);
+    this.form.markAsPristine();
+    this.formEpoch.update((n) => n + 1);
   }
 
   private splitList(text: string): string[] {

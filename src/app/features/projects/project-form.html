@@ -12,9 +12,7 @@
         <h1 class="edit__title">{{ pageTitle() }}</h1>
       </div>
       <div class="edit__actions">
-        @if (isNew()) {
-          <a class="edit__btn edit__btn--ghost" routerLink="/projects">Cancelar</a>
-        } @else {
+        @if (!isNew()) {
           <button
             type="button"
             class="edit__btn edit__btn--danger"
@@ -24,6 +22,14 @@
             {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
           </button>
         }
+        <button
+          type="button"
+          class="edit__btn edit__btn--ghost"
+          [disabled]="saving() || loading() || (!isNew() && !form.dirty)"
+          (click)="discard()"
+        >
+          Descartar
+        </button>
         <button
           type="button"
           class="edit__btn edit__btn--save"
@@ -485,7 +491,9 @@
   }
 
   <footer class="edit__footer">
-    <span>CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
-    <span>{{ footerUser() }}</span>
+    <span class="edit__footer-full">CMS · Sanity Studio · {{ loading() ? 'Cargando' : 'Listo' }}</span>
+    <span class="edit__footer-short">CMS • Sanity Studio Client v3.2 • Conectado</span>
+    <span class="edit__footer-user-full">{{ footerUser() }}</span>
+    <span class="edit__footer-user-short">{{ footerUser() }}</span>
   </footer>
 </section>

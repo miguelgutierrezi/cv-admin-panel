@@ -1,10 +1,15 @@
 @use '../../../styles/edit';
 
+.edit__status-short,
+.edit__footer-short,
+.edit__footer-user-short {
+  display: none;
+}
+
 .list-page__new {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 18px;
   text-decoration: none;
 }
 
@@ -130,6 +135,12 @@
 }
 
 .proj-table__col-details--tablet {
+  display: none;
+}
+
+.proj-table__head-mobile-left,
+.proj-table__head-mobile-right,
+.proj-table__slug-short {
   display: none;
 }
 
@@ -405,25 +416,213 @@
   }
 }
 
-/* Mobile only — keep tablet portrait table chrome (Figma 74:4) */
+/* Mobile — Figma empty 77:409 + populated 77:448 */
 @media (max-width: 720px) {
-  .proj-table__head {
+  .edit {
+    gap: 20px;
+    padding: 20px 16px 0;
+  }
+
+  .edit__title-bar {
+    gap: 10px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .edit__titles {
+    gap: 2px;
+  }
+
+  .edit__eyebrow {
+    margin-bottom: 0;
+    font-size: 11px;
+  }
+
+  .edit__title {
+    font-size: 22px;
+  }
+
+  .list-page__new {
+    justify-content: center;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.1);
+  }
+
+  .edit__status {
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+
+  .edit__status-full,
+  .edit__footer-full,
+  .edit__footer-user-full {
     display: none;
   }
 
-  .proj-table__row,
-  .proj-table__info,
-  .proj-table__meta {
-    flex-wrap: wrap;
+  .edit__status-short {
+    display: block;
+    margin: 0;
+    color: var(--dim);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    line-height: 1.4;
+    white-space: pre-line;
+  }
+
+  .edit__footer-short,
+  .edit__footer-user-short {
+    display: block;
+  }
+
+  .edit__footer-short--split {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .edit__footer-connected {
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  .list-empty {
+    gap: 20px;
+    min-height: 0;
+    padding: 48px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
+  }
+
+  .list-empty__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+  }
+
+  .list-empty__icon span {
+    font-size: 16px;
+  }
+
+  .list-empty__title {
+    font-size: 15px;
+  }
+
+  .list-empty__hint {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .edit__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-inline: -16px;
+    padding: 16px 16px 24px;
+    min-height: 0;
+    font-size: 11px;
+  }
+
+  .proj-table {
+    border-radius: 12px;
+  }
+
+  .proj-table__head {
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 10px;
+  }
+
+  .proj-table__left,
+  .proj-table__right {
+    display: none;
+  }
+
+  .proj-table__head-mobile-left,
+  .proj-table__head-mobile-right {
+    display: inline;
+  }
+
+  .proj-table__head-mobile-right {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .proj-table__row {
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 12px;
+    border-left-width: 3px;
+  }
+
+  .proj-table__info {
+    flex: 1 1 auto;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .proj-table__order {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+
+  .proj-table__titles {
+    gap: 2px;
+  }
+
+  .proj-table__titles strong {
+    font-size: 13px;
+  }
+
+  .proj-table__slug-full {
+    display: none;
+  }
+
+  .proj-table__slug-short {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
   }
 
   .proj-table__meta {
-    width: 100%;
-    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 6px;
+    width: auto;
   }
 
   .proj-table__status,
   .proj-table__controls {
     width: auto;
+    min-height: 0;
+  }
+
+  .proj-table__featured {
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
+  .proj-table__controls {
+    gap: 8px;
+  }
+
+  .proj-table__icon-btn {
+    padding: 4px;
   }
 }

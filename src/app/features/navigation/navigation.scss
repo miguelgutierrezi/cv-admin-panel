@@ -1,5 +1,10 @@
 @use '../../../styles/edit';
 
+.edit__footer-short,
+.edit__footer-user-short {
+  display: none;
+}
+
 .edit__crumb-link {
   color: var(--cyan);
   text-decoration: none;
@@ -7,12 +12,6 @@
 
 .edit__crumb-link:hover {
   color: var(--neon);
-}
-
-.nav-save {
-  padding: 10px 24px;
-  border-radius: 70px;
-  font-size: 14px;
 }
 
 .nav-section-head {
@@ -210,9 +209,96 @@
   }
 }
 
-/* Mobile only — keep ES|EN labels on tablet portrait (Figma 77:319) */
+/* Mobile — Figma admin-navigation-mobile (79:92, ~390) */
 @media (max-width: 720px) {
+  .edit {
+    gap: 20px;
+    padding: 24px 16px 0;
+  }
+
+  .edit__title-bar {
+    gap: 12px;
+  }
+
+  .edit__crumb {
+    font-size: 12px;
+  }
+
+  .edit__eyebrow {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+  .edit__title {
+    font-size: 24px;
+  }
+
+  .edit__footer-full,
+  .edit__footer-user-full {
+    display: none;
+  }
+
+  .edit__footer-short,
+  .edit__footer-user-short {
+    display: block;
+  }
+
+  .nav-section-head {
+    padding-top: 0;
+  }
+
+  .nav-section-head__title {
+    gap: 6px;
+    font-size: 18px;
+  }
+
+  .nav-section-head__hash {
+    font-size: 16px;
+  }
+
+  .nav-add {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .nav-items {
+    gap: 16px;
+  }
+
+  .nav-card {
+    gap: 16px;
+    padding: 16px;
+  }
+
   .field-row {
+    gap: 16px;
     grid-template-columns: 1fr;
+  }
+
+  .field {
+    gap: 6px;
+  }
+
+  .field__label {
+    font-size: 12px;
+  }
+
+  .field__control {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+
+  .nav-remove {
+    font-size: 13px;
+  }
+
+  .edit__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-inline: -16px;
+    padding: 16px;
+    min-height: 0;
+    font-size: 11px;
   }
 }

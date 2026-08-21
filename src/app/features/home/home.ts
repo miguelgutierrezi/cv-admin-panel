@@ -13,7 +13,6 @@ type ContentCard = {
   fields: string;
   description: string;
   icon: string;
-  featured?: boolean;
 };
 
 const CARDS: ContentCard[] = [
@@ -40,7 +39,6 @@ const CARDS: ContentCard[] = [
     fields: '10+ campos · Contenido detallado',
     description: 'Colección con case study: summary, features, gallery. La más compleja.',
     icon: '/assets/dashboard/icon-projects.svg',
-    featured: true,
   },
   {
     path: '/experience',
