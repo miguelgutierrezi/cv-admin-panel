@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 5 slice 2 done** (experience / courses / navigation + Phase 4 MVP via CDN read + `sanityWrite`). Next: Phase 6.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 6 done** (validators + go-live docs; prod Login URL set in CV `environment.prod.ts`). Next: Phase 7 when asked.
 
 ## Read first
 

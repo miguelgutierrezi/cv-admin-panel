@@ -20,7 +20,9 @@
     <p>Cargando…</p>
   } @else {
     <form class="form" [formGroup]="form" (ngSubmit)="save()">
-      <label class="field"><span>slug</span><input formControlName="slug" /></label>
+      <label class="field"
+        ><span>slug (kebab-case)</span><input formControlName="slug"
+      /></label>
       <div class="field-row">
         <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
         <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
@@ -30,8 +32,12 @@
         <label class="field"><span>date ES</span><input formControlName="dateEs" /></label>
         <label class="field"><span>date EN</span><input formControlName="dateEn" /></label>
       </div>
-      <label class="field"><span>imageUrl</span><input formControlName="imageUrl" /></label>
-      <label class="field"><span>credentialUrl</span><input formControlName="credentialUrl" /></label>
+      <label class="field"
+        ><span>imageUrl (assets/… o https)</span><input formControlName="imageUrl"
+      /></label>
+      <label class="field"
+        ><span>credentialUrl (https, opcional)</span><input formControlName="credentialUrl"
+      /></label>
       <label class="field"
         ><span>sortOrder</span><input type="number" formControlName="sortOrder"
       /></label>

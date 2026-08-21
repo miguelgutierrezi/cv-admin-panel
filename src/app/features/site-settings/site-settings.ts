@@ -5,6 +5,11 @@ import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
 import type { SiteSettingsDoc } from '../../models/cms.models';
+import {
+  httpUrlValidator,
+  optionalAssetOrHttpUrlValidator,
+  slugValidator,
+} from '../../shared/cms-validators';
 
 @Component({
   selector: 'app-site-settings',
@@ -78,6 +83,13 @@ export class SiteSettingsPage implements OnInit {
       ...(s.iconUrl.trim() ? { iconUrl: s.iconUrl.trim() } : {}),
     }));
 
+    const socialIds = socialLinks.map((s) => s.id).filter(Boolean);
+    if (new Set(socialIds).size !== socialIds.length) {
+      this.error.set('Los id de socialLinks deben ser únicos.');
+      this.saving.set(false);
+      return;
+    }
+
     const document: SiteSettingsDoc = {
       _id: this.documentId,
       _type: 'siteSettings',
@@ -106,10 +118,10 @@ export class SiteSettingsPage implements OnInit {
 
   private createSocialGroup() {
     return this.fb.nonNullable.group({
-      id: ['', Validators.required],
+      id: ['', [Validators.required, slugValidator()]],
       label: ['', Validators.required],
-      url: ['', Validators.required],
-      iconUrl: [''],
+      url: ['', [Validators.required, httpUrlValidator()]],
+      iconUrl: ['', optionalAssetOrHttpUrlValidator()],
     });
   }
 
@@ -117,14 +129,14 @@ export class SiteSettingsPage implements OnInit {
     this.socialLinks.clear();
     const links = doc.socialLinks?.length ? doc.socialLinks : [{ id: '', label: '', url: '', iconUrl: '' }];
     for (const link of links) {
-      this.socialLinks.push(
-        this.fb.nonNullable.group({
-          id: [link.id ?? '', Validators.required],
-          label: [link.label ?? '', Validators.required],
-          url: [link.url ?? '', Validators.required],
-          iconUrl: [link.iconUrl ?? ''],
-        })
-      );
+      const group = this.createSocialGroup();
+      group.patchValue({
+        id: link.id ?? '',
+        label: link.label ?? '',
+        url: link.url ?? '',
+        iconUrl: link.iconUrl ?? '',
+      });
+      this.socialLinks.push(group);
     }
     this.form.patchValue({
       name: doc.name ?? '',

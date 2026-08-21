@@ -6,6 +6,12 @@ import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
 import { emptyLocalized, type CourseDoc } from '../../models/cms.models';
+import {
+  assetOrHttpUrlValidator,
+  normalizeSlug,
+  optionalHttpUrlValidator,
+  slugValidator,
+} from '../../shared/cms-validators';
 
 @Component({
   selector: 'app-course-form',
@@ -30,14 +36,14 @@ export class CourseFormPage implements OnInit {
   private documentId = '';
 
   readonly form = this.fb.nonNullable.group({
-    slug: ['', Validators.required],
+    slug: ['', [Validators.required, slugValidator()]],
     titleEs: ['', Validators.required],
     titleEn: ['', Validators.required],
     institution: ['', Validators.required],
     dateEs: ['', Validators.required],
     dateEn: ['', Validators.required],
-    imageUrl: ['', Validators.required],
-    credentialUrl: [''],
+    imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
+    credentialUrl: ['', optionalHttpUrlValidator()],
     sortOrder: [0, Validators.required],
   });
 
@@ -73,7 +79,7 @@ export class CourseFormPage implements OnInit {
     }
     this.saving.set(true);
     const raw = this.form.getRawValue();
-    const slug = raw.slug.trim();
+    const slug = normalizeSlug(raw.slug);
     const id = this.documentId || `course-${slug}`;
     const document: CourseDoc = {
       _id: id,

@@ -11,6 +11,12 @@ import {
   type ProjectDoc,
   type ProjectDetailDoc,
 } from '../../models/cms.models';
+import {
+  assetOrHttpUrlValidator,
+  normalizeSlug,
+  optionalHttpUrlValidator,
+  slugValidator,
+} from '../../shared/cms-validators';
 
 @Component({
   selector: 'app-project-form',
@@ -36,15 +42,15 @@ export class ProjectFormPage implements OnInit {
   private documentId = '';
 
   readonly form = this.fb.nonNullable.group({
-    slug: ['', Validators.required],
+    slug: ['', [Validators.required, slugValidator()]],
     title: ['', Validators.required],
     descriptionEs: ['', Validators.required],
     descriptionEn: ['', Validators.required],
     technologiesText: ['', Validators.required],
     technologyIconUrlsText: [''],
-    repositoryUrl: [''],
-    demoUrl: [''],
-    imageUrl: ['', Validators.required],
+    repositoryUrl: ['', optionalHttpUrlValidator()],
+    demoUrl: ['', optionalHttpUrlValidator()],
+    imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
     featured: [false],
     sortOrder: [0, Validators.required],
     summaryEs: ['', Validators.required],
@@ -135,7 +141,7 @@ export class ProjectFormPage implements OnInit {
 
     this.saving.set(true);
     const raw = this.form.getRawValue();
-    const slug = raw.slug.trim();
+    const slug = normalizeSlug(raw.slug);
     const id = this.documentId || `project-${slug}`;
 
     type LocPair = { es: string; en: string };
@@ -159,6 +165,19 @@ export class ProjectFormPage implements OnInit {
     const bodyRows = raw.body as LocPair[];
     const featureRows = raw.features as FeatureRaw[];
     const galleryRows = raw.gallery as GalleryRaw[];
+
+    const featureIds = featureRows.map((f) => f.id.trim()).filter(Boolean);
+    if (new Set(featureIds).size !== featureIds.length) {
+      this.error.set('Los id de features deben ser únicos.');
+      this.saving.set(false);
+      return;
+    }
+    const galleryIds = galleryRows.map((g) => g.id.trim()).filter(Boolean);
+    if (new Set(galleryIds).size !== galleryIds.length) {
+      this.error.set('Los id de gallery deben ser únicos.');
+      this.saving.set(false);
+      return;
+    }
 
     const detail: ProjectDetailDoc = {
       summary: { es: raw.summaryEs.trim(), en: raw.summaryEn.trim() },
@@ -246,7 +265,7 @@ export class ProjectFormPage implements OnInit {
 
   private createFeatureGroup() {
     return this.fb.nonNullable.group({
-      id: ['', Validators.required],
+      id: ['', [Validators.required, slugValidator()]],
       icon: ['code', Validators.required],
       titleEs: ['', Validators.required],
       titleEn: ['', Validators.required],
@@ -257,8 +276,8 @@ export class ProjectFormPage implements OnInit {
 
   private createGalleryGroup() {
     return this.fb.nonNullable.group({
-      id: ['', Validators.required],
-      imageUrl: ['', Validators.required],
+      id: ['', [Validators.required, slugValidator()]],
+      imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
       titleEs: ['', Validators.required],
       titleEn: ['', Validators.required],
       captionEs: ['', Validators.required],
@@ -285,30 +304,30 @@ export class ProjectFormPage implements OnInit {
 
     const features = detail?.features?.length ? detail.features : [];
     for (const f of features) {
-      this.features.push(
-        this.fb.nonNullable.group({
-          id: [f.id ?? '', Validators.required],
-          icon: [f.icon || 'code', Validators.required],
-          titleEs: [f.title?.es ?? '', Validators.required],
-          titleEn: [f.title?.en ?? '', Validators.required],
-          descriptionEs: [f.description?.es ?? '', Validators.required],
-          descriptionEn: [f.description?.en ?? '', Validators.required],
-        })
-      );
+      const group = this.createFeatureGroup();
+      group.patchValue({
+        id: f.id ?? '',
+        icon: (f.icon as (typeof FEATURE_ICONS)[number]) || 'code',
+        titleEs: f.title?.es ?? '',
+        titleEn: f.title?.en ?? '',
+        descriptionEs: f.description?.es ?? '',
+        descriptionEn: f.description?.en ?? '',
+      });
+      this.features.push(group);
     }
 
     const gallery = detail?.gallery?.length ? detail.gallery : [];
     for (const g of gallery) {
-      this.gallery.push(
-        this.fb.nonNullable.group({
-          id: [g.id ?? '', Validators.required],
-          imageUrl: [g.imageUrl ?? '', Validators.required],
-          titleEs: [g.title?.es ?? '', Validators.required],
-          titleEn: [g.title?.en ?? '', Validators.required],
-          captionEs: [g.caption?.es ?? '', Validators.required],
-          captionEn: [g.caption?.en ?? '', Validators.required],
-        })
-      );
+      const group = this.createGalleryGroup();
+      group.patchValue({
+        id: g.id ?? '',
+        imageUrl: g.imageUrl ?? '',
+        titleEs: g.title?.es ?? '',
+        titleEn: g.title?.en ?? '',
+        captionEs: g.caption?.es ?? '',
+        captionEn: g.caption?.en ?? '',
+      });
+      this.gallery.push(group);
     }
 
     this.form.patchValue({

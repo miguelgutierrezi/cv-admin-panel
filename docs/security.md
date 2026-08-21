@@ -53,9 +53,9 @@ See [stack.md](./stack.md) (“Clarification: Firebase Hosting ≠ write tokens 
 
 ## Operational checklist
 
-- [ ] Proxy deployed with write token in secret store
-- [ ] Admin origin in Sanity CORS (if browser reads CDN)
-- [ ] Portfolio `adminLoginUrl` set only after admin HTTPS URL exists
+- [x] Proxy deployed with write token in secret store (Phase 3+)
+- [ ] Admin origin in Sanity CORS (if browser reads CDN) — see [go-live.md](./go-live.md)
+- [x] Portfolio `adminLoginUrl` set to `https://cv-admin-panel.web.app` (redeploy CV)
 - [ ] Smoke: unauthenticated write → 401/403; authenticated edit → published doc visible on CV CDN
 
 ## Related

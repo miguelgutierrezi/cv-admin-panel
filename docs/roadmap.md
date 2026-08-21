@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 5 slice 2 **done** (experience / courses / navigation). Siguiente: Phase 6 polish + go-live. CORS: añadir `http://localhost:4300` y `https://cv-admin-panel.web.app` en Sanity Manage si la lectura CDN falla.
+Estado del workspace: Phase 6 polish + go-live **done** (validadores, `adminLoginUrl` prod, guía CORS). Siguiente: Phase 7 (tests/lint) cuando se pida. Operador: confirmar CORS en Sanity Manage + redeploy CV.
 
 ## Objetivo de producto
 
@@ -87,15 +87,16 @@ Según [stack.md](./stack.md):
 
 **Done when:** colecciones slice 2 editables y visibles en el portfolio (merge remoto) — **UI lista**; smoke tras CORS/publish.
 
-### Phase 6: Polish + go-live
+### Phase 6: Polish + go-live — **done**
 
-- [ ] Validación alineada a reglas del portfolio (`detail`, URLs, ids únicos)
-- [ ] Helpers de imagen / asset URL si hace falta
-- [ ] Deploy admin + CORS Sanity + `adminLoginUrl` en portfolio prod
-- [ ] Checklist de integración del contract
+- [x] Validación alineada a reglas del portfolio (slug kebab-case, URLs `assets/`|http(s), ids únicos)
+- [x] Helpers en `src/app/shared/cms-validators.ts` + hints en forms
+- [x] `adminLoginUrl` prod en portfolio → `https://cv-admin-panel.web.app`
+- [x] Guía [go-live.md](./go-live.md) (CORS Sanity, Auth domains, smoke)
+- [ ] Operador: CORS en Sanity Manage + redeploy CV Hosting (para Login prod)
 - [ ] (Opcional) seed completo usando notas en `studio/seed/`
 
-**Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN.
+**Done when:** Login del CV abre este admin; un cambio editorial aparece en producción vía CDN — **código/docs listos**; falta confirmación operador CORS + deploy CV.
 
 ### Phase 7 (later): Quality gates
 
@@ -111,8 +112,9 @@ Según [stack.md](./stack.md):
 4. Phase 3 ✓ — Cloud Functions `sanityWrite` ([proxy-setup.md](./proxy-setup.md)).
 5. Phase 4 ✓ — pantallas MVP site / profile / projects.
 6. Phase 5 ✓ — slice 2 experience / courses / navigation.
-7. Phase 6 go-live (CORS + `adminLoginUrl` prod) — **siguiente**.
-8. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
+7. Phase 6 ✓ — polish + go-live docs + `adminLoginUrl` prod (CORS/redeploy CV = operador).
+8. Phase 7 later — tests/lint → CI.
+9. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
 
 ## Lectura previa (portfolio)
 

@@ -6,6 +6,11 @@ import { firstValueFrom } from 'rxjs';
 import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
 import { emptyLocalized, emptyLocalizedList, type ExperienceDoc } from '../../models/cms.models';
+import {
+  assetOrHttpUrlValidator,
+  normalizeSlug,
+  slugValidator,
+} from '../../shared/cms-validators';
 
 @Component({
   selector: 'app-experience-form',
@@ -30,7 +35,7 @@ export class ExperienceFormPage implements OnInit {
   private documentId = '';
 
   readonly form = this.fb.nonNullable.group({
-    slug: ['', Validators.required],
+    slug: ['', [Validators.required, slugValidator()]],
     company: ['', Validators.required],
     roleEs: ['', Validators.required],
     roleEn: ['', Validators.required],
@@ -38,7 +43,7 @@ export class ExperienceFormPage implements OnInit {
     durationEn: ['', Validators.required],
     responsibilitiesEs: ['', Validators.required],
     responsibilitiesEn: ['', Validators.required],
-    imageUrl: ['', Validators.required],
+    imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
     sortOrder: [0, Validators.required],
   });
 
@@ -74,7 +79,7 @@ export class ExperienceFormPage implements OnInit {
     }
     this.saving.set(true);
     const raw = this.form.getRawValue();
-    const slug = raw.slug.trim();
+    const slug = normalizeSlug(raw.slug);
     const id = this.documentId || `experience-${slug}`;
     const document: ExperienceDoc = {
       _id: id,

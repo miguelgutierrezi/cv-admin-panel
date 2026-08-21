@@ -7,7 +7,7 @@ alwaysApply: true
 
 Admin editorial para el portfolio de Miguel Gutiérrez. Este repo es el lado **write** (Sanity). El CV público está en `../miguelgutierrezi.github.io/` (CDN read-only).
 
-Estado: Phase 5 slice 2 **done** (experience / courses / navigation). Siguiente: Phase 6. Hosting: https://cv-admin-panel.web.app. CORS Sanity: `localhost:4300` + `cv-admin-panel.web.app` si falla la lectura CDN.
+Estado: Phase 6 polish + go-live **done**. Siguiente: Phase 7 cuando se pida. Hosting: https://cv-admin-panel.web.app. CORS Sanity: ver `docs/go-live.md` (`localhost:4300` + `cv-admin-panel.web.app`).
 
 ## Leer primero
 

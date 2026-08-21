@@ -66,6 +66,12 @@ export class NavigationPage implements OnInit {
     const raw = this.form.getRawValue();
     type ItemRaw = { id: string; labelEs: string; labelEn: string };
     const rows = raw.items as ItemRaw[];
+    const sectionIds = rows.map((item) => item.id);
+    if (new Set(sectionIds).size !== sectionIds.length) {
+      this.error.set('Cada section id en navigation debe ser único.');
+      this.saving.set(false);
+      return;
+    }
     const document: NavigationDoc = {
       _id: this.documentId,
       _type: 'navigation',

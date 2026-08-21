@@ -6,6 +6,7 @@ import { SanityProxyService } from '../../api/sanity-proxy.service';
 import { SanityReadService } from '../../api/sanity-read.service';
 import type { ProfileDoc } from '../../models/cms.models';
 import { emptyLocalized, emptyLocalizedList } from '../../models/cms.models';
+import { assetOrHttpUrlValidator } from '../../shared/cms-validators';
 
 @Component({
   selector: 'app-profile-page',
@@ -26,7 +27,7 @@ export class ProfilePage implements OnInit {
   private documentId = 'profile';
 
   readonly form = this.fb.nonNullable.group({
-    imageUrl: ['', Validators.required],
+    imageUrl: ['', [Validators.required, assetOrHttpUrlValidator()]],
     roleEs: ['', Validators.required],
     roleEn: ['', Validators.required],
     pitchEs: ['', Validators.required],

@@ -67,11 +67,11 @@ Seed reference: `miguelgutierrezi.github.io/studio/seed/slice1-documents.md`, `s
 
 ## Portfolio integration checklist (when admin ships)
 
-1. Deploy admin (e.g. Firebase Hosting).
-2. Set portfolio `environment.prod.ts` → `adminLoginUrl`.
-3. Add admin origin (+ portfolio Firebase URL) to Sanity CORS.
-4. Smoke: Login from CV → admin; edit project title → publish → CV shows change via CDN.
-5. Keep Studio deploy optional for **schema** changes only.
+1. Deploy admin (e.g. Firebase Hosting) — live at https://cv-admin-panel.web.app
+2. Set portfolio `environment.prod.ts` → `adminLoginUrl` — **done** (`https://cv-admin-panel.web.app`); **redeploy CV**
+3. Add admin origin (+ portfolio Firebase URL) to Sanity CORS — see [go-live.md](./go-live.md)
+4. Smoke: Login from CV → admin; edit project title → publish → CV shows change via CDN
+5. Keep Studio deploy optional for **schema** changes only
 
 ## Out of scope for v1
 

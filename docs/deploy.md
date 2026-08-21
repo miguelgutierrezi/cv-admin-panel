@@ -67,7 +67,7 @@ npx firebase-tools deploy --only hosting:admin,functions --project miguel-angel-
 
 1. Open https://cv-admin-panel.web.app → should redirect to `/login`.
 2. Firebase Console → Authentication → Settings → **Authorized domains** → add `cv-admin-panel.web.app` (and custom domain later if any).
-3. Optionally set portfolio prod `adminLoginUrl` to `https://cv-admin-panel.web.app` when ready (Phase 6).
+3. Optionally set portfolio prod `adminLoginUrl` to `https://cv-admin-panel.web.app` when ready — **done in code**; redeploy CV. See [go-live.md](./go-live.md).
 4. Sanity CORS: add the admin origin when the admin reads the CDN from the browser.
 5. Proxy smoke: login → **Probar proxy (ping)** (needs `SANITY_WRITE_TOKEN` secret + Functions).
 
