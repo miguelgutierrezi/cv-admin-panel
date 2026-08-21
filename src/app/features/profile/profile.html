@@ -1,0 +1,65 @@
+<section class="page">
+  <header class="page__head">
+    <h1>Profile</h1>
+    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
+      {{ saving() ? 'Guardando…' : 'Guardar' }}
+    </button>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="save()">
+      <label class="field">
+        <span>imageUrl</span>
+        <input formControlName="imageUrl" />
+      </label>
+
+      <div class="field-row">
+        <label class="field"><span>role (ES)</span><input formControlName="roleEs" /></label>
+        <label class="field"><span>role (EN)</span><input formControlName="roleEn" /></label>
+      </div>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>pitch (ES)</span><textarea formControlName="pitchEs" rows="3"></textarea
+        ></label>
+        <label class="field"
+          ><span>pitch (EN)</span><textarea formControlName="pitchEn" rows="3"></textarea
+        ></label>
+      </div>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>focusAreas ES (uno por línea)</span
+          ><textarea formControlName="focusEs" rows="4"></textarea
+        ></label>
+        <label class="field"
+          ><span>focusAreas EN (uno por línea)</span
+          ><textarea formControlName="focusEn" rows="4"></textarea
+        ></label>
+      </div>
+
+      <div class="block" formArrayName="paragraphs">
+        <div class="block__head">
+          <h2>Paragraphs</h2>
+          <button type="button" class="btn btn--ghost" (click)="addParagraph()">Añadir</button>
+        </div>
+        @for (group of paragraphs.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field"><span>ES</span><textarea formControlName="es" rows="3"></textarea></label>
+            <label class="field"><span>EN</span><textarea formControlName="en" rows="3"></textarea></label>
+            <button type="button" class="btn btn--ghost" (click)="removeParagraph(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      @if (message(); as ok) {
+        <p class="ok" role="status">{{ ok }}</p>
+      }
+      @if (error(); as err) {
+        <p class="err" role="alert">{{ err }}</p>
+      }
+    </form>
+  }
+</section>

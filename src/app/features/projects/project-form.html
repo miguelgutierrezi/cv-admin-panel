@@ -1,0 +1,173 @@
+<section class="page">
+  <header class="page__head">
+    <div>
+      <a class="back" routerLink="/projects">← Projects</a>
+      <h1>{{ isNew() ? 'Nuevo project' : 'Editar project' }}</h1>
+    </div>
+    <div class="page__actions">
+      @if (!isNew()) {
+        <button type="button" class="btn btn--ghost" [disabled]="deleting()" (click)="remove()">
+          {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+        </button>
+      }
+      <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
+        {{ saving() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="save()">
+      <label class="field"><span>slug (id estable)</span><input formControlName="slug" /></label>
+      <label class="field"><span>title</span><input formControlName="title" /></label>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>description ES</span><textarea formControlName="descriptionEs" rows="3"></textarea
+        ></label>
+        <label class="field"
+          ><span>description EN</span><textarea formControlName="descriptionEn" rows="3"></textarea
+        ></label>
+      </div>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>technologies (uno por línea)</span
+          ><textarea formControlName="technologiesText" rows="3"></textarea
+        ></label>
+        <label class="field"
+          ><span>technologyIconUrls</span
+          ><textarea formControlName="technologyIconUrlsText" rows="3"></textarea
+        ></label>
+      </div>
+
+      <div class="field-row">
+        <label class="field"><span>repositoryUrl</span><input formControlName="repositoryUrl" /></label>
+        <label class="field"><span>demoUrl</span><input formControlName="demoUrl" /></label>
+      </div>
+
+      <label class="field"><span>imageUrl</span><input formControlName="imageUrl" /></label>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>sortOrder</span><input type="number" formControlName="sortOrder"
+        /></label>
+        <label class="field field--check"
+          ><input type="checkbox" formControlName="featured" /> featured</label
+        >
+      </div>
+
+      <h2 class="section-title">Detail (obligatorio)</h2>
+
+      <div class="field-row">
+        <label class="field"
+          ><span>summary ES</span><textarea formControlName="summaryEs" rows="3"></textarea
+        ></label>
+        <label class="field"
+          ><span>summary EN</span><textarea formControlName="summaryEn" rows="3"></textarea
+        ></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>role ES</span><input formControlName="roleEs" /></label>
+        <label class="field"><span>role EN</span><input formControlName="roleEn" /></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>duration ES</span><input formControlName="durationEs" /></label>
+        <label class="field"><span>duration EN</span><input formControlName="durationEn" /></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>team ES</span><input formControlName="teamEs" /></label>
+        <label class="field"><span>team EN</span><input formControlName="teamEn" /></label>
+      </div>
+      <label class="field"><span>year</span><input formControlName="year" /></label>
+      <div class="field-row">
+        <label class="field"><span>client ES</span><input formControlName="clientEs" /></label>
+        <label class="field"><span>client EN</span><input formControlName="clientEn" /></label>
+      </div>
+
+      <div class="block" formArrayName="body">
+        <div class="block__head">
+          <h2>Body paragraphs</h2>
+          <button type="button" class="btn btn--ghost" (click)="addBody()">Añadir</button>
+        </div>
+        @for (group of body.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field"><span>ES</span><textarea formControlName="es" rows="3"></textarea></label>
+            <label class="field"><span>EN</span><textarea formControlName="en" rows="3"></textarea></label>
+            <button type="button" class="btn btn--ghost" (click)="removeBody(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      <div class="block" formArrayName="features">
+        <div class="block__head">
+          <h2>Features</h2>
+          <button type="button" class="btn btn--ghost" (click)="addFeature()">Añadir</button>
+        </div>
+        @for (group of features.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field"><span>id</span><input formControlName="id" /></label>
+            <label class="field"
+              ><span>icon</span>
+              <select formControlName="icon">
+                @for (icon of icons; track icon) {
+                  <option [value]="icon">{{ icon }}</option>
+                }
+              </select>
+            </label>
+            <div class="field-row">
+              <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
+              <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
+            </div>
+            <div class="field-row">
+              <label class="field"
+                ><span>description ES</span
+                ><textarea formControlName="descriptionEs" rows="2"></textarea
+              ></label>
+              <label class="field"
+                ><span>description EN</span
+                ><textarea formControlName="descriptionEn" rows="2"></textarea
+              ></label>
+            </div>
+            <button type="button" class="btn btn--ghost" (click)="removeFeature(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      <div class="block" formArrayName="gallery">
+        <div class="block__head">
+          <h2>Gallery</h2>
+          <button type="button" class="btn btn--ghost" (click)="addGallery()">Añadir</button>
+        </div>
+        @for (group of gallery.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field"><span>id</span><input formControlName="id" /></label>
+            <label class="field"><span>imageUrl</span><input formControlName="imageUrl" /></label>
+            <div class="field-row">
+              <label class="field"><span>title ES</span><input formControlName="titleEs" /></label>
+              <label class="field"><span>title EN</span><input formControlName="titleEn" /></label>
+            </div>
+            <div class="field-row">
+              <label class="field"
+                ><span>caption ES</span><textarea formControlName="captionEs" rows="2"></textarea
+              ></label>
+              <label class="field"
+                ><span>caption EN</span><textarea formControlName="captionEn" rows="2"></textarea
+              ></label>
+            </div>
+            <button type="button" class="btn btn--ghost" (click)="removeGallery(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      @if (message(); as ok) {
+        <p class="ok" role="status">{{ ok }}</p>
+      }
+      @if (error(); as err) {
+        <p class="err" role="alert">{{ err }}</p>
+      }
+    </form>
+  }
+</section>

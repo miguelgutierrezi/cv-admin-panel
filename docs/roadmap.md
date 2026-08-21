@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 3 write proxy **implementado** (callable `sanityWrite`). Operador: secret + deploy Functions — [proxy-setup.md](./proxy-setup.md). Siguiente producto: Phase 4 pantallas MVP.
+Estado del workspace: Phase 4 MVP screens **done** (site / profile / projects). Siguiente: Phase 5 slice 2. CORS: añadir `http://localhost:4300` y `https://cv-admin-panel.web.app` en Sanity Manage si la lectura CDN falla.
 
 ## Objetivo de producto
 
@@ -68,17 +68,17 @@ Según [stack.md](./stack.md):
 
 **Done when:** ping/mutate con sesión válida — **código listo**; falta secret + deploy de Functions en el proyecto.
 
-### Phase 4: MVP screens (slice 1)
+### Phase 4: MVP screens (slice 1) — **done**
 
-- [ ] `siteSettings` (singleton)
-- [ ] `profile` (singleton)
-- [ ] `project` list + form con **`detail` obligatorio**
-- [ ] Publish / save flow vía proxy
-- [ ] Lectura inicial (CDN o API) para hidratar formularios
+- [x] `siteSettings` (singleton form + createOrReplace)
+- [x] `profile` (singleton form + createOrReplace)
+- [x] `project` list + form con **`detail` obligatorio** (features/gallery opcionales)
+- [x] Save vía `sanityWrite`; lectura CDN (`SanityReadService`)
+- [x] Shell nav: Inicio / Site / Profile / Projects
 
-**Done when:** editar site/profile/project se refleja en el CV público tras publish (smoke con portfolio).
+**Done when:** editar site/profile/project se refleja en el CV — tras CORS admin + publish. Smoke local/prod en el admin.
 
-### Phase 5: Slice 2 screens
+### Phase 5: Slice 2 screens — **siguiente**
 
 - [ ] `experience` list + form (slug = id estable)
 - [ ] `course` list + form (`credentialUrl` opcional)
@@ -107,10 +107,11 @@ Según [stack.md](./stack.md):
 1. Phase 0 ✓ — stack fijada en [stack.md](./stack.md).
 2. Phase 1 ✓ — scaffold Angular en **puerto 4300** (CV Login local → este admin).
 3. Phase 2 ✓ — Firebase Auth gate ([auth-setup.md](./auth-setup.md)).
-4. Phase 3 ✓ — Cloud Functions `sanityWrite` ([proxy-setup.md](./proxy-setup.md)); secret + deploy Functions pendiente de operador.
-5. Phase 4 MVP screens — **siguiente**.
-6. Phase 5 slice 2 → Phase 6 go-live.
-7. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
+4. Phase 3 ✓ — Cloud Functions `sanityWrite` ([proxy-setup.md](./proxy-setup.md)).
+5. Phase 4 ✓ — pantallas MVP site / profile / projects.
+6. Phase 5 slice 2 — **siguiente**.
+7. Phase 6 go-live (CORS + `adminLoginUrl` prod).
+8. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
 
 ## Lectura previa (portfolio)
 

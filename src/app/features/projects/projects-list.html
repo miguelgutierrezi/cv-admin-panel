@@ -1,0 +1,25 @@
+<section class="page">
+  <header class="page__head">
+    <h1>Projects</h1>
+    <a class="btn" routerLink="/projects/new">Nuevo project</a>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else if (error(); as err) {
+    <p class="err" role="alert">{{ err }}</p>
+  } @else if (projects().length === 0) {
+    <p>No hay projects en Sanity. Crea el primero.</p>
+  } @else {
+    <ul class="list">
+      @for (project of projects(); track project._id) {
+        <li>
+          <a [routerLink]="['/projects', project._id]">
+            <strong>{{ project.title || slugOf(project) }}</strong>
+            <span>#{{ project.sortOrder }} · {{ slugOf(project) }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

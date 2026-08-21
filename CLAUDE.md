@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 3 write proxy done in code** (`sanityWrite`). Set secret + deploy Functions per [docs/proxy-setup.md](docs/proxy-setup.md). Next: Phase 4 screens.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 4 MVP screens done** (site / profile / projects via CDN read + `sanityWrite`). Next: Phase 5.
 
 ## Read first
 

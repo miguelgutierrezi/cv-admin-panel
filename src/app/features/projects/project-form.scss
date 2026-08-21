@@ -1,0 +1,28 @@
+@use '../../../styles/form' as *;
+
+.back {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: #0b5fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.section-title {
+  margin: 0.5rem 0 0;
+  font-size: 1.15rem;
+}
+
+.field--check {
+  align-content: end;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.4rem;
+}

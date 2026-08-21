@@ -1,38 +1,29 @@
-<div class="shell">
-  <header class="shell__header">
-    <p class="shell__brand">{{ title }}</p>
-    <div class="shell__actions">
-      <span class="shell__user">{{ email() }}</span>
-      <a class="shell__link" [href]="portfolioUrl" rel="noopener noreferrer">Portfolio</a>
-      <button type="button" class="shell__logout" [disabled]="loggingOut()" (click)="logout()">
-        {{ loggingOut() ? 'Saliendo…' : 'Salir' }}
-      </button>
-    </div>
-  </header>
+<section class="page">
+  <h1>Editorial admin</h1>
+  <p>
+    Sesión: <strong>{{ email() }}</strong>. Edita contenido MVP con el menú; los cambios van a
+    Sanity vía <code>sanityWrite</code>.
+  </p>
 
-  <main class="shell__main">
-    <h1>Editorial admin</h1>
-    <p>
-      Sesión iniciada. Write proxy (Phase 3): callable <code>sanityWrite</code>. Pantallas de
-      edición en Phase 4.
-    </p>
-    <ul>
-      <li>Sanity project: <code>{{ sanityProjectId }}</code></li>
-      <li>Dataset: <code>{{ dataset }}</code></li>
-      <li>Auth: Firebase email/password ✓</li>
-      <li>Proxy: Cloud Functions <code>sanityWrite</code> (token solo en servidor)</li>
-    </ul>
+  <ul class="page__links">
+    <li><a routerLink="/site">Site settings</a></li>
+    <li><a routerLink="/profile">Profile</a></li>
+    <li><a routerLink="/projects">Projects</a></li>
+  </ul>
 
-    <div class="shell__probe">
-      <button type="button" class="shell__probe-btn" [disabled]="probing()" (click)="probeProxy()">
-        {{ probing() ? 'Probando…' : 'Probar proxy (ping)' }}
-      </button>
-      @if (probeMessage(); as ok) {
-        <p class="shell__probe-ok" role="status">{{ ok }}</p>
-      }
-      @if (probeError(); as err) {
-        <p class="shell__probe-err" role="alert">{{ err }}</p>
-      }
-    </div>
-  </main>
-</div>
+  <p class="page__meta">
+    Sanity <code>{{ sanityProjectId }}</code> / <code>{{ dataset }}</code>
+  </p>
+
+  <div class="page__probe">
+    <button type="button" class="btn" [disabled]="probing()" (click)="probeProxy()">
+      {{ probing() ? 'Probando…' : 'Probar proxy (ping)' }}
+    </button>
+    @if (probeMessage(); as ok) {
+      <p class="ok" role="status">{{ ok }}</p>
+    }
+    @if (probeError(); as err) {
+      <p class="err" role="alert">{{ err }}</p>
+    }
+  </div>
+</section>

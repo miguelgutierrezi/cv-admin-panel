@@ -1,0 +1,25 @@
+<div class="layout">
+  <aside class="layout__nav">
+    <p class="layout__brand">CV Admin</p>
+    <nav>
+      @for (item of nav; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: item.exact }"
+          >{{ item.label }}</a
+        >
+      }
+    </nav>
+    <div class="layout__foot">
+      <span class="layout__user">{{ email() }}</span>
+      <a [href]="portfolioUrl" rel="noopener noreferrer">Portfolio</a>
+      <button type="button" [disabled]="loggingOut()" (click)="logout()">
+        {{ loggingOut() ? 'Saliendo…' : 'Salir' }}
+      </button>
+    </div>
+  </aside>
+  <main class="layout__main">
+    <router-outlet />
+  </main>
+</div>

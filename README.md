@@ -19,9 +19,9 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 3 write proxy — code done** (callable `sanityWrite`). Next product: Phase 4 MVP screens.
+**Phase 4 MVP screens — done** (site settings, profile, projects + detail). Next: Phase 5 (experience / courses / navigation).
 
-Operator steps before ping works in prod: [docs/proxy-setup.md](docs/proxy-setup.md) (Sanity token → `firebase functions:secrets:set` → deploy functions). Blaze plan required for Functions.
+If CDN reads fail in the admin, add CORS origins in Sanity Manage: `http://localhost:4300` and `https://cv-admin-panel.web.app`.
 
 Live admin: https://cv-admin-panel.web.app  
 CV: https://miguel-angel-gutierrez-ibague.web.app
@@ -100,9 +100,9 @@ See **[docs/stack.md](docs/stack.md)**.
 0. Docs bootstrap + stack lock ← **done**  
 1. Angular scaffold + port 4300 + public-safe env ← **done**  
 2. Firebase Auth ← **done**  
-3. Cloud Functions write proxy ← **code done** (secret + Functions deploy by operator)  
-4. MVP screens: site, profile, projects ← **next**  
-5. Slice 2: experience, courses, navigation  
+3. Cloud Functions write proxy ← **done**  
+4. MVP screens: site, profile, projects ← **done**  
+5. Slice 2: experience, courses, navigation ← **next**  
 6. Polish, deploy, CORS, prod `adminLoginUrl`  
 7. Later: tests + lint → CI  
 

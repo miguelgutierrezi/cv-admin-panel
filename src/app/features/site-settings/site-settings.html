@@ -1,0 +1,50 @@
+<section class="page">
+  <header class="page__head">
+    <h1>Site settings</h1>
+    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
+      {{ saving() ? 'Guardando…' : 'Guardar' }}
+    </button>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="save()">
+      <label class="field">
+        <span>Nombre completo</span>
+        <input formControlName="name" />
+      </label>
+      <label class="field">
+        <span>Brand handle</span>
+        <input formControlName="brandHandle" />
+      </label>
+      <label class="field">
+        <span>Emails (uno por línea)</span>
+        <textarea formControlName="emailsText" rows="3"></textarea>
+      </label>
+
+      <div class="block" formArrayName="socialLinks">
+        <div class="block__head">
+          <h2>Social links</h2>
+          <button type="button" class="btn btn--ghost" (click)="addSocial()">Añadir</button>
+        </div>
+        @for (group of socialLinks.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field"><span>id</span><input formControlName="id" /></label>
+            <label class="field"><span>label</span><input formControlName="label" /></label>
+            <label class="field"><span>url</span><input formControlName="url" /></label>
+            <label class="field"><span>iconUrl</span><input formControlName="iconUrl" /></label>
+            <button type="button" class="btn btn--ghost" (click)="removeSocial(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      @if (message(); as ok) {
+        <p class="ok" role="status">{{ ok }}</p>
+      }
+      @if (error(); as err) {
+        <p class="err" role="alert">{{ err }}</p>
+      }
+    </form>
+  }
+</section>

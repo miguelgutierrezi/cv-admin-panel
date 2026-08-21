@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 3 write proxy implemented** (`sanityWrite` callable + `SanityProxyService`). Operator must set `SANITY_WRITE_TOKEN` and deploy Functions — [docs/proxy-setup.md](docs/proxy-setup.md). Next: Phase 4 MVP screens. No Figma required until editorial UI polish.
+Current repo state: **Phase 4 MVP screens done** (site / profile / projects). Next: Phase 5 slice 2. Sanity CORS may need admin origins (`localhost:4300`, `cv-admin-panel.web.app`).
 
 ## Contract (read first)
 
