@@ -19,7 +19,7 @@ Sibling portfolio (schemas, CDN adapter, local fallback):
 
 ## Current status
 
-**Phase 4 MVP screens — done** (site settings, profile, projects + detail). Next: Phase 5 (experience / courses / navigation).
+**Phase 5 slice 2 — done** (experience, courses, navigation + Phase 4 MVP). Next: Phase 6 (polish, CORS, prod `adminLoginUrl`).
 
 If CDN reads fail in the admin, add CORS origins in Sanity Manage: `http://localhost:4300` and `https://cv-admin-panel.web.app`.
 
@@ -102,8 +102,8 @@ See **[docs/stack.md](docs/stack.md)**.
 2. Firebase Auth ← **done**  
 3. Cloud Functions write proxy ← **done**  
 4. MVP screens: site, profile, projects ← **done**  
-5. Slice 2: experience, courses, navigation ← **next**  
-6. Polish, deploy, CORS, prod `adminLoginUrl`  
+5. Slice 2: experience, courses, navigation ← **done**  
+6. Polish, deploy, CORS, prod `adminLoginUrl` ← **next**  
 7. Later: tests + lint → CI  
 
 ## Agent documentation sync

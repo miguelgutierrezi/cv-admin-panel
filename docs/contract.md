@@ -56,9 +56,9 @@ Align field names with portfolio schemas and `miguelgutierrezi.github.io/src/app
 | MVP | `siteSettings` | Singleton |
 | MVP | `profile` | Singleton |
 | MVP | `project` | List + form; **`detail` required** or portfolio mapper drops the doc |
-| Next | `experience` | List + form; slug = stable id |
-| Next | `course` | List + form; optional `credentialUrl` |
-| Next | `navigation` | Singleton with `items[]` |
+| Done | `experience` | List + form; slug = stable id |
+| Done | `course` | List + form; optional `credentialUrl` |
+| Done | `navigation` | Singleton with `items[]` |
 | Later | `ui` chrome labels | Still local in portfolio; migrate only if needed |
 
 Localized fields are always `{ es, en }` (or localized string lists). Stable ids = Sanity `slug.current`.

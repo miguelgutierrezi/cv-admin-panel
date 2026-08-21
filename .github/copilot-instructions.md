@@ -4,7 +4,7 @@
 
 This repo is the **custom admin panel** for Miguel Gutiérrez’s portfolio CMS (Sanity). It is the authenticated **write** path. The public site is the sibling `miguelgutierrezi.github.io` and must remain CDN read-only with a local content fallback.
 
-Repo status: Phase 4 MVP screens done. Next: Phase 5 slice 2. Canonical agent entry: `AGENTS.md`.
+Repo status: Phase 5 slice 2 done. Next: Phase 6 polish/go-live. Canonical agent entry: `AGENTS.md`.
 
 ## Recommended stack (v1)
 
@@ -45,7 +45,8 @@ Repo status: Phase 4 MVP screens done. Next: Phase 5 slice 2. Canonical agent en
 3. Firebase Auth ✓
 4. Cloud Functions write proxy ✓
 5. MVP screens: site, profile, projects ✓
-6. Slice 2: experience, courses, navigation ← next
+6. Slice 2: experience, courses, navigation ← done
+7. Polish / go-live ← next
 7. Polish, deploy, CORS, portfolio Login URL (prod)
 8. Later: real tests + lint → CI
 

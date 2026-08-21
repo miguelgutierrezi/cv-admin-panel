@@ -1,0 +1,25 @@
+<section class="page">
+  <header class="page__head">
+    <h1>Experience</h1>
+    <a class="btn" routerLink="/experience/new">Nueva experience</a>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else if (error(); as err) {
+    <p class="err" role="alert">{{ err }}</p>
+  } @else if (items().length === 0) {
+    <p>No hay experiences en Sanity.</p>
+  } @else {
+    <ul class="list">
+      @for (item of items(); track item._id) {
+        <li>
+          <a [routerLink]="['/experience', item._id]">
+            <strong>{{ item.company || slugOf(item) }}</strong>
+            <span>#{{ item.sortOrder }} · {{ slugOf(item) }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

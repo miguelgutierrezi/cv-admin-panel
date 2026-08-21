@@ -40,6 +40,41 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/projects/project-form').then((m) => m.ProjectFormPage),
       },
+      {
+        path: 'experience',
+        loadComponent: () =>
+          import('./features/experience/experiences-list').then((m) => m.ExperiencesListPage),
+      },
+      {
+        path: 'experience/new',
+        loadComponent: () =>
+          import('./features/experience/experience-form').then((m) => m.ExperienceFormPage),
+      },
+      {
+        path: 'experience/:id',
+        loadComponent: () =>
+          import('./features/experience/experience-form').then((m) => m.ExperienceFormPage),
+      },
+      {
+        path: 'courses',
+        loadComponent: () =>
+          import('./features/courses/courses-list').then((m) => m.CoursesListPage),
+      },
+      {
+        path: 'courses/new',
+        loadComponent: () =>
+          import('./features/courses/course-form').then((m) => m.CourseFormPage),
+      },
+      {
+        path: 'courses/:id',
+        loadComponent: () =>
+          import('./features/courses/course-form').then((m) => m.CourseFormPage),
+      },
+      {
+        path: 'navigation',
+        loadComponent: () =>
+          import('./features/navigation/navigation').then((m) => m.NavigationPage),
+      },
     ],
   },
   {

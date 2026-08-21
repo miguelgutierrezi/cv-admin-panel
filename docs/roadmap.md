@@ -3,7 +3,7 @@
 Plan de entrega para `cv-admin-panel`, derivado de  
 [`admin-app-brief.md`](../../miguelgutierrezi.github.io/docs/admin-app-brief.md).
 
-Estado del workspace: Phase 4 MVP screens **done** (site / profile / projects). Siguiente: Phase 5 slice 2. CORS: añadir `http://localhost:4300` y `https://cv-admin-panel.web.app` en Sanity Manage si la lectura CDN falla.
+Estado del workspace: Phase 5 slice 2 **done** (experience / courses / navigation). Siguiente: Phase 6 polish + go-live. CORS: añadir `http://localhost:4300` y `https://cv-admin-panel.web.app` en Sanity Manage si la lectura CDN falla.
 
 ## Objetivo de producto
 
@@ -78,13 +78,14 @@ Según [stack.md](./stack.md):
 
 **Done when:** editar site/profile/project se refleja en el CV — tras CORS admin + publish. Smoke local/prod en el admin.
 
-### Phase 5: Slice 2 screens — **siguiente**
+### Phase 5: Slice 2 screens — **done**
 
-- [ ] `experience` list + form (slug = id estable)
-- [ ] `course` list + form (`credentialUrl` opcional)
-- [ ] `navigation` singleton (`items[]`)
+- [x] `experience` list + form (slug = id estable)
+- [x] `course` list + form (`credentialUrl` opcional)
+- [x] `navigation` singleton (`items[]`)
+- [x] Shell nav + home links + lectura CDN extendida
 
-**Done when:** colecciones slice 2 editables y visibles en el portfolio (merge remoto).
+**Done when:** colecciones slice 2 editables y visibles en el portfolio (merge remoto) — **UI lista**; smoke tras CORS/publish.
 
 ### Phase 6: Polish + go-live
 
@@ -109,8 +110,8 @@ Según [stack.md](./stack.md):
 3. Phase 2 ✓ — Firebase Auth gate ([auth-setup.md](./auth-setup.md)).
 4. Phase 3 ✓ — Cloud Functions `sanityWrite` ([proxy-setup.md](./proxy-setup.md)).
 5. Phase 4 ✓ — pantallas MVP site / profile / projects.
-6. Phase 5 slice 2 — **siguiente**.
-7. Phase 6 go-live (CORS + `adminLoginUrl` prod).
+6. Phase 5 ✓ — slice 2 experience / courses / navigation.
+7. Phase 6 go-live (CORS + `adminLoginUrl` prod) — **siguiente**.
 8. No tocar schemas del portfolio salvo que el usuario pida un cambio de modelo (eso vive en `studio/`).
 
 ## Lectura previa (portfolio)

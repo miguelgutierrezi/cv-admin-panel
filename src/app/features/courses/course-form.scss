@@ -1,0 +1,15 @@
+@use '../../../styles/form' as *;
+
+.back {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: #0b5fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

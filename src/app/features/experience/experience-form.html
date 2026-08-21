@@ -1,0 +1,56 @@
+<section class="page">
+  <header class="page__head">
+    <div>
+      <a class="back" routerLink="/experience">← Experience</a>
+      <h1>{{ isNew() ? 'Nueva experience' : 'Editar experience' }}</h1>
+    </div>
+    <div class="page__actions">
+      @if (!isNew()) {
+        <button type="button" class="btn btn--ghost" [disabled]="deleting()" (click)="remove()">
+          {{ deleting() ? 'Eliminando…' : 'Eliminar' }}
+        </button>
+      }
+      <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
+        {{ saving() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="save()">
+      <label class="field"><span>slug</span><input formControlName="slug" /></label>
+      <label class="field"><span>company</span><input formControlName="company" /></label>
+      <div class="field-row">
+        <label class="field"><span>role ES</span><input formControlName="roleEs" /></label>
+        <label class="field"><span>role EN</span><input formControlName="roleEn" /></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>duration ES</span><input formControlName="durationEs" /></label>
+        <label class="field"><span>duration EN</span><input formControlName="durationEn" /></label>
+      </div>
+      <div class="field-row">
+        <label class="field"
+          ><span>responsibilities ES (uno por línea)</span
+          ><textarea formControlName="responsibilitiesEs" rows="5"></textarea
+        ></label>
+        <label class="field"
+          ><span>responsibilities EN (uno por línea)</span
+          ><textarea formControlName="responsibilitiesEn" rows="5"></textarea
+        ></label>
+      </div>
+      <label class="field"><span>imageUrl</span><input formControlName="imageUrl" /></label>
+      <label class="field"
+        ><span>sortOrder</span><input type="number" formControlName="sortOrder"
+      /></label>
+
+      @if (message(); as ok) {
+        <p class="ok" role="status">{{ ok }}</p>
+      }
+      @if (error(); as err) {
+        <p class="err" role="alert">{{ err }}</p>
+      }
+    </form>
+  }
+</section>

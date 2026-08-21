@@ -1,0 +1,45 @@
+<section class="page">
+  <header class="page__head">
+    <h1>Navigation</h1>
+    <button type="button" class="btn" [disabled]="saving() || loading()" (click)="save()">
+      {{ saving() ? 'Guardando…' : 'Guardar' }}
+    </button>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="block" formArrayName="items">
+        <div class="block__head">
+          <h2>Items</h2>
+          <button type="button" class="btn btn--ghost" (click)="addItem()">Añadir</button>
+        </div>
+        @for (group of items.controls; track $index; let i = $index) {
+          <div class="card" [formGroupName]="i">
+            <label class="field">
+              <span>section id</span>
+              <select formControlName="id">
+                @for (section of sectionIds; track section) {
+                  <option [value]="section">{{ section }}</option>
+                }
+              </select>
+            </label>
+            <div class="field-row">
+              <label class="field"><span>label ES</span><input formControlName="labelEs" /></label>
+              <label class="field"><span>label EN</span><input formControlName="labelEn" /></label>
+            </div>
+            <button type="button" class="btn btn--ghost" (click)="removeItem(i)">Quitar</button>
+          </div>
+        }
+      </div>
+
+      @if (message(); as ok) {
+        <p class="ok" role="status">{{ ok }}</p>
+      }
+      @if (error(); as err) {
+        <p class="err" role="alert">{{ err }}</p>
+      }
+    </form>
+  }
+</section>

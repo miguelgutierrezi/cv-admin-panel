@@ -72,6 +72,43 @@ export interface ProjectDoc {
   detail: ProjectDetailDoc;
 }
 
+export interface ExperienceDoc {
+  _id: string;
+  _type: 'experience';
+  slug: { current: string };
+  company: string;
+  role: LocalizedString;
+  duration: LocalizedString;
+  responsibilities: LocalizedStringList;
+  imageUrl: string;
+  sortOrder: number;
+}
+
+export interface CourseDoc {
+  _id: string;
+  _type: 'course';
+  slug: { current: string };
+  title: LocalizedString;
+  institution: string;
+  date: LocalizedString;
+  imageUrl: string;
+  credentialUrl?: string;
+  sortOrder: number;
+}
+
+export interface NavItemDoc {
+  id: string;
+  label: LocalizedString;
+}
+
+export interface NavigationDoc {
+  _id: string;
+  _type: 'navigation';
+  items: NavItemDoc[];
+}
+
+export const SECTION_IDS = ['about', 'projects', 'experience', 'courses'] as const;
+
 export const FEATURE_ICONS = [
   'shield',
   'bell',

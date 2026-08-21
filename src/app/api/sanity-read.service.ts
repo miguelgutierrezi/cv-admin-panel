@@ -2,7 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map, timeout } from 'rxjs';
 import { environment } from '../../environments/environment';
-import type { ProfileDoc, ProjectDoc, SiteSettingsDoc } from '../models/cms.models';
+import type {
+  CourseDoc,
+  ExperienceDoc,
+  NavigationDoc,
+  ProfileDoc,
+  ProjectDoc,
+  SiteSettingsDoc,
+} from '../models/cms.models';
 
 interface SanityQueryResponse {
   result?: unknown;
@@ -24,6 +31,26 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(sortOrder asc){
 const PROJECT_BY_ID_QUERY = `*[_type == "project" && _id == $id][0]{
   _id, _type, slug, title, description, technologies, technologyIconUrls,
   repositoryUrl, demoUrl, imageUrl, featured, sortOrder, detail
+}`;
+
+const EXPERIENCES_QUERY = `*[_type == "experience"] | order(sortOrder asc){
+  _id, _type, slug, company, role, duration, responsibilities, imageUrl, sortOrder
+}`;
+
+const EXPERIENCE_BY_ID_QUERY = `*[_type == "experience" && _id == $id][0]{
+  _id, _type, slug, company, role, duration, responsibilities, imageUrl, sortOrder
+}`;
+
+const COURSES_QUERY = `*[_type == "course"] | order(sortOrder asc){
+  _id, _type, slug, title, institution, date, imageUrl, credentialUrl, sortOrder
+}`;
+
+const COURSE_BY_ID_QUERY = `*[_type == "course" && _id == $id][0]{
+  _id, _type, slug, title, institution, date, imageUrl, credentialUrl, sortOrder
+}`;
+
+const NAVIGATION_QUERY = `*[_type == "navigation"][0]{
+  _id, _type, items[]{id, label}
 }`;
 
 @Injectable({ providedIn: 'root' })
@@ -50,6 +77,26 @@ export class SanityReadService {
 
   fetchProjectById(id: string): Observable<ProjectDoc | null> {
     return this.query<ProjectDoc | null>(PROJECT_BY_ID_QUERY, { id });
+  }
+
+  fetchExperiences(): Observable<ExperienceDoc[]> {
+    return this.query<ExperienceDoc[]>(EXPERIENCES_QUERY).pipe(map((rows) => rows ?? []));
+  }
+
+  fetchExperienceById(id: string): Observable<ExperienceDoc | null> {
+    return this.query<ExperienceDoc | null>(EXPERIENCE_BY_ID_QUERY, { id });
+  }
+
+  fetchCourses(): Observable<CourseDoc[]> {
+    return this.query<CourseDoc[]>(COURSES_QUERY).pipe(map((rows) => rows ?? []));
+  }
+
+  fetchCourseById(id: string): Observable<CourseDoc | null> {
+    return this.query<CourseDoc | null>(COURSE_BY_ID_QUERY, { id });
+  }
+
+  fetchNavigation(): Observable<NavigationDoc | null> {
+    return this.query<NavigationDoc | null>(NAVIGATION_QUERY);
   }
 
   private query<T>(groq: string, params?: Record<string, string>): Observable<T> {

@@ -6,7 +6,7 @@ Guidance for any coding agent (Cursor, Claude Code, Copilot, etc.) working in `c
 
 Custom **editorial admin** for Miguel Gutiérrez’s portfolio CMS (Sanity). This repo is the **write** side. The public CV lives in the sibling folder `../miguelgutierrezi.github.io/` and stays **read-only** against the Sanity CDN.
 
-Current repo state: **Phase 4 MVP screens done** (site / profile / projects). Next: Phase 5 slice 2. Sanity CORS may need admin origins (`localhost:4300`, `cv-admin-panel.web.app`).
+Current repo state: **Phase 5 slice 2 done** (experience / courses / navigation + Phase 4 MVP). Next: Phase 6 polish/go-live. Sanity CORS may need admin origins (`localhost:4300`, `cv-admin-panel.web.app`).
 
 ## Contract (read first)
 
@@ -46,7 +46,7 @@ See [docs/stack.md](docs/stack.md) for the full table. Default choices:
 - Do **not** run `npm test` as a routine gate unless the user asks.
 ## Working style
 
-- Execute roadmap phases in order: docs → scaffold → auth ✓ → proxy ✓ → **MVP screens** → slice 2 → polish/go-live.
+- Execute roadmap phases in order: docs → scaffold → auth ✓ → proxy ✓ → MVP ✓ → slice 2 ✓ → **polish/go-live**.
 - Never put `SANITY_WRITE_TOKEN` in Angular env or GitHub Actions secrets; use `firebase functions:secrets:set`.
 - Treat [docs/stack.md](docs/stack.md) as the default toolchain; do not silently switch stacks.
 - Prefer surgical changes that match documented architecture.

@@ -22,6 +22,9 @@ export class AdminShell {
     { path: '/site', label: 'Site settings', exact: false },
     { path: '/profile', label: 'Profile', exact: false },
     { path: '/projects', label: 'Projects', exact: false },
+    { path: '/experience', label: 'Experience', exact: false },
+    { path: '/courses', label: 'Courses', exact: false },
+    { path: '/navigation', label: 'Navigation', exact: false },
   ];
 
   async logout(): Promise<void> {

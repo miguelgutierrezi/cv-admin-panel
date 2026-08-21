@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 ## Context
 
-Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 4 MVP screens done** (site / profile / projects via CDN read + `sanityWrite`). Next: Phase 5.
+Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling public CV: `../miguelgutierrezi.github.io/` (CDN read-only). **Phase 5 slice 2 done** (experience / courses / navigation + Phase 4 MVP via CDN read + `sanityWrite`). Next: Phase 6.
 
 ## Read first
 
@@ -36,7 +36,7 @@ Editorial admin for the Miguel Gutiérrez portfolio (Sanity writes). Sibling pub
 
 - Project ID `xm49cfca`, dataset `production`
 - Studio: https://miguel-gutierrez-cv.sanity.studio/
-- MVP docs: `siteSettings`, `profile`, `project` (with `detail`); then `experience`, `course`, `navigation`
+- Docs: `siteSettings`, `profile`, `project` (with `detail`), `experience`, `course`, `navigation`
 
 ## Commands
 
